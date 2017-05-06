@@ -5,7 +5,7 @@ var package = require('../package.json');
 
 var config = package.config;
 var app = express();
-app.listen(3000);
+app.listen(5000);
 
 // app.set('view engine', 'jade');
 // app.set('views', path.join(__dirname, 'views'));

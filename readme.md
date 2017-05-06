@@ -15,13 +15,13 @@ Features:
 
 For development:
 
-    npm run start
+    npm run start:local
 
-open [http://localhost:8080/](http://localhost:8080/) in the browser
+open [http://localhost:8080/](http://localhost:8081/) in the browser
 
 ## Requirements
 
-* Node 4
+* Node 4 or Higher
 * TypeScript 2.2.2
 
 ## Dependencies

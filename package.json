@@ -20,7 +20,7 @@
     "serve": "node server/public",    
     "serve-api": "node server/index.js",
     "start:local": "npm-run-all --parallel watch serve:local",
-    "start": "npm-run-all --parallel watch serve"
+    "start": "npm-run-all --parallel watch serve:local"
   },
   "keywords": [
     "svelte",
