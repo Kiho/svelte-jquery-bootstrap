@@ -1,0 +1,39 @@
+<div class="col-{{col}}">
+    <div class="view-header">
+        <div class="pull-right text-right" style="line-height: 14px">
+            {{{viewPath}}}
+        </div>
+        <div class="header-icon">
+            <i class="fa fa-{{icon}}"></i>
+        </div>
+        <div class="header-title">
+            <h3>{{title}}</h3>
+            <small>
+                {{description}}
+            </small>
+        </div>
+    </div>
+    <hr>
+</div>
+
+<script>
+    export default {
+        data () {
+            return {
+                col: 'lg-12',
+                title: '',
+                viewPath: '',
+                icon: '',
+                description: '',
+            }
+        },
+        oncreate() {
+
+        },
+        methods: {
+            handleUpdate (data) {
+                this.set(data);
+            }
+        }
+    }
+</script>

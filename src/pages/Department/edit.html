@@ -1,0 +1,100 @@
+<Panel loader="bar" bind:loading="loading" filled={{true}}>
+    <form class="form-horizontal">   
+        <Row>
+            <Col md="4">
+                <TextField
+                    label="Department #"
+                    readOnly={true}
+                    bind:value="item.id"
+                    />
+            </Col>
+        </Row>
+        <Row>
+            <Col md="4">
+                <TextField
+                    label="Department Name"
+                    required={true}
+                    bind:value="item.name"
+                    />
+            </Col>
+        </Row>
+        <Row>
+            <Col md="4">
+                <TextField
+                    label="Group Name"
+                    required={true}
+                    bind:value="item.groupName"
+                    />
+            </Col>
+        </Row>       
+        <Row className="formfoot">
+            <Col md="4">
+                <Col sm="3" />
+                <Button color="primary" on:click="handleSubmit(event)">Submit</Button>
+                <Button color="primary" on:click="handleBack(event)">Back</Button>
+            </Col>
+            <Col md="4">
+                <!--<Spinner isActive={app.loading}/>-->
+            </Col>
+        </Row>
+        <Row>
+            <Col md="12">
+                <!--<InvoiceTable rows={rows} actions={actions} className="mdl-color--white" width={this.width - 40}/>-->
+            </Col>
+        </Row> 
+    </form>
+</Panel>
+
+<script>
+    import Col from '../../components/Col.html';
+    import Row from '../../components/Row.html';
+    import Button from '../../components/Button.html';
+    import TextField from '../../components/TextField.html';
+    import SelectField from '../../components/SelectField.html';
+    import StateZipField from '../../components/StateZipField.html';
+    import Panel from '../../components/Panel.html';
+    import Service from './service';
+
+    const service = new Service();
+
+    export default {
+        data () {
+            return { 
+                item: {},
+                header: {
+					title: 'Department',
+					icon: 'home',
+					viewPath: '<small>UI Elements<br>General<br> <span class="c-white">Typography</span></small>'
+				},
+                entityType: 'department',
+                id: 0,
+                departmentList: [],
+                employeeList: []
+            }
+        },
+        components: {
+            Col,
+            Row,
+            Button,
+            Panel,
+            TextField,
+            StateZipField,
+            SelectField,
+        },
+        oncreate() {
+            service.init(this);
+			service.initHeader(this);
+            service.getById(this);
+		},
+		methods: {
+			// initHeader() {			
+			// 	const headerData = this.get('header');
+			// 	this.get('pageHeader').set(headerData);
+			// },
+            handleBack: service.handleBack,
+            handleSubmit(e) {
+                service.handleSubmit(e, this);
+            }
+		}
+    };
+</script>

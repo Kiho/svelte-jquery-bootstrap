@@ -1,0 +1,27 @@
+<div class="form-group"><label for={{uuid}} class="col-sm-3 control-label">{{label}}</label>
+    <div class="col-sm-9">
+        <select class="form-control {{inputClass}}" bind:value="value" id={{uuid}} placeholder={{placeholder}}>
+            {{#each optionList as opt}}
+            <option value={{opt.id}}>{{getOptionName(opt)}}</option>
+            {{/each}}
+        </select>
+    </div>
+</div>
+
+<script>
+    import { makeUniqueId } from '../utils'
+
+    export default {
+        data() {
+            return { 
+                uuid: makeUniqueId(),
+                placeholder: '',
+                label: '',
+                inputClass: '',
+                value: '',
+                optionList: [],
+                getOptionName: (x) => x.name
+            }
+        }
+    }
+</script>

@@ -1,0 +1,33 @@
+<div ref:sparkline>
+</div>
+
+<script>
+    export default {
+        data() {
+            return { 
+                value: null,
+                options: {
+                    type: 'pie',
+                    sliceColors: ['#f7af3e', '#404652']
+                }
+            }
+        },
+        oncreate() {
+            const element = this.refs.sparkline;
+            this.observe('value', value => {
+                this.load(element, value, this.get('options'));
+            });
+            const value = this.get('value');
+            this.load(element, this.get('value'), this.get('options'));
+        },
+        methods: {
+            load(element, value, options) {
+                $(element).sparkline(value, options);
+            }			
+		},
+        ondestroy: function () {
+            $(this.refs.sparkline).sparkline('destroy');
+            $(this.refs.sparkline).empty();
+        },
+    }
+</script>

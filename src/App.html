@@ -1,0 +1,72 @@
+﻿
+<script>
+import createRouter from './services/createRouter';
+import Home from './pages/Home.html';
+import DepartmentPage from './pages/Department/index.html';
+import DepartmentEdit from './pages/Department/edit.html';
+import AboutPage from './pages/About.html';
+import ViewHeader from './components/ViewHeader.html';
+import Nav from './Nav.html';
+import Loading from './components/Loading.html';
+import Link from './components/Link.html';
+import Button from './components/Button.html';
+import EmployeePage from './pages/Employee/index.html';
+import EmployeeEdit from './pages/Employee/edit.html';
+import history from './services/history';
+
+const pageHeader = new ViewHeader({
+	target: document.querySelector('#page-header'),
+	data: () => ({}),
+});
+
+const menu = [
+	{ href: '/home', text: 'Home', icon: 'home' },
+	{ href: '/departments', text: 'Departments', icon: 'sitemap' },
+	{ href: '/employees', text: 'Employees', icon: 'users' },
+	{ href: '/about', text: 'About', icon: 'leaf' },
+];
+
+const router = createRouter({
+    '/': '/home',
+    '/home': Home,
+	'/departments': DepartmentPage,
+	'/departments/:id': DepartmentEdit,
+    '/about': AboutPage,
+    '/employees': EmployeePage,
+	'/employees/:id': EmployeeEdit,
+});
+
+const nav = new Nav({
+	target: document.querySelector('#left-nav'),
+	data: {menu}	
+});
+
+export default {
+	components: {
+		Link,
+		Button,
+		Storage,
+		Home,
+		ViewHeader,
+		AboutPage,
+        Loading,
+        EmployeePage
+	},
+	data: () => ({
+			development: process.env.NODE_ENV !== 'production',
+			state: { },
+		}),
+	oncreate(){
+		router.start(window.location, window.document.querySelector('#content'), pageHeader, nav);
+		setTimeout(() => {
+			this.set({loading: false});			
+		}, 1000);
+	},
+	ondestroy(){
+		router.remove();
+	},
+	methods: {
+
+	}
+}
+</script>

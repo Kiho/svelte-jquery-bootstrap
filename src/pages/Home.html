@@ -1,0 +1,32 @@
+<div>HOME</div>
+<div>AA</div>
+<div>HOME sss 88</div>
+
+<script>
+	import Link from '../components/Link.html';
+	import Button from '../components/Button.html';
+
+	export default {
+		components: {
+			Link,
+			Button,
+		},
+		data() {
+			return { }
+		},
+		oncreate() {
+			this.initHeader();
+		},
+		methods: {
+			initHeader() {			
+				const headerData = {
+					title: 'Home',
+					icon: 'home',
+					viewPath: '<small>UI Elements<br>General<br> <span class="c-white">Typography</span></small>'
+				};
+				this.get('pageHeader').set(headerData);
+			}			
+		}
+	}
+</script>
+

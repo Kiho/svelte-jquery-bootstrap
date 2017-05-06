@@ -1,0 +1,51 @@
+[
+  {
+    "id": 1,
+    "name": "Gustavo",
+    "title": "Production Technician",
+    "departmentId": 2,
+    "rate": 20.0
+  },
+  {
+    "id": 2,
+    "name": "Catherine",
+    "title": "Engineering Manager",
+    "departmentId": 1,
+    "rate": 50.0
+  },
+  {
+    "id": 3,
+    "name": "Kim",
+    "title": "Production Supervisor",
+    "departmentId": 2,
+    "rate": 30.0
+  },
+  {
+    "id": 4,
+    "name": "Humberto",
+    "title": "Production Technician",
+    "departmentId": 2,
+    "rate": 20.0
+  },
+  {
+    "id": 5,
+    "name": "Pilar",
+    "title": "Marketing Assistant",
+    "departmentId": 3,
+    "rate": 25.0
+  },
+  {
+    "id": 6,
+    "name": "Frances",
+    "title": "Sales Representative",
+    "departmentId": 4,
+    "rate": 30.0
+  },
+  {
+    "id": 7,
+    "name": "Margaret",
+    "title": "Production Technician",
+    "departmentId": 2,
+    "rate": 20.0
+  }
+]

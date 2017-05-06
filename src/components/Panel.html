@@ -1,0 +1,54 @@
+<div class="col-{{col}}">
+    <div class="panel {{filled ? ' panel-filled' : ''}}{{loader && loading ? ' ld-loading' : ''}}">
+        <div class="loader" >
+            <div class="loader-{{loader}}"></div>
+        </div>
+        {{ #if tools || title }}
+        <div class="panel-heading">
+            {{ #if tools }}
+            <div class="panel-tools">
+                <a class="panel-toggle"><i class="fa fa-chevron-up"></i></a>
+                <a class="panel-close"><i class="fa fa-times"></i></a>
+            </div>
+            {{ /if }}
+            {{ title }}
+        </div>
+        {{ /if }}
+        <div class="panel-body">
+            {{ #if description }}
+            <p>
+                {{description}}
+            </p>
+            {{ /if }}
+            {{ yield }}
+        </div>
+    </div>
+    {{ #if toolbar }}
+    <div class="btn-toolbar" ref="toolbar">
+        <Button color="primary" on:click='fire("onLoadData", event)'>Load</Button>
+    </div>
+    {{ /if }}
+</div>
+
+<script>
+    import Button from './Button.html';
+    import { setClass } from '../utils/dom-helper';
+
+    export default {
+        components: {
+            Button,
+        },
+        data () {
+            return {
+                loader: '',
+                loading: false,
+                col: 'lg-12',
+                filled: false,
+                tools: false,
+                toolbar: false,
+                title: '',
+                description: '',
+            }
+        }
+    }
+</script>

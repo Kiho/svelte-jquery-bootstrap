@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "name": "Engineering",
+    "groupName": "Research and Development"
+  },
+  {
+    "id": 2,
+    "name": "Production",
+    "groupName": "Production"
+  },
+  {
+    "id": 3,
+    "name": "Marketing",
+    "groupName": "Sales and Marketing"
+  },
+  {
+    "id": 4,
+    "name": "Sales",
+    "groupName": "Sales and Marketing"
+  }
+]

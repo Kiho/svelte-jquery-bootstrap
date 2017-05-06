@@ -1,0 +1,100 @@
+﻿    <Panel loader="bar" filled={{true}}>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="input-group m-b-xs m-t-xs">
+                    <input class="form-control" type="text" placeholder="Search by Department.." style="width: 100%">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <select class="form-control m-b-xs m-t-xs" name="account" style="width: 100%">
+                    <option selected="">Select status</option>
+                    <option>Option 1</option>
+                    <option>Option 2</option>
+                </select>
+            </div>
+            <div class="col-lg-3">
+                <select class="form-control m-t-xs" name="account" style="width: 100%">
+                    <option selected="">Sort by:</option>
+                    <option>Option 1</option>
+                    <option>Option 2</option>
+                </select>
+            </div>
+        </div>
+    </Panel>
+
+    <Panel loader="bar" bind:loading="loading" filled={{false}}>
+        <div class="table-responsive">
+            <table id="projects"
+                ref:rtable
+                class="table table-vertical-align-middle">
+                <thead>
+                    <tr>
+                        <th>Department#</th>
+                        <th>Department</th>
+                        <th>Group</th>
+                        <th>% Share</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each list as department}}
+                    <tr>
+                        <td>{{department.id}}</td>
+                        <td>{{department.name}}</td>
+                        <td>{{department.groupName}}</td>
+                        <td><SparkLine value={{[1, 3]}}/> </td>
+                        <td><a href="#departments/{{department.id}}" class="btn btn-default btn-xs">View</a></td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </Panel>
+
+<script>
+    import Button from '../../components/Button.html';
+    import ViewHeader from '../../components/ViewHeader.html';
+    import Panel from '../../components/Panel.html';
+    import SparkLine from '../../components/SparkLine.html';
+    import { server } from '../../api';
+    import * as utils from '../../utils';
+    import Service from './service';
+
+    const service = new Service();
+    const entityType = 'department';
+
+    export default {
+        components: {
+            ViewHeader,
+            Panel,
+            Button,
+            SparkLine,
+        },
+        data() {
+			return { 
+                list: [],
+                entityType: entityType,
+                header: {
+					title: 'Department',
+					icon: 'home',
+					viewPath: '<small>UI Elements<br>General<br> <span class="c-white">Typography</span></small>'
+				},
+            }
+		},
+		oncreate() {
+            service.init(this);
+			service.initHeader(this);
+            service.getList(this)
+                .then(() =>{
+                        // setTimeout(()=> this.loadShare(), 1000)
+                    }
+                );          
+		},
+        helpers: {
+            formatDate: utils.formatDate
+        }
+    }
+</script>

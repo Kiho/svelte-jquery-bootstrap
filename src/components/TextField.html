@@ -1,0 +1,21 @@
+<div class="form-group"><label for={{uuid}} class="col-sm-3 control-label">{{label}}</label>
+    <div class="col-sm-9">
+        <input type="text" class="form-control {{inputClass}}" id={{uuid}} placeholder={{placeholder}} bind:value="value"/>
+    </div>
+</div>
+
+<script>
+    import { makeUniqueId } from '../utils'
+
+    export default {
+        data() {
+            return { 
+                uuid: makeUniqueId(),
+                placeholder: '',
+                label: '',
+                inputClass: '',
+                value: '',
+            }
+        }
+    }
+</script>
