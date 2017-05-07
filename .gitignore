@@ -9,7 +9,8 @@ obj/
 obj/
 [Rr]elease*/
 _ReSharper*/
-server/public
+docs/
+server/public/
 **/dist/*
 **/build/js/*
 **/packages/*

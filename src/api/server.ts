@@ -1,8 +1,8 @@
+declare var process;
 const index_html = '/index.html'; 
-export const BASE_URL = 'http://localhost:8081';
-// export const BASE_URL = 'https://whispering-brook-33382.herokuapp.com'
+export const HEROKU_URL = process.env.HEROKU_URL;
+export const BASE_URL = HEROKU_URL || 'https://whispering-brook-33382.herokuapp.com'
 export const API_URL = BASE_URL + '/api/';
-// export const LOOKUP_URL = BASE_URL + '/api/lookup/'; // + '/api/lookup/?' + getTimestamp();
 
 console.log('BASE_URL: ', BASE_URL);
 
@@ -29,14 +29,6 @@ export function postLogin(path, data) {
         body: data
     }).then(response => response.json());
 }
-
-// export function postLookup(data) {
-//     return fetch(LOOKUP_URL, {
-//         method: 'post',
-//         headers: headers,
-//         body: JSON.stringify(data)
-//     });
-// }
 
 export function post(path, data) {
     var url = API_URL + path + '/'

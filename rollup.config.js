@@ -28,6 +28,7 @@ const plugins = [
 	replace({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
       'process.env.APP_BASE_PATH': JSON.stringify(process.env.APP_BASE_PATH || ''),
+	  'process.env.HEROKU_URL': JSON.stringify(process.env.HEROKU_URL || ''),
     })
 ];
 
