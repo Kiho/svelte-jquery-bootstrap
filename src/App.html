@@ -7,7 +7,6 @@ import DepartmentEdit from './pages/Department/edit.html';
 import AboutPage from './pages/About.html';
 import ViewHeader from './components/ViewHeader.html';
 import Nav from './Nav.html';
-import Loading from './components/Loading.html';
 import Link from './components/Link.html';
 import Button from './components/Button.html';
 import EmployeePage from './pages/Employee/index.html';
@@ -49,7 +48,6 @@ export default {
 		Home,
 		ViewHeader,
 		AboutPage,
-        Loading,
         EmployeePage
 	},
 	data: () => ({
@@ -58,9 +56,6 @@ export default {
 		}),
 	oncreate(){
 		router.start(window.location, window.document.querySelector('#content'), pageHeader, nav);
-		setTimeout(() => {
-			this.set({loading: false});			
-		}, 2000);
 	},
 	ondestroy(){
 		router.remove();

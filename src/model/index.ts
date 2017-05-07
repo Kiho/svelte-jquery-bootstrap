@@ -1,12 +1,8 @@
-﻿import { Project } from './project';
-import { Employee } from './employee';
-import { Invoice } from './invoice';
+﻿import { Employee } from './employee';
 import { Department } from './department';
 
-export type EntityType = 'project' | 'department' | 'employee' | 'invoice';
+export type EntityType ='department' | 'employee';
 
-export { IInvoice } from './invoice';
-export { IProject } from './project';
 export { IDepartment } from './department';
 export { IEmployee } from './employee';
 
@@ -14,19 +10,15 @@ export interface IEntity {
     loading: boolean;
     error: string;
     data: Object;
-    item: any;
+    item: Object;
 }
 
 export const createNew = (path: EntityType) => {
     switch (path) {
-        case 'project':
-            return Object.assign({}, Project);
         case 'employee':
             return Object.assign({}, Employee);
         case 'department':
             return Object.assign({}, Department);
-        case 'invoice':
-            return Object.assign({}, Invoice);
     }
     return null;
 };

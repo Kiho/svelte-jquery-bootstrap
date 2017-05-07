@@ -75,7 +75,6 @@ export default class AppService {
     }
 
     async getById(app: IApp) {
-        // const action = () => server.getById(app.entityType, app.get('id'));
         const action = () => server.getById(app.entityType, app.id);
         const postAction = (item) => app.set({item});
         this.serverAction(app, action, postAction);
