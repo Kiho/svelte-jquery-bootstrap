@@ -8,24 +8,17 @@
   "scripts": {
     "mkdir": "mkdirp ./server/public",
     "build": "npm run mkdir && rollup -c && npm run copy-file",
-    "build:dev": "npm run mkdir && rollup -c && npm run copy-file",
     "build:min": "SET NODE_ENV=production&& npm run mkdir && rollup -c && npm run copy-file",
-    "build:heroku": "SET NODE_ENV=production&& rollup -c && npm run copy-h-file",
-    "copy-h-images": "copyfiles -f ./src/assets/images/* ../heroku/svelte-app/public/images",
-    "copy-h-js": "cpx src/assets/js/**/* ../heroku/svelte-app/public/js",
-    "copy-h-bundle": "cpx ./server/public/bundle.* ../heroku/svelte-app/public",
-    "copy-h-vendor": "cpx src/vendor/toastr/* ../heroku/svelte-app/public/vendor/toastr",
-    "copy-h-file": "copyfiles ./index.html ../heroku/svelte-app/public && npm run copy-h-images  && npm run copy-h-js && npm run copy-h-vendor && npm run copy-h-bundle",
     "copy-images": "copyfiles -f ./src/assets/images/* ./server/public/images",
     "copy-vendor": "cpx src/vendor/**/* ./server/public/vendor",
     "copy-js": "cpx src/assets/js/**/* ./server/public/js",
     "copy-file": "copyfiles ./index.html ./server/public  && npm run copy-images  && npm run copy-js && npm run copy-vendor",
     "clean": "rimraf ./server/public",
     "watch": "rollup -c -w",
-    "serve:local": "live-server --cors --port=8081 --proxy=/api:http://127.0.0.1:5000/api --watch=./server/public/bundle.js,./server/public/bundle.css,./server/public/index.html server/public",
+    "serve-web": "live-server --cors --port=8081 --proxy=/api:http://127.0.0.1:5000/api --watch=./server/public/bundle.js,./server/public/bundle.css,./server/public/index.html server/public",
     "serve-api": "node server/index.js",
-    "serve:dev": "npm run build:dev && npm run serve-api",
-    "start": "npm-run-all --parallel watch serve:local"
+    "serve": "npm run build && npm run serve-api",
+    "start": "npm-run-all --parallel watch serve-web"
   },
   "keywords": [
     "svelte",
