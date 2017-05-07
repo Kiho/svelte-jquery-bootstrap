@@ -43,7 +43,7 @@ export default class AppService {
 
         const startLoading = () => {
             app.set({loading: false});
-            progress.complete();
+            progress.start();
         }
         const completeLoading = () => {
             app.set({loading: false});
