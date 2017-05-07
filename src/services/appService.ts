@@ -2,12 +2,21 @@ import { server } from '../api';
 import * as utils from '../utils';
 import history from '../services/history';
 import { EntityType } from '../model';
+import ProgressBar from '../components/ProgressBar.html';
 
 export const lookupTypes: EntityType[] = ['employee', 'department'];
 
-// set loading delay
-const loaded = (time, app) => {
-    setTimeout(() => app.set({loading: false}), time)
+const progress = new ProgressBar({
+	target: document.querySelector('body'),
+    data: { color: 'blue' }
+})
+
+const loaded = (intervalTime, start, end, complete: () => void) => {
+    if (end - start < intervalTime) {
+        setTimeout(complete, intervalTime);
+    } else {
+        complete();
+    }       
 }
 
 export interface IApp {
@@ -27,29 +36,34 @@ export default class AppService {
         const headerData = app.get('header');
         app.get('pageHeader').set(headerData);
     }
-
+    
     async serverAction(app: IApp, action, postAction) {
         let start = Date.now();
         let data;
+
+        const startLoading = () => {
+            app.set({loading: false});
+            progress.complete();
+        }
+        const completeLoading = () => {
+            app.set({loading: false});
+            progress.complete();
+        } 
+        
         try{
-            app.set({
-                loading: true
-            });
-            data = await action(app.entityType);
+            startLoading();
+            data = await action(app.entityType);            
         } catch(e) {
             alert('ERROR: ' + e.message);
         }
+        
         let end = Date.now();
         if (data) {
             postAction(data);
         }
-        if (end - start < 300) {
-            loaded(300 - (end - start), app);
-        } else {
-            app.set({
-                loading: false
-            });
-        }
+
+        const intervalTime = progress.get('intervalTime');
+        loaded(intervalTime, start, end, completeLoading);
         return data;
     }
 
