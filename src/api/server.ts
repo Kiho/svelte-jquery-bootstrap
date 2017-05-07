@@ -1,7 +1,7 @@
 declare var process;
 const index_html = '/index.html'; 
-export const HEROKU_URL = process.env.HEROKU_URL;
-export const BASE_URL = HEROKU_URL || 'https://whispering-brook-33382.herokuapp.com'
+export const SERVER_URL = process.env.SERVER_URL;
+export const BASE_URL = SERVER_URL || '.';
 export const API_URL = BASE_URL + '/api/';
 
 console.log('BASE_URL: ', BASE_URL);
@@ -32,7 +32,7 @@ export function postLogin(path, data) {
 
 export function post(path, data) {
     var url = API_URL + path + '/'
-    const method = 'post'; // (data.id > 0) ? 'put' : 'post';
+    const method = (data.id > 0) ? 'put' : 'post';
     return fetch(url, {
         method: method,
         headers: headers,

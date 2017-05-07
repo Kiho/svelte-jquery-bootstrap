@@ -5,7 +5,8 @@ var package = require('../package.json');
 
 var config = package.config;
 var app = express();
-app.listen(5000);
+
+app.set('port', (process.env.PORT || 5000));
 
 // app.set('view engine', 'jade');
 // app.set('views', path.join(__dirname, 'views'));
@@ -22,3 +23,6 @@ app.use('/api/', api);
 
 console.log('NODE_ENV', process.env.NODE_ENV);
 
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
+});

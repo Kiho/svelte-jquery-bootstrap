@@ -35,7 +35,6 @@
                         <th>Department#</th>
                         <th>Department</th>
                         <th>Group</th>
-                        <th>% Share</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -45,7 +44,6 @@
                         <td>{{department.id}}</td>
                         <td>{{department.name}}</td>
                         <td>{{department.groupName}}</td>
-                        <td><SparkLine value={{[1, 3]}}/> </td>
                         <td><a href="#departments/{{department.id}}" class="btn btn-default btn-xs">View</a></td>
                     </tr>
                     {{/each}}
@@ -58,7 +56,7 @@
     import Button from '../../components/Button.html';
     import ViewHeader from '../../components/ViewHeader.html';
     import Panel from '../../components/Panel.html';
-    import SparkLine from '../../components/SparkLine.html';
+    // import SparkLine from '../../components/SparkLine.html';
     import { server } from '../../api';
     import * as utils from '../../utils';
     import Service from './service';
@@ -71,7 +69,6 @@
             ViewHeader,
             Panel,
             Button,
-            SparkLine,
         },
         data() {
 			return { 
@@ -87,11 +84,7 @@
 		oncreate() {
             service.init(this);
 			service.initHeader(this);
-            service.getList(this)
-                .then(() =>{
-                        // setTimeout(()=> this.loadShare(), 1000)
-                    }
-                );          
+            service.getList(this);         
 		},
         helpers: {
             formatDate: utils.formatDate
