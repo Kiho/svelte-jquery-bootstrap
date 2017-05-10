@@ -1,5 +1,5 @@
 <Panel loader="bar" bind:loading="loading" filled={{true}}>
-    <form class="form-horizontal">   
+    <form class="form-horizontal" ref:form>   
         <Row>
             <Col md="4">
                 <TextField
@@ -49,7 +49,7 @@
             <Col md="4">
                 <Col sm="3" />
                 <Button color="primary" on:click="handleSubmit(event)">Submit</Button>
-                <Button color="primary" on:click="handleBack(event)">Back</Button>
+                <Button color="primary" on:click="handleGoBack(event)">Back</Button>
             </Col>
             <Col md="4">
                 <!--<Spinner isActive={app.loading}/>-->
@@ -108,9 +108,9 @@
                 });
 		},
 		methods: {
-            handleBack: service.handleBack,
+            handleGoBack: service.goBack,
             handleSubmit(e) {
-                service.handleSubmit(e, this);
+                service.submit(e, this);
             }
 		}
     };

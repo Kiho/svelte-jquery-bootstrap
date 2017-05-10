@@ -1,7 +1,7 @@
 import { server } from '../api';
 import * as utils from '../utils';
 import history from '../services/history';
-import { EntityType } from '../model';
+import { EntityType, createNew } from '../model';
 import ProgressBar from '../components/ProgressBar.html';
 
 export const lookupTypes: EntityType[] = ['employee', 'department'];
@@ -24,6 +24,7 @@ export interface IApp {
     set: (object) => void;
     entityType: EntityType;
     id: number;
+    refs?: any;
 }
 
 export default class AppService {
@@ -88,17 +89,24 @@ export default class AppService {
         this.serverAction(app, action, postAction);
     }
 
-    async getById(app: IApp) {
+    async getById(app: IApp) {        
+        if(app.id == 0){
+            this.createNew(app); return;
+        }
         const action = () => server.getById(app.entityType, app.id);
         const postAction = (item) => app.set({item});
         this.serverAction(app, action, postAction);
     }
 
-    handleSubmit(event, app: IApp) {
+    async submit(event, app: IApp) {
         // prevent the page from reloading
         event.preventDefault();
-
+        const form = app.refs.form;
         const data = app.get('item');
+        if (!this.validateForm(form)) {
+            console.log("Form is not valid", data);
+            return;
+        }
         console.log('item', data);
         const action = () => server.post(app.entityType, data);
         const postAction = (r) => {
@@ -110,9 +118,30 @@ export default class AppService {
         this.serverAction(app, action, postAction);
     } 
 
-    handleBack(event) {
+    validateForm(form) {
+        // check validity of all inputs
+        const isValid = form.checkValidity();
+        if (!isValid) {
+            for (let i = 0; i < form.length; i++) {
+                const input = form[i];
+                if (input.checkValidity) {
+                    const r = input.checkValidity();
+                    if (!r) {
+                        console.log(input.validationMessage);
+                    }
+                }
+            }
+        }
+        return isValid;
+    }
+
+    goBack(event) {
         // prevent the page from reloading
         event.preventDefault();
         history.goBack();
+    }
+
+    createNew(app: IApp) {        
+        app.set({item: createNew(app.entityType)});
     }
 }

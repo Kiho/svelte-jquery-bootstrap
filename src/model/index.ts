@@ -1,10 +1,10 @@
-﻿import { Employee } from './employee';
-import { Department } from './department';
+﻿import { Employee } from './Employee';
+import { Department } from './Department';
 
 export type EntityType ='department' | 'employee';
 
-export { IDepartment } from './department';
-export { IEmployee } from './employee';
+export { Department } from './Department';
+export { Employee } from './Employee';
 
 export interface IEntity {
     loading: boolean;

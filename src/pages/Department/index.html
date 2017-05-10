@@ -50,12 +50,14 @@
                 </tbody>
             </table>
         </div>
+        <a href="#departments/0" class="btn btn-default">New</a>
     </Panel>
 
 <script>
     import Button from '../../components/Button.html';
     import ViewHeader from '../../components/ViewHeader.html';
     import Panel from '../../components/Panel.html';
+    import Link from '../../components/Link.html';
     // import SparkLine from '../../components/SparkLine.html';
     import { server } from '../../api';
     import * as utils from '../../utils';
@@ -69,6 +71,7 @@
             ViewHeader,
             Panel,
             Button,
+            Link,
         },
         data() {
 			return { 
@@ -85,6 +88,11 @@
             service.init(this);
 			service.initHeader(this);
             service.getList(this);         
+		},
+		methods: {
+            createNew: function(e) {
+                window.location.href = '#departments';
+            } 
 		},
         helpers: {
             formatDate: utils.formatDate
