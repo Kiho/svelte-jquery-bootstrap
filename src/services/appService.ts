@@ -4,6 +4,8 @@ import history from '../services/history';
 import { EntityType, createNew } from '../model';
 import ProgressBar from '../components/ProgressBar.html';
 
+declare var validator;
+
 export const lookupTypes: EntityType[] = ['employee', 'department'];
 
 const progress = new ProgressBar({
@@ -36,8 +38,21 @@ export default class AppService {
     initHeader(app: IApp) {			
         const headerData = app.get('header');
         app.get('pageHeader').set(headerData);
+        this.initValidator(app);
     }
     
+    initValidator(app: IApp) {
+        const form = app.refs.form;
+		// validate a field on "blur" event, a 'select' on 'change' event & a '.reuired' classed multifield on 'keyup':
+		$(form)
+			.on('blur', 'input[required], input.optional, select.required', validator.checkField)
+			.on('change', 'select.required', validator.checkField)
+			.on('keypress', 'input[required][pattern]', validator.keypress);
+        $('.multi.required').on('keyup blur', 'input', function() {
+            validator.checkField.apply($(this).siblings().last()[0]);
+        });    
+    }
+
     async serverAction(app: IApp, action, postAction) {
         let start = Date.now();
         let data;
@@ -103,10 +118,17 @@ export default class AppService {
         event.preventDefault();
         const form = app.refs.form;
         const data = app.get('item');
+
+        // Validate the form using generic validaing
+        if( !validator.checkAll( $(form) ) ){
+            return;
+        }
+
         if (!this.validateForm(form)) {
             console.log("Form is not valid", data);
             return;
         }
+
         console.log('item', data);
         const action = () => server.post(app.entityType, data);
         const postAction = (r) => {

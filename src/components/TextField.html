@@ -1,5 +1,5 @@
-<div class="form-group"><label for={{uuid}} class="col-sm-3 control-label">{{label}}</label>
-    <div class="col-sm-9">
+<div class="form-group {{class}}"><label for={{uuid}} class="col-md-1 control-label">{{label}}</label>
+    <div class="col-md-2">
         <input type="text" ref:input class="form-control {{inputClass}}" id={{uuid}} placeholder={{placeholder}} bind:value="value" readonly="{{ readOnly ? 'readonly' : '' }}" />
     </div>
 </div>
@@ -15,6 +15,7 @@
                 label: '',
                 inputClass: '',
                 value: '',
+                class: '',
                 readOnly: false,
                 required: false 
             }
