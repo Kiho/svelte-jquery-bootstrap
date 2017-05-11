@@ -1,5 +1,5 @@
 ﻿
-# Svelte + Bootstrap + jQuery Starter project in TypeScript
+# Svelte + Bootstrap Starter project in TypeScript
 
 The goal of this project is to provide a starting base for an Svelte project styled with Bootstrap in TypeScript.
 
