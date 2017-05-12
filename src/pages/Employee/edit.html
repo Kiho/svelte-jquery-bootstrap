@@ -12,8 +12,10 @@
         <Row>
             <Col lg="12">
                 <TextField
+                    class="item"
                     label="Employee Name"
-                    required={true}
+                    validate={{['length-range=6']}} 
+                    required={{false}}
                     bind:value="item.name"
                     />
             </Col>
@@ -38,10 +40,11 @@
         <Row>
             <Col lg="12">
                 <TextField
+                    type="number"
                     class="item"
                     label="Rate"
-                    pattern="-?[0-9]*(\.[0-9]+)?"
-                    error="Input is not a number!"
+                    required={{true}}
+                    validate={{['minmax=10,100']}}
                     bind:value="item.rate"
                     />
             </Col>

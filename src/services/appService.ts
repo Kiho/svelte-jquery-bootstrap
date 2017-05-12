@@ -30,6 +30,8 @@ export interface IApp {
 }
 
 export default class AppService {
+    validator;
+
     init(app: IApp) {
         app.entityType = app.get('entityType');
         app.id = app.get('id');
@@ -38,11 +40,13 @@ export default class AppService {
     initHeader(app: IApp) {			
         const headerData = app.get('header');
         app.get('pageHeader').set(headerData);
-        this.initValidator(app);
+        this.initValidator(app, app.refs.form);
     }
     
-    initValidator(app: IApp) {
-        const form = app.refs.form;
+    initValidator(app: IApp, form) {
+        if (!form) {
+            return;
+        }
 		// validate a field on "blur" event, a 'select' on 'change' event & a '.reuired' classed multifield on 'keyup':
 		$(form)
 			.on('blur', 'input[required], input.optional, select.required', validator.checkField)
@@ -50,7 +54,12 @@ export default class AppService {
 			.on('keypress', 'input[required][pattern]', validator.keypress);
         $('.multi.required').on('keyup blur', 'input', function() {
             validator.checkField.apply($(this).siblings().last()[0]);
-        });    
+        });
+        // this.validator = new FormValidator();
+        // const validator = this.validator;
+        // form.addEventListener('blur', (e) => {
+        //     validator.checkField.call(validator, e.target)
+        // }, true);    
     }
 
     async serverAction(app: IApp, action, postAction) {
@@ -119,13 +128,7 @@ export default class AppService {
         const form = app.refs.form;
         const data = app.get('item');
 
-        // Validate the form using generic validaing
-        if( !validator.checkAll( $(form) ) ){
-            return;
-        }
-
-        if (!this.validateForm(form)) {
-            console.log("Form is not valid", data);
+        if (!validator.checkAll($(form))) {
             return;
         }
 
@@ -139,23 +142,6 @@ export default class AppService {
         }
         this.serverAction(app, action, postAction);
     } 
-
-    validateForm(form) {
-        // check validity of all inputs
-        const isValid = form.checkValidity();
-        if (!isValid) {
-            for (let i = 0; i < form.length; i++) {
-                const input = form[i];
-                if (input.checkValidity) {
-                    const r = input.checkValidity();
-                    if (!r) {
-                        console.log(input.validationMessage);
-                    }
-                }
-            }
-        }
-        return isValid;
-    }
 
     goBack(event) {
         // prevent the page from reloading
