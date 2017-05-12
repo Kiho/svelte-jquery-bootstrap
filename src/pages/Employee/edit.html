@@ -1,7 +1,7 @@
 <Panel loader="bar" bind:loading="loading" filled={{true}}>
     <form class="form-horizontal" ref:form>   
         <Row>
-            <Col md="4">
+            <Col lg="12">
                 <TextField
                     label="Employee #"
                     readOnly={true}
@@ -10,7 +10,7 @@
             </Col>
         </Row>
         <Row>
-            <Col md="4">
+            <Col lg="12">
                 <TextField
                     label="Employee Name"
                     required={true}
@@ -19,7 +19,7 @@
             </Col>
         </Row>
         <Row>
-            <Col md="4">
+            <Col lg="12">
                 <TextField
                     label="Title"
                     bind:value="item.title"
@@ -27,7 +27,7 @@
             </Col>
         </Row>
         <Row>
-            <Col md="4">
+            <Col lg="12">
                 <SelectField label="Ddepartment"
                     bind:value="item.departmentId"
                     required={{true}}
@@ -36,8 +36,9 @@
             </Col>
         </Row>
         <Row>
-            <Col md="4">
+            <Col lg="12">
                 <TextField
+                    class="item"
                     label="Rate"
                     pattern="-?[0-9]*(\.[0-9]+)?"
                     error="Input is not a number!"
@@ -46,12 +47,12 @@
             </Col>
         </Row>        
         <Row className="formfoot">
-            <Col md="4">
-                <Col sm="3" />
+            <Col lg="12">
+                 <Col md="1" />
                 <Button color="primary" on:click="handleSubmit(event)">Submit</Button>
                 <Button color="primary" on:click="handleGoBack(event)">Back</Button>
             </Col>
-            <Col md="4">
+            <Col lg="12">
                 <!--<Spinner isActive={app.loading}/>-->
             </Col>
         </Row>

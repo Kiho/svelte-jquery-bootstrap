@@ -1,6 +1,6 @@
 <div class="form-group {{class}}"><label for={{uuid}} class="col-md-1 control-label">{{label}}</label>
     <div class="col-md-2">
-        <input type="text" ref:input 
+        <input type='text' ref:input 
             class="form-control {{inputClass}}" id={{uuid}} 
             placeholder={{placeholder}} 
             bind:value="value" 
@@ -12,16 +12,10 @@
 <script>
     import { makeUniqueId } from '../utils'
 
-    function stripQuotes(a) {
-        if (a.charAt(0) === '"' && a.charAt(a.length-1) === '"') {
-            return a.substr(1, a.length-2);
-        }
-        return a;
-    }
-
     export default {
         data() {
             return { 
+                type: 'text',
                 uuid: makeUniqueId(),
                 placeholder: '',
                 label: '',
@@ -30,6 +24,7 @@
                 class: '',
                 readOnly: false,
                 required: false,
+                pattern: '',
                 validate: [],
                 validators: null
             }
@@ -41,12 +36,18 @@
             });
             element.required = this.get('required');
             this.initValidators(element, this.get('validate'));
+            const pattern = this.get('pattern');
+            if (pattern) {
+                element.setAttribute('pattern', pattern);
+            }
         },
         methods: {
             initValidators: function (element, data) {
                 data.forEach(function(attr) {
                     const kv = attr.split('=');
-                    element.setAttribute('data-validate-' + kv[0], stripQuotes(kv[1]));
+                    if (kv.length == 2) {
+                        element.setAttribute('data-validate-' + kv[0], kv[1]);
+                    }                    
                 }, this);
             }
         }

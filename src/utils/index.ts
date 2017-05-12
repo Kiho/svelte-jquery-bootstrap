@@ -21,6 +21,13 @@ export function makeUniqueId() {
     });
 }
 
+export function stripQuotes(a) {
+    if (a.charAt(0) === '"' && a.charAt(a.length-1) === '"') {
+        return a.substr(1, a.length-2);
+    }
+    return a;
+}
+
 export function getPathName(path) {
     if (!path) return '/';
     const sub = path.substring(1);

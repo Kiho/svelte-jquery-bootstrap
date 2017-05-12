@@ -1,5 +1,5 @@
-<div class="form-group"><label for={{uuid}} class="col-sm-3 control-label">{{label}}</label>
-    <div class="col-sm-9">
+<div class="form-group"><label for={{uuid}} class="col-md-1 control-label">{{label}}</label>
+    <div class="col-md-2">
         <select class="form-control {{inputClass}}" bind:value="value" id={{uuid}} placeholder={{placeholder}}>
             {{#each optionList as opt}}
             <option value={{opt.id}}>{{getOptionName(opt)}}</option>

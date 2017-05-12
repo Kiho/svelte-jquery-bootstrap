@@ -10,6 +10,7 @@
                     <th>Title</th>
                     <th>Department</th>
                     <th>Rate</th>
+                    <th>Action</th>
                 </tr>
             </thead>
         </table>
@@ -46,13 +47,14 @@
                     searching: true,
                     data: this.get('dataSource'),
                     columns: [
-                        { data: function (data, type, row, meta) {
-                                    return '<a href="#employees/' + data.id + '">' + data.id + '</a>';
-                            } },
+                        { data: 'id' },
                         { data: 'name' },
                         { data: 'title' },
                         { data: 'departmentId' },
-                        { data: 'rate' }
+                        { data: 'rate' },
+                        { data: function (data, type, row, meta) {
+                            return '<a href="#employees/' + data.id + '" class="btn btn-default btn-xs">Edit</a>';
+                        } },
                     ],
                 };
                 const table = this.getTable().DataTable(options);
