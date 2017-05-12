@@ -1,11 +1,23 @@
 <div class="form-group {{class}}"><label for={{uuid}} class="col-md-1 control-label">{{label}}</label>
     <div class="col-md-2">
-        <input type="text" ref:input class="form-control {{inputClass}}" id={{uuid}} placeholder={{placeholder}} bind:value="value" readonly="{{ readOnly ? 'readonly' : '' }}" />
+        <input type="text" ref:input 
+            class="form-control {{inputClass}}" id={{uuid}} 
+            placeholder={{placeholder}} 
+            bind:value="value" 
+            readonly="{{ readOnly ? 'readonly' : '' }}"            
+            />
     </div>
 </div>
 
 <script>
     import { makeUniqueId } from '../utils'
+
+    function stripQuotes(a) {
+        if (a.charAt(0) === '"' && a.charAt(a.length-1) === '"') {
+            return a.substr(1, a.length-2);
+        }
+        return a;
+    }
 
     export default {
         data() {
@@ -17,7 +29,9 @@
                 value: '',
                 class: '',
                 readOnly: false,
-                required: false 
+                required: false,
+                validate: [],
+                validators: null
             }
         },
         oncreate() {
@@ -26,6 +40,15 @@
                 element.required = required;
             });
             element.required = this.get('required');
+            this.initValidators(element, this.get('validate'));
         },
+        methods: {
+            initValidators: function (element, data) {
+                data.forEach(function(attr) {
+                    const kv = attr.split('=');
+                    element.setAttribute('data-validate-' + kv[0], stripQuotes(kv[1]));
+                }, this);
+            }
+        }
     }
 </script>

@@ -15,7 +15,7 @@
                 <TextField
                     class="item"
                     label="Department Name"
-                    dataValidateLengthRange="6" 
+                    validate={{['length-range="6"', 'words="2"']}} 
                     required={true}
                     bind:value="item.name"
                     />
