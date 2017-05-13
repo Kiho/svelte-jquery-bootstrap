@@ -37,7 +37,7 @@ var validator = (function($){
     defaults = {
         alerts  : true,
         classes : {
-	        item    : 'item',
+	        item    : 'field',
 	        alert   : 'alert',
 	        bad     : 'bad'
         }
