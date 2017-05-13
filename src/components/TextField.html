@@ -1,4 +1,4 @@
-<div class="form-group {{class}}"><label for={{uuid}} class="col-md-1 control-label">{{label}}</label>
+<div class="form-group {{class}} {{validate ? 'item' : ''}}"><label for={{uuid}} class="col-md-1 control-label">{{label}}</label>
     <div class="col-md-2">
         {{#if type=='number'}}
         <input type='number' ref:input 
@@ -34,7 +34,7 @@
                 readOnly: false,
                 required: false,
                 pattern: '',
-                validate: [],
+                validate: null,
                 validators: null
             }
         },
@@ -44,20 +44,22 @@
                 element.required = required;
             });
             element.required = this.get('required');
-            this.initValidators(element, this.get('validate'));
             const pattern = this.get('pattern');
             if (pattern) {
                 element.setAttribute('pattern', pattern);
             }
+            this.initValidators(element, this.get('validate'));
         },
         methods: {
             initValidators: function (element, data) {
-                data.forEach(function(attr) {
-                    const kv = attr.split('=');
-                    if (kv.length == 2) {
-                        element.setAttribute('data-validate-' + kv[0], kv[1]);
-                    }                    
-                }, this);
+                if (data && data.length > 0) {
+                    data.forEach(function(attr) {
+                        const kv = attr.split('=');
+                        if (kv.length == 2) {
+                            element.setAttribute('data-validate-' + kv[0], kv[1]);
+                        }                    
+                    }, this);
+                }
             }
         }
     }

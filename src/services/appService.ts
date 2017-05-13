@@ -4,7 +4,7 @@ import history from '../services/history';
 import { EntityType, createNew } from '../model';
 import ProgressBar from '../components/ProgressBar.html';
 
-declare var validator;
+declare var validator: validator;
 
 export const lookupTypes: EntityType[] = ['employee', 'department'];
 
@@ -54,12 +54,7 @@ export default class AppService {
 			.on('keypress', 'input[required][pattern]', validator.keypress);
         $('.multi.required').on('keyup blur', 'input', function() {
             validator.checkField.apply($(this).siblings().last()[0]);
-        });
-        // this.validator = new FormValidator();
-        // const validator = this.validator;
-        // form.addEventListener('blur', (e) => {
-        //     validator.checkField.call(validator, e.target)
-        // }, true);    
+        });  
     }
 
     async serverAction(app: IApp, action, postAction) {
@@ -128,7 +123,8 @@ export default class AppService {
         const form = app.refs.form;
         const data = app.get('item');
 
-        if (!validator.checkAll($(form))) {
+        const validatorResult = validator.checkAll($(form));
+        if (!validatorResult.valid) {
             return;
         }
 
