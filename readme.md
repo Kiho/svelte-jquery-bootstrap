@@ -3,7 +3,7 @@
 
 The goal of this project is to provide a starting base for an Svelte project styled with Bootstrap in TypeScript.
 
-[See demo here](https://cryptic-dusk-82553.herokuapp.com/)
+[See demo here at Heroku](https://cryptic-dusk-82553.herokuapp.com/)
 
 
 Features:
@@ -11,6 +11,7 @@ Features:
 * [Bootstrap Template](https://github.com/puikinsh/gentelella)
 * Uses DataTables as Grid
 * SCSS compilation
+* Basic Form Validation
 
 ## How to run
     npm install
@@ -29,10 +30,11 @@ open [http://localhost:8081/](http://localhost:8081/) in the browser
 
 ## Dependencies
 
-* Svelte
+* [Svelte](https://svelte.technology/)
 * Bootstrap
 * Rollup
 * TypeScript
+* jQuery
 
 Need Express to run api server
 
