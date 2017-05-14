@@ -1,0 +1,86 @@
+<table class="" style="width:100%">
+    <tr>
+        <th style="width:37%;">
+            <p>Top 5</p>
+        </th>
+        <th>
+            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                <p class="">Device</p>
+            </div>
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+            <p class="">Progress</p>
+        </div>
+        </th>
+    </tr>
+    <tr>
+        <td>
+            <canvas class="canvasDoughnut" height="140" width="140" style="margin: 15px 10px 10px 0" ref:canvas ></canvas>
+        </td>
+        <td>
+            <table class="tile_info">
+                {{#each settings.data.labels as label, y}}
+                <tr>
+                    <td>
+                        <p><i class="fa fa-square {{dataset.color[y]}}"></i>{{label}} </p>
+                    </td>
+                    <td>{{dataset.data[y]}}%</td>
+                </tr>
+                {{/each}}
+            </table>
+        </td>
+    </tr>
+</table>
+
+<script>
+    const chart_doughnut_settings = {
+        type: 'doughnut',
+        tooltipFillColor: "rgba(51, 51, 51, 0.55)",
+        data: {
+            labels: [
+                "Symbian",
+                "Blackberry",
+                "Other",
+                "Android",
+                "IOS"
+            ],
+            datasets: [{
+                data: [15, 20, 30, 10, 30],
+                color: ['blue', 'green', 'purple', 'aero', 'red'],
+                backgroundColor: [
+                    "#BDC3C7",
+                    "#9B59B6",
+                    "#E74C3C",
+                    "#26B99A",
+                    "#3498DB"
+                ],
+                hoverBackgroundColor: [
+                    "#CFD4D8",
+                    "#B370CF",
+                    "#E95E4F",
+                    "#36CAAB",
+                    "#49A9EA"
+                ]
+            }]
+        },
+        options: { 
+            legend: false, 
+            responsive: false 
+        }
+    }
+
+	export default {
+		data() {
+			return {
+                settings: chart_doughnut_settings,
+                dataset: {data: [], color: []}
+            }
+		},
+		oncreate() {
+            
+            const element = this.refs.canvas;
+            const settings = this.get('settings');
+            this.set({dataset: settings.data.datasets[0]});
+            var chart_doughnut = new Chart($(element), settings);
+        },
+	}
+</script>
