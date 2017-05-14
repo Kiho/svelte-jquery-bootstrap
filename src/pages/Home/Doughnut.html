@@ -75,12 +75,14 @@
                 dataset: {data: [], color: []}
             }
 		},
-		oncreate() {
-            
+		oncreate() {            
             const element = this.refs.canvas;
             const settings = this.get('settings');
             this.set({dataset: settings.data.datasets[0]});
             var chart_doughnut = new Chart($(element), settings);
+        },
+        ondestroy: function () {
+            $(this.refs.canvas).empty();
         },
 	}
 </script>
