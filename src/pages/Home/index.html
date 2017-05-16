@@ -9,33 +9,10 @@
 		<Tile title="Total Connections" icon="user" count="7,325" sort="asc" percent="34" text="From last Week" />
 	</div>
 	<div class="row">
-		<div class="col-md-12 col-sm-12 col-xs-12">
-			<div class="dashboard_graph">
-
-			<div class="row x_title">
-          <div class="col-md-6">
-            <h3>Network Activities <small>Graph title sub-title</small></h3>
-          </div>
-          <div class="col-md-6">
-            <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
-                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                <span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
-            </div>
-          </div>
-			</div>
-
-			<div class="col-md-9 col-sm-9 col-xs-12">
-				<div id="chart_plot_01" class="demo-placeholder"></div>
-			</div>
-			<Performance />
-
-			<div class="clearfix"></div>
-			</div>
-		</div>
-
+		<NetworkActivities/>
 	</div>
 	<br />
-  <div class="row">
+  	<div class="row">
       <Widget title="App Versions">          
           <h4>App Usage across versions</h4>
           <AppVersions version="0.1.5.2" value="123k" percent="66" />
@@ -57,23 +34,23 @@
 	import Link from '../../components/Link.html';
 	import Button from '../../components/Button.html';
 	import Tile from '../../components/Tile.html';
-  import Widget from '../../components/Widget.html';
+	import Widget from '../../components/Widget.html';
 
-  import AppVersions from './AppVersions.html';
-  import Doughnut from './Doughnut.html';
-  import QuickSettings from './QuickSettings.html';
-  import Performance from './Performance.html';
+	import AppVersions from './AppVersions.html';
+	import Doughnut from './Doughnut.html';
+	import QuickSettings from './QuickSettings.html';
+	import NetworkActivities from './NetworkActivities.html';
   
 	export default {
 		components: {
 			Link,
 			Button,
 			Tile,
-      Widget,
-      AppVersions,
-      Doughnut,
-      QuickSettings,
-      Performance,
+			Widget,
+			AppVersions,
+			Doughnut,
+			QuickSettings,
+			NetworkActivities,
 		},
 		data() {
 			return { }
