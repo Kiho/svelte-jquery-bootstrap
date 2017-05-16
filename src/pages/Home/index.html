@@ -1,5 +1,4 @@
 <div>
-	<!-- top tiles -->
 	<div class="row tile_count">
 		<Tile title="Total Users" icon="user" count="2,500" percent="4" text="From last Week" />
 		<Tile title="Average Time" icon="clock-o" count="123.50" sort="asc" percent="3" text="From last Week" />
@@ -56,18 +55,9 @@
 			return { }
 		},
 		oncreate() {
-			// this.initHeader();
-		},
-		// methods: {
-		// 	initHeader() {			
-		// 		const headerData = {
-		// 			title: 'Home',
-		// 			icon: 'home',
-		// 			viewPath: '<small><span class="c-white">Home</span></small>'
-		// 		};
-		// 		this.get('pageHeader').set(headerData);
-		// 	}			
-		// }
+			const headerData = { visible: false };
+			this.get('pageHeader').set(headerData);
+		}
 	}
 </script>
 
