@@ -54,7 +54,7 @@ export default (routes) => {
             let data = routeData[i].route.match(location.pathname);
 
             if (data) {
-                data.pageHeader = header;
+                data.pageHeader = header;            
                 routeData[i].behavior({ target, data });
                 navigator.set({location});
                 break;

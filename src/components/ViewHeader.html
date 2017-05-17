@@ -1,4 +1,4 @@
-{{#if visible}}
+{{#if !hidden}}
 <div class="col-{{col}}">
     <div class="view-header">
         <div class="pull-right text-right" style="line-height: 14px">
@@ -27,7 +27,7 @@
                 viewPath: '',
                 icon: '',
                 description: '',
-                visible: true,
+                hidden: false,
             }
         },
         oncreate() {
@@ -35,13 +35,13 @@
         },
         methods: {
             handleUpdate (data) {                
-                if (!data){
-                    this.set({visible: false});
-                }                
-                else {
-                    data.visible = true;
-                    this.set(data);
-                }
+                // if (!data){
+                //     this.set({hidden: false});
+                // }                
+                // else {
+                //     data.hidden = true;
+                //     this.set(data);
+                // }
                 // console.log('handleUpdate', data);
             }
         }
