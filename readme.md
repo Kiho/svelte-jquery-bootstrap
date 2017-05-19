@@ -40,11 +40,15 @@ Need Express to run api server
 
 ## Goals
 
-I needed a simple structure to support CRUD operation with JavaScript front-end and WebAPI back-end.
-So I made this POC code for starting a new project with Svelte and TypeScript.
+I needed a simple POC code to support CRUD operation with JavaScript front-end and WebAPI back-end.
 
 ## Known Issues
 (commonjs plugin) Invalid labeled declaration (163:8) in D:/Work/svelte-ts-bootstrap/node_modules/route-parser/lib/route/compiled-grammar.js
 
 Error when building with rollup #25
 [https://github.com/rcs/route-parser/issues/25](https://github.com/rcs/route-parser/issues/25)
+
+## Credits
+
+[Svelte-TypeScript-WebPack-Starter](https://github.com/brakmic/Svelte-TypeScript-WebPack-Starter)
+[MiYogurt/svelte-with-ts](https://github.com/MiYogurt/svelte-with-ts)
