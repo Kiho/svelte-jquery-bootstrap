@@ -79,9 +79,11 @@
             const element = this.refs.canvas;
             const settings = this.get('settings');
             this.set({dataset: settings.data.datasets[0]});
-            var chart_doughnut = new Chart($(element), settings);
+            this.set({ instance: new Chart($(element), settings) })
         },
         ondestroy: function () {
+            const instance = this.get('instance');
+            instance.destroy();
             $(this.refs.canvas).empty();
         },
 	}

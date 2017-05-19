@@ -18,11 +18,10 @@ function init_sidebar() {
         var bodyHeight = $BODY.outerHeight(),
             footerHeight = $BODY.hasClass('footer_fixed') ? -10 : $FOOTER.height(),
             leftColHeight = $LEFT_COL.eq(1).height() + $SIDEBAR_FOOTER.height(),
-            contentHeight = bodyHeight < leftColHeight ? leftColHeight : bodyHeight;
-
+            contentHeight = bodyHeight < leftColHeight ? leftColHeight : bodyHeight - 25;
+        
         // normalize content
         contentHeight -= $NAV_MENU.height() + footerHeight;
-
         $RIGHT_COL.css('min-height', contentHeight);
     };
 
@@ -42,6 +41,7 @@ function init_sidebar() {
 
         setContentHeight();
     });
+    setContentHeight();
 }
 
 $(document).ready(function() {

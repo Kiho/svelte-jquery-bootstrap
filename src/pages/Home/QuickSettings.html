@@ -51,12 +51,12 @@
 		oncreate() {
             const element = this.refs.gauge;
             const settings = this.get('settings');
-			const chart_gauge_01 = new Gauge(element).setOptions(settings);
+			const gauge = new Gauge(element).setOptions(settings);
             
-            chart_gauge_01.maxValue = 6000;
-			chart_gauge_01.animationSpeed = 32;
-			chart_gauge_01.set(3200);
-			chart_gauge_01.setTextField(document.getElementById("gauge-text"));
+            gauge.maxValue = 6000;
+			gauge.animationSpeed = 32;
+			gauge.set(3200);
+			gauge.setTextField(document.getElementById("gauge-text"));
 		},
         ondestroy: function () {
             $(this.refs.gauge).empty();

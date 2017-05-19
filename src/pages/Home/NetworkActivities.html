@@ -101,14 +101,18 @@
 		data() {
 			return {
                 settings: chart_plot_01_settings,
+                data: [arr_data1, arr_data2],
             }
 		},
 		oncreate() {
             const element = this.refs.plot;
             const settings = this.get('settings');
-			$.plot( $(element), [ arr_data1, arr_data2 ],  settings );
+            const data = this.get('data');
+            this.set({ instance: $.plot($(element), data, settings) })
 		},
         ondestroy: function () {
+            const instance = this.get('instance');
+            instance.destroy();
             $(this.refs.plot).empty();
         },
 	}

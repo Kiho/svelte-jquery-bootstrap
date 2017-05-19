@@ -1,5 +1,6 @@
 node_modules
 .DS_Store
+.vs/
 npm-debug.*
 obj/
 *.suo
