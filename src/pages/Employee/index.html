@@ -23,6 +23,10 @@
     import ViewHeader from '../../components/ViewHeader.html';
     import Panel from '../../components/Panel.html';
     import { API_URL } from '../../api/server';
+    import Service from './service';
+
+    const service = new Service();
+    const entityType = 'employee';
 
     export default {
         components: {
@@ -30,13 +34,17 @@
             Panel,
             Button,
         },
-        data: () => grid.data({        
+        data: () => grid.data({   
+            departmentList: [],
             tableName: '',
-            // url: 'http://northwind.servicestack.net/employees.json',
-            url: API_URL + 'employee',
+            url: API_URL + entityType,
             description: 'Each list you can customize by standard css styles. Each element is responsive so you can add to it any other element to improve functionality of list.'
         }),
         methods: {
+            getDepartmentName: function (id) {
+                const department = this.get('departmentList').find(x => x.id === id);
+                return department ? department.name : '';
+            },
             getTable: function () {
                 return $(this.refs.rtable);
             },
@@ -50,7 +58,9 @@
                         { data: 'id' },
                         { data: 'name' },
                         { data: 'title' },
-                        { data: 'departmentId' },
+                        { data: (data, type, row, meta) => {
+                            return '<a href="#departments/' + data.departmentId + '">' + this.getDepartmentName(data.departmentId) + '</a>';
+                        } },
                         { data: 'rate' },
                         { data: function (data, type, row, meta) {
                             return '<a href="#employees/' + data.id + '" class="btn btn-default btn-xs">Edit</a>';
@@ -79,8 +89,11 @@
         },
         oncreate() {
             this.initHeader();
-            this.loadData();
-            grid.oncreate(this);
+            service.getLookups(this, ['department'])
+                .then(() => {
+                    this.loadData();
+                    grid.oncreate(this);
+                });
         },
         ondestroy: grid.ondestroy
     }
