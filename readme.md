@@ -50,5 +50,5 @@ Error when building with rollup #25
 
 ## Credits
 
-[Svelte-TypeScript-WebPack-Starter](https://github.com/brakmic/Svelte-TypeScript-WebPack-Starter)
-[MiYogurt/svelte-with-ts](https://github.com/MiYogurt/svelte-with-ts)
+* [Svelte-TypeScript-WebPack-Starter](https://github.com/brakmic/Svelte-TypeScript-WebPack-Starter)
+* [MiYogurt/svelte-with-ts](https://github.com/MiYogurt/svelte-with-ts)
