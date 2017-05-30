@@ -19,7 +19,7 @@ export default {
         const table = component.initTable(component.getTable()); 
         component.set({ tableInstance: table });     
         component.observe('dataSource', dataSource => { // watch for changes in 'dataSource'
-            if (dataSource && dataSource.length > 0) {
+            if (dataSource) {
                 component.updateTable();
             }
         });
@@ -30,6 +30,7 @@ export default {
     loadData: async function () {
         const json = await server.doFetch(this.get('url'));
         this.set({ dataSource: json });
+        toastr.info(`Retrieved data from ${this.get('url')}`, 'Info');
     },
     updateTable: function () {
         const table = this.get('tableInstance'); // https://svelte.technology/guide#component-get-key-
@@ -37,7 +38,6 @@ export default {
             table.clear();
             table.rows.add(this.get('dataSource'));
             table.draw();
-            toastr.info(`Retrieved data from ${this.get('url')}`, 'Info');
         }
     },
     getTable: function () {
