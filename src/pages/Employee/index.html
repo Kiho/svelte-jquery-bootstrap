@@ -38,17 +38,20 @@
             departmentList: [],
             tableName: '',
             url: API_URL + entityType,
-            description: 'Each list you can customize by standard css styles. Each element is responsive so you can add to it any other element to improve functionality of list.'
+            description: '',
+            headerData: {
+                title: 'Employees',
+                icon: 'users',
+                hidden: false,
+                viewPath: '<small><span class="c-white">Employees</span></small>'
+            }
         }),
         methods: {
             getDepartmentName: function (id) {
                 const department = this.get('departmentList').find(x => x.id === id);
                 return department ? department.name : '';
             },
-            getTable: function () {
-                return $(this.refs.rtable);
-            },
-            initTable: function () {
+            initTable: function ($table) {
                 const options = {
                     processing: true,
                     // select: true,
@@ -67,33 +70,20 @@
                         } },
                     ],
                 };
-                const table = this.getTable().DataTable(options);
-                this.set({ tableInstance: table }); // // https://svelte.technology/guide#component-set-data-
+                const table = $table.DataTable(options);
                 table.on('select', (e, dt, type, indexes) => {
                     // event handling for jquery.dataTables
                     // see: https://datatables.net/examples/advanced_init/dt_events.html
                 });
-                // console.log('refs', this.refs);
+                return table;
             },
-            initHeader() {			
-				const headerData = {
-					title: 'Employees',
-					icon: 'users',
-                    hidden: false,
-					viewPath: '<small><span class="c-white">Employees</span></small>'
-				};
-				this.get('pageHeader').set(headerData);
-			},
-            updateTable: grid.methods.updateTable,
-            loadData: grid.methods.loadData
+            updateTable: grid.updateTable,
+            getTable: grid.getTable,
+            loadData: grid.loadData,
+            initHeader: grid.initHeader
         },
         oncreate() {
-            this.initHeader();
-            service.getLookups(this, ['department'])
-                .then(() => {
-                    this.loadData();
-                    grid.oncreate(this);
-                });
+            grid.oncreate(this, service, ['department']);
         },
         ondestroy: grid.ondestroy
     }

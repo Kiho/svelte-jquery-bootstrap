@@ -13,11 +13,21 @@ const progress = new ProgressBar({
     data: { color: 'blue' }
 })
 
-const loaded = (intervalTime, start, end, complete: () => void) => {
+function startLoading(app: IApp) {
+    app.set({loading: true});
+    progress.start();
+}
+
+function completeLoading(app: IApp) {
+    app.set({loading: false});
+    progress.complete();
+} 
+
+const loaded = (intervalTime, start, end, app: IApp, complete: (x: IApp) => void) => {
     if (end - start < intervalTime) {
-        setTimeout(complete, intervalTime);
+        setTimeout(() => complete(app), intervalTime);
     } else {
-        complete();
+        complete(app);
     }       
 }
 
@@ -61,17 +71,8 @@ export default class AppService {
         let start = Date.now();
         let data;
 
-        const startLoading = () => {
-            app.set({loading: false});
-            progress.start();
-        }
-        const completeLoading = () => {
-            app.set({loading: false});
-            progress.complete();
-        } 
-        
         try{
-            startLoading();
+            startLoading(app);
             data = await action(app.entityType);            
         } catch(e) {
             alert('ERROR: ' + e.message);
@@ -83,11 +84,11 @@ export default class AppService {
         }
 
         const intervalTime = progress.get('intervalTime');
-        loaded(intervalTime, start, end, completeLoading);
+        loaded(intervalTime, start, end, app, completeLoading);
         return data;
     }
 
-    async getLookups(app: IApp, entities: EntityType[], predicate?: (EntityType) => boolean) {
+    async getLookups(app: IApp, entities: EntityType[], predicate?: (x: EntityType) => boolean) {
         const loadAll = [];
         entities.forEach(entity => {
             loadAll.push(

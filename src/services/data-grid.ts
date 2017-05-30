@@ -1,5 +1,6 @@
 ﻿import { server } from '../api';
 import toastr from '../common/toastr';
+import AppService from './appService';
 
 export default {
     data: function (data) { // default data: https://svelte.technology/guide#default-data
@@ -8,32 +9,41 @@ export default {
             dataSource: [],
         }, data);
     },
-    oncreate: function (component) { // life-cycle hook 
-        component.initTable();    // see: https://svelte.technology/guide#lifecycle-hooks       
+    oncreate: async function (component: IDataGrid, service, lookups) { // life-cycle hook 
+        await service.getLookups(component, lookups)
+        component.loadData();
+        this.initialize(component);
+    },
+    initialize(component: IDataGrid){
+        component.initHeader();
+        const table = component.initTable(component.getTable()); 
+        component.set({ tableInstance: table });     
         component.observe('dataSource', dataSource => { // watch for changes in 'dataSource'
-            // see: https://svelte.technology/guide#component-observe-key-callback-options-
             if (dataSource && dataSource.length > 0) {
                 component.updateTable();
             }
         });
     },
-    ondestroy: function () { // cleanup life-cycle method. See: https://svelte.technology/guide#component-teardown-
+    ondestroy: function () { // cleanup life-cycle method.
         this.getTable().remove(); // remove jQuery object
     },
-    methods: { 
-        updateTable: function () {
-            const table = this.get('tableInstance'); // https://svelte.technology/guide#component-get-key-
-            if (table) {
-                table.clear();
-                table.rows.add(this.get('dataSource'));
-                table.draw();
-                toastr.info(`Retrieved data from ${this.get('url')}`, 'Info');
-            }
-        },
-        loadData: function () {
-            server.doFetch(this.get('url')).then(json => {
-                this.set({ dataSource: json });
-            });
+    loadData: async function () {
+        const json = await server.doFetch(this.get('url'));
+        this.set({ dataSource: json });
+    },
+    updateTable: function () {
+        const table = this.get('tableInstance'); // https://svelte.technology/guide#component-get-key-
+        if (table) {
+            table.clear();
+            table.rows.add(this.get('dataSource'));
+            table.draw();
+            toastr.info(`Retrieved data from ${this.get('url')}`, 'Info');
         }
-    }
+    },
+    getTable: function () {
+        return $(this.refs.rtable);
+    },
+    initHeader() {			
+        this.get('pageHeader').set(this.get('headerData'));
+    },
 }
