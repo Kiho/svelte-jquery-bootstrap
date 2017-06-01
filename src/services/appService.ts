@@ -48,8 +48,7 @@ export default class AppService {
     } 
 
     initHeader(app: IApp) {			
-        const headerData = app.get('header');
-        app.get('pageHeader').set(headerData);
+        app.get('pageHeader').set(app.get('header'));
         this.initValidator(app, app.refs.form);
     }
     
@@ -119,7 +118,6 @@ export default class AppService {
     }
 
     async submit(event, app: IApp) {
-        // prevent the page from reloading
         event.preventDefault();
         const form = app.refs.form;
         const data = app.get('item');
@@ -141,7 +139,6 @@ export default class AppService {
     } 
 
     goBack(event) {
-        // prevent the page from reloading
         event.preventDefault();
         history.goBack();
     }

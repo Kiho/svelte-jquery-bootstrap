@@ -1,4 +1,12 @@
-<div>About</div>
+<div class="container">
+    <div class="row">
+        <div class="content col-md-4">
+            <h1><strong>This is the about page</strong></h1>
+
+            <p>Make sure to follow the project on <a class="repo-link" href="{{repo}}">GitHub</a> to stay up to date with the latest releases, or contribute to the broject by opening an issue or making a pull-request!</p>
+        </div>
+    </div>
+</div>
 
 <script>
 	import Link from '../components/Link.html';
@@ -10,20 +18,22 @@
 			Button,
 		},
 		data() {
-			return { }
+			return {
+				repo: 'https://github.com/Kiho/svelte-ts-bootstrap',
+				headerData: {
+					title: 'About',
+					icon: 'about',
+                    hidden: false,
+					viewPath: '<small><span class="c-white">About</span></small>'
+				}
+			}
 		},
 		oncreate() {
 			this.initHeader();
 		},
 		methods: {
-			initHeader() {			
-				const headerData = {
-					title: 'About',
-					icon: 'about',
-                    hidden: false,
-					viewPath: '<small><span class="c-white">About</span></small>'
-				};
-				this.get('pageHeader').set(headerData);
+			initHeader() {
+				this.get('pageHeader').set(this.get('headerData'));
 			}			
 		}
 	}
