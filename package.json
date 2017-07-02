@@ -57,11 +57,11 @@
     "rollup-plugin-scss": "^0.2.0",
     "rollup-plugin-svelte": "^1.6.0",
     "rollup-plugin-typescript": "^0.8.1",
-    "rollup-plugin-uglify": "^1.0.1",
+    "rollup-plugin-uglify": "^2.0.1",
     "rollup-watch": "^3.2.2",
     "route-parser": "0.0.5",
     "typescript": "~2.3.2",
-    "uglify-js": "^3.0.22"
+    "uglify-es": "^3.0.22"
   },
   "dependencies": {
     "body-parser": "^1.15.2",

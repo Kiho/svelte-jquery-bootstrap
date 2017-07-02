@@ -7,7 +7,7 @@ import tscompile from 'typescript';
 import replace from 'rollup-plugin-replace';
 import async from 'rollup-plugin-async';
 import scss from 'rollup-plugin-scss';
-import { minify } from 'uglify-js';
+import { minify } from 'uglify-es';
 
 const plugins = [ 
     typescript({typescript: tscompile}),
