@@ -11,7 +11,7 @@ obj/
 [Rr]elease*/
 _ReSharper*/
 server/public/
-**/dist/*
+dist/*
 **/build/js/*
 **/packages/*
 # except build/, which is used as an MSBuild target.
