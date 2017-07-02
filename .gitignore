@@ -18,8 +18,6 @@ dist/*
 !**/packages/build/
 # Uncomment if necessary however generally it will be regenerated when needed
 #!**/packages/repositories.config
-mdl-electron/js/*
-mdl-react/js/*
-mdl-react-ts/js/*
 **/node_modules/*
 **/bower_components/*
+.vscode/
