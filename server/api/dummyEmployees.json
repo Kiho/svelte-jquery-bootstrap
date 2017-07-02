@@ -2,6 +2,7 @@
   {
     "id": 1,
     "name": "Gustavo",
+    "gender": "Male",
     "title": "Production Technician",
     "departmentId": 2,
     "rate": 20.0
@@ -9,6 +10,7 @@
   {
     "id": 2,
     "name": "Catherine",
+    "gender": "Female",
     "title": "Engineering Manager",
     "departmentId": 1,
     "rate": 50.0
@@ -16,6 +18,7 @@
   {
     "id": 3,
     "name": "Kim",
+    "gender": "Female",
     "title": "Production Supervisor",
     "departmentId": 2,
     "rate": 30.0
@@ -23,6 +26,7 @@
   {
     "id": 4,
     "name": "Humberto",
+    "gender": "Male",
     "title": "Production Technician",
     "departmentId": 2,
     "rate": 20.0
@@ -30,6 +34,7 @@
   {
     "id": 5,
     "name": "Pilar",
+    "gender": "Male",
     "title": "Marketing Assistant",
     "departmentId": 3,
     "rate": 25.0
@@ -37,6 +42,7 @@
   {
     "id": 6,
     "name": "Frances",
+    "gender": "Female",
     "title": "Sales Representative",
     "departmentId": 4,
     "rate": 30.0
@@ -44,6 +50,7 @@
   {
     "id": 7,
     "name": "Margaret",
+    "gender": "Female",
     "title": "Production Technician",
     "departmentId": 2,
     "rate": 20.0

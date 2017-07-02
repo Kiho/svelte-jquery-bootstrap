@@ -7,6 +7,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
+                    <th>Gender</th>
                     <th>Title</th>
                     <th>Department</th>
                     <th>Rate</th>
@@ -60,6 +61,7 @@
                     columns: [
                         { data: 'id' },
                         { data: 'name' },
+                        { data: 'gender' },
                         { data: 'title' },
                         { data: (data, type, row, meta) => {
                             return '<a href="#departments/' + data.departmentId + '">' + this.getDepartmentName(data.departmentId) + '</a>';

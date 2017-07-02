@@ -7,7 +7,7 @@ import tscompile from 'typescript';
 import replace from 'rollup-plugin-replace';
 import async from 'rollup-plugin-async';
 import scss from 'rollup-plugin-scss';
-import { minify } from 'uglify-js';
+import { minify } from 'uglify-es';
 
 const plugins = [ 
     typescript({typescript: tscompile}),
@@ -36,8 +36,10 @@ console.log('process.env.NODE_ENV', process.env.NODE_ENV);
 console.log('SERVER_URL', process.env.SERVER_URL);
 
 if (process.env.NODE_ENV) {
+	// console.log('process.env.NODE_ENV 2', process.env.NODE_ENV);
     plugins.push(uglify({}, minify));
 }
+
 
 export default {
 	entry: 'src/app.ts',

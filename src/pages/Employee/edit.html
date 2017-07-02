@@ -19,6 +19,17 @@
                     />
             </Col>
         </Row>
+<!--        <Row>
+            <Col lg="12">
+                <Selectfield
+                    label="Gender"
+                    bind:value="item.gender"
+                    required={{true}}
+                    optionList={{genderList}}
+                    getOptionName={{x => x.gender}}
+                    />
+            </Col>
+        </Row> -->
         <Row>
             <Col lg="12">
                 <TextField
@@ -29,7 +40,7 @@
         </Row>
         <Row>
             <Col lg="12">
-                <SelectField label="Ddepartment"
+                <SelectField label="Department"
                     bind:value="item.departmentId"
                     required={{true}}
                     optionList={{departmentList}}
