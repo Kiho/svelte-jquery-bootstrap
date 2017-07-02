@@ -1,5 +1,5 @@
 {
-  "name": "svelte-ts-bootstrap",
+  "name": "svelte-typescript-bootstrap",
   "version": "1.0.0",
   "description": "Svelte TS Bootstrap",
   "files": [
@@ -61,7 +61,7 @@
     "rollup-watch": "^3.2.2",
     "route-parser": "0.0.5",
     "typescript": "~2.3.2",
-    "uglify-js": "github:mishoo/UglifyJS2#harmony"
+    "uglify-js": "^3.0.22"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
