@@ -15,6 +15,7 @@ Features:
 
 ## How to run
     npm install
+    npm run fix:route-parser
 
 For development:
 

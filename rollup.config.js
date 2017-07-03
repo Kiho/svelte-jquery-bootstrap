@@ -9,6 +9,10 @@ import async from 'rollup-plugin-async';
 import scss from 'rollup-plugin-scss';
 import { minify } from 'uglify-es';
 
+const nodeEnv = process.env.NODE_ENV || 'development';
+const appBasePath = process.env.APP_BASE_PATH || '';
+const serverUrl = process.env.SERVER_URL || '';
+
 const plugins = [ 
     typescript({typescript: tscompile}),
     nodeResolve({ 
@@ -26,17 +30,16 @@ const plugins = [
 	async(),
 	
 	replace({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-      'process.env.APP_BASE_PATH': JSON.stringify(process.env.APP_BASE_PATH || ''),
-	  'process.env.SERVER_URL': JSON.stringify(process.env.SERVER_URL || ''),
+      'process.env.NODE_ENV': JSON.stringify(nodeEnv),
+      'process.env.APP_BASE_PATH': JSON.stringify(appBasePath),
+	  'process.env.SERVER_URL': JSON.stringify(serverUrl),
     })
 ];
 
-console.log('process.env.NODE_ENV', process.env.NODE_ENV);
-console.log('SERVER_URL', process.env.SERVER_URL);
+console.log('NODE_ENV: ', nodeEnv);
+console.log('SERVER_URL: ', serverUrl);
 
-if (process.env.NODE_ENV) {
-	// console.log('process.env.NODE_ENV 2', process.env.NODE_ENV);
+if (process.env.NODE_ENV == 'production') {
     plugins.push(uglify({}, minify));
 }
 
