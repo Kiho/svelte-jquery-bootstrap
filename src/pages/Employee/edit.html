@@ -25,6 +25,7 @@
                     bind:value="item.gender"
                     required={{true}}
                     optionList={{genderList}}
+                    getOptionValue={{x => x}}
                     getOptionName={{x => x}} />
             </Col>
         </Row>
@@ -41,8 +42,7 @@
                 <SelectField label="Department"
                     bind:value="item.departmentId"
                     required={{true}}
-                    optionList={{departmentList}}
-                    getOptionName={{x => x.name}} />
+                    optionList={{departmentList}} />
             </Col>
         </Row>
         <Row>
@@ -99,7 +99,7 @@
                 entityType: 'employee',
                 id: 0,
                 departmentList: [],
-                genderList: [],
+                genderList: ["Male", "Female"],
             }
         },
         components: {

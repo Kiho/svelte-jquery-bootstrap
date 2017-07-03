@@ -37,7 +37,6 @@
         },
         data: () => grid.data({   
             departmentList: [],
-            genderList: ["Male", "Female"],
             tableName: '',
             url: API_URL + entityType,
             description: '',
@@ -52,10 +51,6 @@
             getDepartmentName: function (id) {
                 const department = this.get('departmentList').find(x => x.id === id);
                 return department ? department.name : '';
-            },
-            getGender: function (gender) {
-                const gender = this.get('genderList').find(x => x == x);
-                return gender;
             },
             initTable: function ($table) {
                 const options = {
