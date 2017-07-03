@@ -2,7 +2,7 @@
     <div class="col-md-2">
         <select class="form-control {{inputClass}}" bind:value="value" id={{uuid}} placeholder={{placeholder}}>
             {{#each optionList as opt}}
-            <option value={{opt.id}}>{{getOptionName(opt)}}</option>
+            <option value={{getOptionValue(opt)}}>{{getOptionName(opt)}}</option>
             {{/each}}
         </select>
     </div>
@@ -20,7 +20,8 @@
                 inputClass: '',
                 value: '',
                 optionList: [],
-                getOptionName: (x) => x.name
+                getOptionName: (x) => x.name,
+                getOptionValue: (x) => x.id,
             }
         }
     }

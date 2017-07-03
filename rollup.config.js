@@ -43,6 +43,7 @@ if (process.env.NODE_ENV == 'production') {
     plugins.push(uglify({}, minify));
 }
 
+
 export default {
 	entry: 'src/app.ts',
 	dest: 'server/public/bundle.js',
