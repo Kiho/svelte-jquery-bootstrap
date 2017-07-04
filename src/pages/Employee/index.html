@@ -19,7 +19,6 @@
 
 <script>
     import grid from '../../services/data-grid';
-    import Button from '../../components/Button.html';
     import ViewHeader from '../../components/ViewHeader.html';
     import Panel from '../../components/Panel.html';
     import { API_URL } from '../../api/server';
@@ -32,7 +31,6 @@
         components: {
             ViewHeader,
             Panel,
-            Button,
         },
         data: () => grid.data({   
             departmentList: [],

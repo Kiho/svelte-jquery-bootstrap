@@ -1,8 +1,8 @@
-<Button
+<button
   class="btn btn{{outline ? '-outline' : ''}}-{{color}}{{size ? ` btn-${size}` : ''}}{{block ? ' btn-block' : ''}}{{ active ? ' active' : ''}}{{ disabled ? ' disabled' : ''}} {{class}}"
   on:click="onClick(event)">
   {{yield}}
-</Button>
+</button>
 
 <script>
     export default {
