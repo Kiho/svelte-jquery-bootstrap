@@ -9,12 +9,12 @@ export default {
             dataSource: [],
         }, data);
     },
-    oncreate: async function (component: IDataGrid, service, lookups) { // life-cycle hook 
+    oncreate: async function (component: IDataTable, service, lookups) { // life-cycle hook 
         await service.getLookups(component, lookups)
         component.loadData();
         this.initialize(component);
     },
-    initialize(component: IDataGrid){
+    initialize(component: IDataTable){
         component.initHeader();
         const table = component.initTable(component.getTable()); 
         component.set({ tableInstance: table });     

@@ -1,0 +1,83 @@
+﻿    <Panel loader="bar" bind:loading="loading" filled={{false}}>
+        <DataGrid title="Demo" rows={{list}} columns={{columndata}}></DataGrid>
+        <a href="#customers/0" class="btn btn-default">New</a>
+    </Panel>
+
+<script>
+    import ViewHeader from '../../components/ViewHeader.html';
+    import Panel from '../../components/Panel.html';
+    import DataGrid from '../../components/DataGrid.html';
+    // import SparkLine from '../../components/SparkLine.html';
+    import { server } from '../../api';
+    import * as utils from '../../utils';
+    import Service from './service';
+
+    const service = new Service();
+    const entityType = 'customer';
+
+    export default {
+        components: {
+            ViewHeader,
+            Panel,
+            DataGrid,
+        },
+        data() {
+			return { 
+                list: [],
+                entityType: entityType,
+                header: {
+					title: 'Customers',
+					icon: 'sitemap',
+                    hidden: false,
+					viewPath: '<small><span class="c-white">Customers</span></small>'
+				},
+                columndata: [ // Array of objects
+                    {
+                        label: 'ID', // Column name
+                        field: 'id', // Field name from row
+                        numeric: true, // Affects sorting
+                        html: false, // Escapes output if false.
+                    }, {
+                        label: 'First Name', // Column name
+                        field: 'fname', // Field name from row
+                        numeric: false, // Affects sorting
+                        html: false, // Escapes output if false.
+                    }, {
+                        label: 'Last Name',
+                        field: 'lname',
+                        numeric: false,
+                        html: false,
+                    }, {
+                        label: 'Age',
+                        field: 'age',
+                        numeric: true,
+                        html: false,
+                    }, {
+                        label: 'State',
+                        field: 'state',
+                        numeric: false,
+                        html: false,
+                    }, {
+                        label: 'Action',
+                        field: 'button',
+                        numeric: false,
+                        html: true,
+                    }
+                ]                
+            }
+		},
+		oncreate() {
+            service.init(this);
+			service.initHeader(this);
+            service.getList(this);         
+		},
+		methods: {
+            createNew: function(e) {
+                window.location.href = '#customers';
+            } 
+		},
+        helpers: {
+            formatDate: utils.formatDate
+        }
+    }
+</script>

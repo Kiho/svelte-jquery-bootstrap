@@ -7,7 +7,7 @@ interface ObjectConstructor {
     assign(target: any, ...sources: any[]): any;
 }
 
-interface IDataGrid extends Svelte {
+interface IDataTable extends Svelte {
     initHeader: () => void;
     loadData: () => void;
     updateTable: () => void;

@@ -49,7 +49,9 @@ export default class AppService {
 
     initHeader(app: IApp) {			
         app.get('pageHeader').set(app.get('header'));
-        this.initValidator(app, app.refs.form);
+        if (app.refs && app.refs.form) {
+            this.initValidator(app, app.refs.form);
+        }
     }
     
     initValidator(app: IApp, form) {
