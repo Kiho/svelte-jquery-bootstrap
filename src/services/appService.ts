@@ -74,13 +74,13 @@ export default class AppService {
 
         try{
             startLoading(app);
-            data = await action(app.entityType);            
+            data = await action(app.entityType);       
         } catch(e) {
             alert('ERROR: ' + e.message);
         }
         
         let end = Date.now();
-        if (data) {
+        if (data) {            
             postAction(data);
         }
 
@@ -106,7 +106,10 @@ export default class AppService {
 
     async getList(app: IApp) {
         const action = () => server.getList(app.entityType);
-        const postAction = (list) => app.set({list});
+        const postAction = (list) => {
+            console.log('List from server', list);
+            app.set({list});
+        };
         this.serverAction(app, action, postAction);
     }
 
