@@ -1,7 +1,53 @@
 
 <div class="table-responsive">
-    <table id="customers"
-            ref="table"
+	<div class="table-header">
+		<span class="table-title">{{title}}</span>
+		<div class="actions">
+			{{#each customButtons as button, x}}
+			{{#if !button.hide}}
+			<a href="javascript:undefined"
+				class="waves-effect btn-flat nopadding"
+				on:click="button.onclick()">
+				<i class="material-icons">{{button.icon}}</i>
+			</a>
+			{{/if}}
+			{{/each}}
+			{{#if printable}}
+			<a href="javascript:undefined"
+				class="waves-effect btn-flat nopadding"
+				on:click="print()">
+				<i class="material-icons">print</i>
+			</a>
+			{{/if}}
+			{{#if exportable}}
+			<a href="javascript:undefined"
+				class="waves-effect btn-flat nopadding"
+				v-if="this.exportable"
+				on:click="exportExcel()">
+				<i class="material-icons">description</i>
+			</a>
+			{{/if}}
+			{{#if searchable}}
+			<a href="javascript:undefined"
+				class="waves-effect btn-flat nopadding"
+				on:click="search()">
+				<i class="material-icons">search</i>
+			</a>
+			{{/if}}
+		</div>
+	</div>
+	{{#if searching}}
+	<div>
+		<div id="search-input-container">
+			<label>
+				<input type="search" id="search-input" class="form-control" placeholder="Search data"
+					bind:value="searchInput">
+			</label>
+		</div>
+	</div>
+	{{/if}}
+
+    <table  ref="table"
             class="table table-striped table-hover">
         <thead>
             <tr>
@@ -35,8 +81,6 @@
             {{/each}}
         </tbody>
     </table>
-</div>
-
 {{#if paginate}}
 	<div class="table-footer">
 		<div class="datatable-length">
@@ -71,6 +115,7 @@
 		</div>
 	</div>
 {{/if}}
+</div>
 
 <script>
 	import Fuse from 'fuse.js';
@@ -350,8 +395,9 @@
 
 	#search-input {
 		margin: 0;
-		border: transparent 0 !important;
-		/*height: 48px;
+		border: transparent 0 !important;		
+		/*
+		height: 48px;
 		color: rgba(0, 0, 0, .84);*/
 	}
 
