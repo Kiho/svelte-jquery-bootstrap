@@ -7,7 +7,7 @@
 			{{#if !button.hide}}
 			<a href="javascript:undefined"
 				class="waves-effect btn-flat nopadding"
-				on:click="button.onclick()">
+				on:click="this.click()">
 				<i class="material-icons">{{button.icon}}</i>
 			</a>
 			{{/if}}
@@ -163,10 +163,7 @@
 			defaultPerPage: null,
 			sortable: true,
 			searchable: true,
-			exactSearch: {
-				type: Boolean,
-				default: false
-			},
+			exactSearch: false,
 			paginate: true,
 			exportable: true,
 			printable: true,			
@@ -212,6 +209,10 @@
 				}
 				this.set({sortType, sortColumn});
 				this.setPage(true, currentPage);
+			},
+
+			searchData(searchText) {
+				this.processRows(this.get('rows'), searchText);
 			},
 
 			search: function(e) {
@@ -266,7 +267,7 @@
 					table += '</th>';
 				}
 				table += '</tr>';
-
+ 
 				table += '</thead><tbody>';
 				
 				for (let i = 0; i < rows.length; i++) {
@@ -295,11 +296,14 @@
 				console.log('paginatedRows', paginatedRows);
 			},
 
-			processRows: function(rows) {
+			processRows: function(rows, searchText) {
 				let computedRows = rows;				
 				const { currentPage, columns,
 					sortable, sortColumn, sortType, 
 					searching, searchInput, exactSearch } = this.get();
+				if (!searchText) {
+					searchText = searchInput;
+				}	
 				if (sortable !== false && sortColumn > -1 && columns)
 					computedRows = computedRows.sort((x,y) => {
 						if (!columns[sortColumn])
@@ -321,7 +325,7 @@
 						return (x < y ? -1 : (x > y ? 1 : 0)) * (sortType === 'desc' ? -1 : 1);
 					})
 
-				if (searching && searchInput) {
+				if (searching && searchText) {
 					const searchConfig = { keys: columns.map(c => c.field) }
 
 					// Enable searching of numbers (non-string)
@@ -332,13 +336,13 @@
 					    	return obj[path];
 					}
 
-					if(exactSearch){
+					if (exactSearch) {
 						//return only exact matches
 						searchConfig.threshold = 0,
 						searchConfig.distance = 0
 					}
 
-					computedRows = (new Fuse(computedRows, searchConfig)).search(searchInput);
+					computedRows = (new Fuse(computedRows, searchConfig)).search(searchText);
 				}
 
 				this.set({processedRows: computedRows});
@@ -378,7 +382,10 @@
 		oncreate: function() {
 			this.observe('rows', rows => {
 				this.processRows(rows);
-            });			
+            });
+			this.observe('searchInput', searchInput => {
+				this.searchData(searchInput);
+			});				
 			this.setPerPageOptions();
 		}
 	}
