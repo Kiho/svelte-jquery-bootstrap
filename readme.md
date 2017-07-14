@@ -10,7 +10,7 @@ Features:
 
 * [Bootstrap Template](https://github.com/puikinsh/gentelella)
 * Uses DataTables as Grid
-* SCSS compilation
+* Svelte Data Table - Converted from vue-materialize-datatable
 * Basic Form Validation
 
 ## How to run

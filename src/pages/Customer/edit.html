@@ -3,7 +3,7 @@
         <Row>
             <Col lg="12">
                 <TextField
-                    label="Department #"
+                    label="Customer #"
                     readOnly={true}
                     bind:value="item.id"
                     md="1"
@@ -13,22 +13,32 @@
         <Row>
             <Col lg="12">
                 <TextField
-                    label="Department Name"
+                    label="First Name"
                     validate={{['length-range=6']}} 
                     required={true}
-                    bind:value="item.name"
+                    bind:value="item.fname"
                     />
             </Col>
         </Row>
         <Row>
             <Col lg="12">
                 <TextField
-                    label="Group Name"
+                    label="Last Name"
                     required={true}
-                    bind:value="item.groupName"
+                    bind:value="item.lname"
                     />
             </Col>
-        </Row>       
+        </Row>
+        <Row>
+            <Col lg="12">
+                <TextField
+                    type="number"
+                    label="Age"
+                    required={{true}}
+                    bind:value="item.age"
+                    />
+            </Col>
+        </Row>     
         <Row className="formfoot">
             <Col lg="12">
                 <Col md="1" />
@@ -64,14 +74,14 @@
             return { 
                 item: {},
                 header: {
-					title: 'Department',
+					title: 'Customer',
 					icon: 'home',
                     hidden: false,
-					viewPath: '<small><span class="c-white">Department</span></small>'
+					viewPath: '<small><span class="c-white">Customer</span></small>'
 				},
-                entityType: 'department',
+                entityType: 'customer',
                 id: 0,
-                departmentList: [],
+                customerList: [],
                 employeeList: []
             }
         },
