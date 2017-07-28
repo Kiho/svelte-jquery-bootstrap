@@ -12,8 +12,8 @@
     import * as utils from '../../utils';
     import Service from './service';
 
-    const service = new Service();
     const entityType = 'customer';
+    const service = new Service(entityType + ' index');
 
     export default {
         components: {

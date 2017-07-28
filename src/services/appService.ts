@@ -42,7 +42,11 @@ export interface IApp {
 export default class AppService {
     validator;
 
-    init(app: IApp) {
+    constructor(private _page?: string) {
+        console.log('AppService: constructor()', _page);
+    }
+
+    init(app: IApp) {        
         app.entityType = app.get('entityType');
         app.id = app.get('id');
     } 
@@ -52,6 +56,7 @@ export default class AppService {
         if (app.refs && app.refs.form) {
             this.initValidator(app, app.refs.form);
         }
+        console.log('AppService: init()', this._page);
     }
     
     initValidator(app: IApp, form) {

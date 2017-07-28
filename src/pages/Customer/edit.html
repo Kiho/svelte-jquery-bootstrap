@@ -67,7 +67,8 @@
     import Panel from '../../components/Panel.html';
     import Service from './service';
 
-    const service = new Service();
+    const entityType = 'customer';
+    const service = new Service(entityType + ' edit');
 
     export default {
         data () {
