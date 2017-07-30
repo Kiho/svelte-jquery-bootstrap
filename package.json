@@ -19,7 +19,7 @@
     "serve-web": "live-server --cors --port=8081 --proxy=/api:http://127.0.0.1:5000/api --watch=./server/public/bundle.js,./server/public/bundle.css,./server/public/index.html server/public",
     "serve-api": "node server/index.js",
     "serve": "npm run build && npm run serve-api",
-    "start": "npm-run-all --parallel watch serve-web"
+    "start": "npm-run-all --parallel serve-api watch serve-web"
   },
   "keywords": [
     "svelte",
