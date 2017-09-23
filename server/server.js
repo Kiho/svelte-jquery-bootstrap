@@ -6,7 +6,7 @@ var package = require('../package.json');
 var config = package.config;
 var app = express();
 
-app.set('port', (process.env.PORT || 5000));
+app.set('port', (process.env.PORT || 5011));
 
 // app.set('view engine', 'jade');
 // app.set('views', path.join(__dirname, 'views'));
