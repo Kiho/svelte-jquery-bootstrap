@@ -3,6 +3,6 @@ import './assets/scss/custom.scss';
 import './assets/scss/app.scss';
 
 const app = new App({
-	target: document.querySelector('application'),
+	target: document.querySelector('#content'),
 })
 

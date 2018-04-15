@@ -1,5 +1,5 @@
 import Route from 'route-parser';
-import history from './history';
+import history from './whistory';
 
 // disable ts wanrning
 declare var process;

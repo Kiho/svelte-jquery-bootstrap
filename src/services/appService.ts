@@ -1,6 +1,6 @@
 import { server } from '../api';
 import * as utils from '../utils';
-import history from '../services/history';
+import history from '../services/whistory';
 import { EntityType, createNew } from '../model';
 import ProgressBar from '../components/ProgressBar.html';
 
