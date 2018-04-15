@@ -16,7 +16,7 @@
     "clean": "rimraf ./server/public",
     "fix:route-parser": "replace-in-file /_token_stack:/ //_token_stack: node_modules/route-parser/lib/route/compiled-grammar.js --isRegex",
     "watch": "rollup -c -w",
-    "serve-web": "live-server --cors --port=8081 --proxy=/api:http://127.0.0.1:5011/api --watch=./server/public/bundle.js,./server/public/bundle.css,./server/public/index.html server/public",
+    "serve-web": "live-server --cors --port=8081 --proxy=/api:http://127.0.0.1:5011/api --watch=./server/public/app.js,./server/public/app.css,./server/public/index.html server/public",
     "serve-api": "node server/index.js",
     "serve": "npm run build && npm run serve-api",
     "start": "npm-run-all --parallel serve-api watch serve-web"
