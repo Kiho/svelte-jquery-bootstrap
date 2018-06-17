@@ -1,9 +1,9 @@
 <ul class="nav side-menu">
-    {{#each menu as item}}
-    <li class='{{ route === item.href ? " active" : "" }}'>
-        <Link to='{{ item.href }}'><i class='fa fa-{{ item.icon }}'></i>{{item.text}}</Link>
+    {#each menu as item}
+    <li class='{ route === item.href ? " active" : "" }'>
+        <Link to='{ item.href }'><i class='fa fa-{ item.icon }'></i>{item.text}</Link>
     </li>
-    {{/each}}
+    {/each}
 </ul>
 
 <script>
@@ -21,7 +21,7 @@
             Link
         },
         computed: {
-            route: location => {
+            route: ({ location }) => {
                 const pathname = getPathName(location.pathname);
                 return pathname;
             }

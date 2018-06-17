@@ -32,7 +32,7 @@ const loaded = (intervalTime, start, end, app: IApp, complete: (x: IApp) => void
 }
 
 export interface IApp {
-    get: (string) => any;
+    get: () => any;
     set: (object) => void;
     entityType: EntityType;
     id: number;
@@ -46,13 +46,14 @@ export default class AppService {
         console.log('AppService: constructor()', _page);
     }
 
-    init(app: IApp) {        
-        app.entityType = app.get('entityType');
-        app.id = app.get('id');
+    init(app: IApp) { 
+        const {id, entityType} = app.get();       
+        app.entityType = entityType;
+        app.id = id;
     } 
 
     initHeader(app: IApp) {			
-        app.get('pageHeader').set(app.get('header'));
+        app.get().pageHeader.set(app.get().header);
         if (app.refs && app.refs.form) {
             this.initValidator(app, app.refs.form);
         }
@@ -89,7 +90,7 @@ export default class AppService {
             postAction(data);
         }
 
-        const intervalTime = progress.get('intervalTime');
+        const {intervalTime} = progress.get();
         loaded(intervalTime, start, end, app, completeLoading);
         return data;
     }
@@ -130,7 +131,7 @@ export default class AppService {
     async submit(event, app: IApp) {
         event.preventDefault();
         const form = app.refs.form;
-        const data = app.get('item');
+        const data = app.get().item;
 
         const validatorResult = validator.checkAll($(form));
         if (!validatorResult.valid) {

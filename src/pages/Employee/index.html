@@ -1,4 +1,4 @@
-﻿<Panel title={{tableName}} description={{description}} filled={{true}} on:onLoadData='loadData(event)' toolbar={{false}} >
+﻿<Panel title={tableName} description={description} filled={true} on:onLoadData='loadData(event)' toolbar={false} >
     <div class="table-responsive">
         <table id="employees"
             ref:rtable
@@ -24,6 +24,7 @@
     import Panel from '../../components/Panel.html';
     import { API_URL } from '../../api/server';
     import Service from './service';
+    import { observe } from 'svelte-extras';
 
     const service = new Service();
     const entityType = 'employee';
@@ -46,8 +47,9 @@
             }
         }),
         methods: {
+            observe,
             getDepartmentName: function (id) {
-                const department = this.get('departmentList').find(x => x.id === id);
+                const department = this.get().departmentList.find(x => x.id === id);
                 return department ? department.name : '';
             },
             initTable: function ($table) {
@@ -55,7 +57,7 @@
                     processing: true,
                     // select: true,
                     searching: true,
-                    data: this.get('dataSource'),
+                    data: this.get().dataSource,
                     columns: [
                         { data: 'id' },
                         { data: 'name' },

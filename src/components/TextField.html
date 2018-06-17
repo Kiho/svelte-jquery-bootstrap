@@ -1,24 +1,25 @@
-<div class="form-group {{class}} {{validate ? 'field' : ''}}"><label for={{uuid}} class="col-md-1 control-label">{{label}}</label>
+<div class="form-group {class} {validate ? 'field' : ''}"><label for={uuid} class="col-md-1 control-label">{label}</label>
     <div class="col-md-2">
-        {{#if type=='number'}}
+        {#if type=='number'}
         <input type='number' ref:input 
-            class="form-control {{inputClass}}" id={{uuid}} 
-            placeholder={{placeholder}} 
+            class="form-control {inputClass}" id={uuid} 
+            placeholder={placeholder} 
             bind:value="value" 
-            readonly="{{ readOnly ? 'readonly' : '' }}"            
+            readonly="{ readOnly ? 'readonly' : '' }"            
             />
-        {{else}}
+        {:else}
         <input type='text' ref:input 
-            class="form-control {{inputClass}}" id={{uuid}} 
-            placeholder={{placeholder}} 
+            class="form-control {inputClass}" id={uuid} 
+            placeholder={placeholder} 
             bind:value="value" 
-            readonly="{{ readOnly ? 'readonly' : '' }}"            
+            readonly="{ readOnly ? 'readonly' : '' }"            
             />
-        {{/if}}    
+        {/if}    
     </div>
 </div>
 
 <script>
+    import { observe } from 'svelte-extras';
     import { makeUniqueId } from '../utils'
 
     export default {
@@ -43,14 +44,15 @@
             this.observe('required', required => {
                 element.required = required;
             });
-            element.required = this.get('required');
-            const pattern = this.get('pattern');
+            element.required = this.get().required;
+            const { pattern, validate } = this.get();
             if (pattern) {
                 element.setAttribute('pattern', pattern);
             }
-            this.initValidators(element, this.get('validate'));
+            this.initValidators(element, validate);
         },
         methods: {
+            observe,
             initValidators: function (element, data) {
                 if (data && data.length > 0) {
                     data.forEach(function(attr) {

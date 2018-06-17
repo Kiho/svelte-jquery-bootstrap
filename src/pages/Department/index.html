@@ -1,4 +1,4 @@
-﻿    <Panel loader="bar" filled={{true}}>
+﻿    <Panel loader="bar" filled={true}>
         <div class="row">
             <div class="col-lg-6">
                 <div class="input-group m-b-xs m-t-xs">
@@ -25,7 +25,7 @@
         </div>
     </Panel>
 
-    <Panel loader="bar" bind:loading="loading" filled={{false}}>
+    <Panel loader="bar" bind:loading="loading" filled={false}>
         <div class="table-responsive">
             <table id="projects"
                 ref:rtable
@@ -39,14 +39,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{#each list as department}}
+                    {#each list as department}
                     <tr>
-                        <td>{{department.id}}</td>
-                        <td>{{department.name}}</td>
-                        <td>{{department.groupName}}</td>
-                        <td><a href="#departments/{{department.id}}" class="btn btn-default btn-xs">Edit</a></td>
+                        <td>{department.id}</td>
+                        <td>{department.name}</td>
+                        <td>{department.groupName}</td>
+                        <td><a href="#departments/{department.id}" class="btn btn-default btn-xs">Edit</a></td>
                     </tr>
-                    {{/each}}
+                    {/each}
                 </tbody>
             </table>
         </div>

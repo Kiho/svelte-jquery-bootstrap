@@ -1,5 +1,5 @@
-<div class="{{classes}} {{class}}">
-  {{yield}}
+<div class="{classes} {class}">
+  <slot></slot>
 </div>
 
 <script>
@@ -28,7 +28,7 @@
       }
     },
     computed: {
-      classes(widths, xs, sm, md, lg, xl) {
+      classes({ widths, xs, sm, md, lg, xl }) {
         const colClasses = [];
         const props = {
           xs,

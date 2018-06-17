@@ -1,10 +1,10 @@
-{{#if width && widthPercent}}
-<div class="svelte-progress-bar {{barClass}}" style="width: {{widthPercent}}%; {{barColorStyle}}">
-	{{#if running}}
-	<div class="svelte-progress-bar-leader" style="{{leaderColorStyle}}"></div>
-	{{/if}}
+{#if width && widthPercent}
+<div class="svelte-progress-bar {barClass}" style="width: {widthPercent}%; {barColorStyle}">
+	{#if running}
+	<div class="svelte-progress-bar-leader" style="{leaderColorStyle}"></div>
+	{/if}
 </div>
-{{/if}}
+{/if}
 
 <script>
 function getIncrement(number) {
@@ -33,15 +33,15 @@ export default {
 			this.continue()
 		},
 		reset() {
-			const startingWidth = this.get('minimum')
+			const startingWidth = this.get().minimum
 			this.set({
 				width: startingWidth,
 				running: true
 			})
 		},
 		continue() {
-			const maximumWidth = this.get('maximum')
-			const intervalTime = this.get('intervalTime')
+			const maximumWidth = this.get().maximum
+			const intervalTime = this.get().intervalTime
 
 			if (updater) {
 				// prevent multiple intervals by clearing before making
@@ -49,9 +49,9 @@ export default {
 			}
 			this.set({ running: true })
 			updater = setInterval(() => {
-				let value = this.get('width')
+				let value = this.get().width
 
-				const stepSizes = this.get('stepSizes')
+				const stepSizes = this.get().stepSizes
 				const randomStep = stepSizes[Math.floor(Math.random() * stepSizes.length)]
 				const step = getIncrement(value) + randomStep
 				if (value < maximumWidth) {
@@ -75,7 +75,7 @@ export default {
 				width: 1,
 				running: false
 			})
-			const settleTime = this.get('settleTime')
+			const settleTime = this.get().settleTime
 			setTimeout(() => {
 				this.set({
 					completed: true
@@ -90,16 +90,16 @@ export default {
 		}
 	},
 	computed: {
-		widthPercent(width) {
+		widthPercent({ width }) {
 			return width * 100 || undefined
 		},
-		barClass(completed) {
+		barClass({ completed }) {
 			return completed ? 'svelte-progress-bar-hiding' : ''
 		},
-		barColorStyle(color) {
+		barColorStyle({ color }) {
 			return color && `background-color: ${color};` || ''
 		},
-		leaderColorStyle(color) {
+		leaderColorStyle({ color }) {
 			// the box shadow of the leader bar uses `color` to set its shadow color
 			return color && `background-color: ${color}; color: ${color};` || ''
 		}

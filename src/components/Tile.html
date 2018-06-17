@@ -1,12 +1,12 @@
 <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-    <span class="count_top"><i class="fa fa-{{icon}}"></i> {{title}}</span>
-    <div class="count {{class}}">{{count}}</div>
+    <span class="count_top"><i class="fa fa-{icon}"></i> {title}</span>
+    <div class="count {class}">{count}</div>
     <span class="count_bottom">
-        <i class={{percentColor}}>
-        {{#if sort}}
-            <i class="fa fa-sort-{{sort}}"></i>
-        {{/if}}    
-        {{percent}}% </i> {{text}}
+        <i class={percentColor}>
+        {#if sort}
+            <i class="fa fa-sort-{sort}"></i>
+        {/if}    
+        {percent}% </i> {text}
     </span>
 </div>
 
@@ -25,7 +25,7 @@
             }
         },
         oncreate() {
-            const sort = this.get('sort');
+            const {sort} = this.get();
             this.set({percentColor: sort == 'desc' ? 'red' : 'green'});        
         }
     };

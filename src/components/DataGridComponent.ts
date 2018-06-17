@@ -35,7 +35,7 @@ export class DataGridComponent {
     setPage(reload, currentPage, offset = 0) {
         if (reload) {
             this.svt.set({currentPage: currentPage + offset});
-            this.processRows(this.svt.get('rows'));
+            this.processRows(this.svt.get().rows);
         }
     }
 
@@ -71,15 +71,15 @@ export class DataGridComponent {
     }
 
     searchData(searchText) {
-        this.processRows(this.svt.get('rows'), searchText);
+        this.processRows(this.svt.get().rows, searchText);
     }
 
     search = (e) => {
-        this.svt.set({searching: !this.svt.get('searching')});
+        this.svt.set({searching: !this.svt.get().searching});
     }
 
     click = (row) => {
-        if(!this.svt.get('clickable')){
+        if(!this.svt.get().clickable){
             return;
         }
 

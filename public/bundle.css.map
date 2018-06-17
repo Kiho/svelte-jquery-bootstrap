@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "file": "app.css",
+  "file": "bundle.css",
   "sources": [
     "..\\src\\components\\ProgressBar.html",
     "..\\src\\components\\DataGrid.html"

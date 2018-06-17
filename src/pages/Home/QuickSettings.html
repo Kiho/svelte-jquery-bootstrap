@@ -50,7 +50,7 @@
 		},
 		oncreate() {
             const element = this.refs.gauge;
-            const settings = this.get('settings');
+            const {settings} = this.get();
 			const gauge = new Gauge(element).setOptions(settings);
             
             gauge.maxValue = 6000;

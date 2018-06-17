@@ -5,16 +5,16 @@
     </div>
 
     <div class="col-md-12 col-sm-12 col-xs-6" ref:progress>
-        {{#each settings.data as row}}
+        {#each settings.data as row}
         <div>
-            <p>{{row.title}}</p>
+            <p>{row.title}</p>
             <div class="">
             <div class="progress progress_sm" style="width: 76%;">
-                <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="{{row.percent}}"></div>
+                <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="{row.percent}"></div>
             </div>
             </div>
         </div>
-        {{/each}}
+        {/each}
     </div>
 </div>
 

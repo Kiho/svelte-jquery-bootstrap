@@ -1,42 +1,42 @@
 
 <div class="table-responsive">
 	<div class="table-header">
-		<span class="table-title">{{title}}</span>
+		<span class="table-title">{title}</span>
 		<div class="actions">
-			{{#each customButtons as button, x}}
-			{{#if !button.hide}}
+			{#each customButtons as button, x}
+			{#if !button.hide}
 			<a href="javascript:undefined"
 				class="waves-effect btn-flat nopadding"
 				on:click="click()">
-				<i class="material-icons">{{button.icon}}</i>
+				<i class="material-icons">{button.icon}</i>
 			</a>
-			{{/if}}
-			{{/each}}
-			{{#if printable}}
+			{/if}
+			{/each}
+			{#if printable}
 			<a href="javascript:undefined"
 				class="waves-effect btn-flat nopadding"
 				on:click="print()">
 				<i class="material-icons">print</i>
 			</a>
-			{{/if}}
-			{{#if exportable}}
+			{/if}
+			{#if exportable}
 			<a href="javascript:undefined"
 				class="waves-effect btn-flat nopadding"
 				v-if="this.exportable"
 				on:click="exportExcel()">
 				<i class="material-icons">description</i>
 			</a>
-			{{/if}}
-			{{#if searchable}}
+			{/if}
+			{#if searchable}
 			<a href="javascript:undefined"
 				class="waves-effect btn-flat nopadding"
 				on:click="search()">
 				<i class="material-icons">search</i>
 			</a>
-			{{/if}}
+			{/if}
 		</div>
 	</div>
-	{{#if searching}}
+	{#if searching}
 	<div>
 		<div id="search-input-container">
 			<label>
@@ -45,59 +45,59 @@
 			</label>
 		</div>
 	</div>
-	{{/if}}
+	{/if}
 
     <table  ref="table"
             class="table table-striped table-hover">
         <thead>
             <tr>
-                {{#each columns as column, x}}
+                {#each columns as column, x}
                 <th on:click="sort(x)"
-                    class="{{ sortable ? 'sorting ' : ''}}
-                        {{ sortColumn === x ?
+                    class="{ sortable ? 'sorting ' : ''}
+                        { sortColumn === x ?
                             (sortType === 'desc' ? 'sorting-desc' : 'sorting-asc')
-                            : '' }}
-                        {{ column.numeric ? ' numeric' : ''}}"
-                    style="width: {{ column.width ? column.width : 'auto' }}">
-                    {{column.label}}
+                            : '' }
+                        { column.numeric ? ' numeric' : ''}"
+                    style="width: { column.width ? column.width : 'auto' }">
+                    {column.label}
                 </th>
-                {{/each}}
+                {/each}
             </tr>
         </thead>
 
         <tbody>
-            {{#each paginated as row, y}}
-                <tr class="{{ clickable ? 'clickable' : '' }}" on:click="click(row)">
-                    {{#each columns as column, x}}
+            {#each paginated as row, y}
+                <tr class="{ clickable ? 'clickable' : '' }" on:click="click(row)">
+                    {#each columns as column, x}
                         <td>
-                            {{#if column.html}}
-                                {{{collect(row, column.field)}}}
-                            {{else}}
-                                {{ collect(row, column.field) }}   
-                            {{/if}}     
+                            {#if column.html}
+                                {@html collect(row, column.field)}
+                            {:else}
+                                { collect(row, column.field) }   
+                            {/if}     
                         </td>    
-                    {{/each}}
+                    {/each}
                 </tr>
-            {{/each}}
+            {/each}
         </tbody>
     </table>
-{{#if paginate}}
+{#if paginate}
 	<div class="table-footer">
 		<div class="datatable-length">
 			<label>
 				<span>Rows per page:</span>
 				<select class="browser-default" on:change="onTableLength((event))">
-					{{#each perPageOptions as option, x}}
-						<option value={{option}} selected={{option == currentPerPage}}>
-						{{ option === -1 ? 'All' : option }}
+					{#each perPageOptions as option, x}
+						<option value={option} selected={option == currentPerPage}>
+						{ option === -1 ? 'All' : option }
 						</option>
-					{{/each}}
+					{/each}
 				</select>
 			</label>
 		</div>
 		<div class="datatable-info">
-			{{(currentPage - 1) * currentPerPage ? (currentPage - 1) * currentPerPage : 1}}
-				-{{Math.min(processedRows.length, currentPerPage * currentPage)}} of {{processedRows.length}}
+			{(currentPage - 1) * currentPerPage ? (currentPage - 1) * currentPerPage : 1}
+				-{Math.min(processedRows.length, currentPerPage * currentPage)} of {processedRows.length}
 		</div>
 		<div>
 			<ul class="material-pagination">
@@ -114,12 +114,13 @@
 			</ul>
 		</div>
 	</div>
-{{/if}}
+{/if}
 </div>
 
 <script>
 	import Fuse from 'fuse.js';
 	import { DataGridComponent, collect } from './DataGridComponent';
+	import { observe } from 'svelte-extras';
 
 	const dataGrid = new DataGridComponent();
 
@@ -151,6 +152,7 @@
 		}),
 
 		methods: {
+			observe,
 			nextPage: dataGrid.nextPage,
 			previousPage: dataGrid.previousPage,
 			onTableLength: dataGrid.onTableLength,

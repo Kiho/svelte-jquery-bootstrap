@@ -1,33 +1,33 @@
-<div class="col-{{col}}">
-    <div class="panel {{filled ? ' panel-filled' : ''}}{{loader && loading ? ' ld-loading' : ''}}">
+<div class="col-{col}">
+    <div class="panel {filled ? ' panel-filled' : ''}{loader && loading ? ' ld-loading' : ''}">
         <div class="loader" >
-            <div class="loader-{{loader}}"></div>
+            <div class="loader-{loader}"></div>
         </div>
-        {{ #if tools || title }}
+        { #if tools || title }
         <div class="panel-heading">
-            {{ #if tools }}
+            { #if tools }
             <div class="panel-tools">
                 <a class="panel-toggle"><i class="fa fa-chevron-up"></i></a>
                 <a class="panel-close"><i class="fa fa-times"></i></a>
             </div>
-            {{ /if }}
-            {{ title }}
+            { /if }
+            { title }
         </div>
-        {{ /if }}
+        { /if }
         <div class="panel-body">
-            {{ #if description }}
+            { #if description }
             <p>
-                {{description}}
+                {description}
             </p>
-            {{ /if }}
-            {{ yield }}
+            { /if }
+            <slot></slot>
         </div>
     </div>
-    {{ #if toolbar }}
+    { #if toolbar }
     <div class="btn-toolbar" ref="toolbar">
         <Button color="primary" on:click='fire("onLoadData", event)'>Load</Button>
     </div>
-    {{ /if }}
+    { /if }
 </div>
 
 <script>

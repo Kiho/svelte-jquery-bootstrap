@@ -64,7 +64,8 @@
     "rollup-plugin-uglify": "^2.0.1",
     "rollup-watch": "^4.3.1",
     "route-parser": "0.0.5",
-    "svelte": "^1.60.2",
+    "svelte": "^2.7.2",
+    "svelte-extras": "^2.0.2",
     "typescript": "^2.8.1",
     "uglify-es": "^3.0.22"
   },

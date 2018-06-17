@@ -3,7 +3,7 @@
         <div class="content col-md-4">
             <h1><strong>This is the about page</strong></h1>
 
-            <p>Make sure to follow the project on <a class="repo-link" href="{{repo}}">GitHub</a> to stay up to date with the latest releases, or contribute to the broject by opening an issue or making a pull-request!</p>
+            <p>Make sure to follow the project on <a class="repo-link" href="{repo}">GitHub</a> to stay up to date with the latest releases, or contribute to the broject by opening an issue or making a pull-request!</p>
         </div>
     </div>
 </div>
@@ -33,7 +33,8 @@
 		},
 		methods: {
 			initHeader() {
-				this.get('pageHeader').set(this.get('headerData'));
+				const {pageHeader, headerData} = this.get();
+				pageHeader.set(headerData);
 			}			
 		}
 	}

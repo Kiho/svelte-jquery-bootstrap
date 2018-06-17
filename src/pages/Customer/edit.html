@@ -1,10 +1,10 @@
-<Panel loader="bar" bind:loading="loading" filled={{true}}>
+<Panel loader="bar" bind:loading="loading" filled={true}>
     <form class="form-horizontal" ref:form> 
         <Row>
             <Col lg="12">
                 <TextField
                     label="Customer #"
-                    readOnly={true}
+                    readOnly=&#123;true}
                     bind:value="item.id"
                     md="1"
                     />
@@ -14,8 +14,8 @@
             <Col lg="12">
                 <TextField
                     label="First Name"
-                    validate={{['length-range=6']}} 
-                    required={true}
+                    validate={['length-range=6']} 
+                    required=&#123;true}
                     bind:value="item.fname"
                     />
             </Col>
@@ -24,7 +24,7 @@
             <Col lg="12">
                 <TextField
                     label="Last Name"
-                    required={true}
+                    required=&#123;true}
                     bind:value="item.lname"
                     />
             </Col>
@@ -34,7 +34,7 @@
                 <TextField
                     type="number"
                     label="Age"
-                    required={{true}}
+                    required={true}
                     bind:value="item.age"
                     />
             </Col>

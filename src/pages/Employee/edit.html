@@ -1,10 +1,10 @@
-<Panel loader="bar" bind:loading="loading" filled={{true}}>
+<Panel loader="bar" bind:loading="loading" filled={true}>
     <form class="form-horizontal" ref:form>   
         <Row>
             <Col lg="12">
                 <TextField
                     label="Employee #"
-                    readOnly={true}
+                    readOnly=&#123;true}
                     bind:value="item.id"
                     />
             </Col>
@@ -13,8 +13,8 @@
             <Col lg="12">
                 <TextField
                     label="Employee Name"
-                    validate={{['length-range=6']}} 
-                    required={{true}}
+                    validate={['length-range=6']} 
+                    required={true}
                     bind:value="item.name"
                     />
             </Col>
@@ -23,10 +23,10 @@
             <Col lg="12">
                 <SelectField label="Gender"
                     bind:value="item.gender"
-                    required={{true}}
-                    optionList={{genderList}}
-                    getOptionValue={{x => x}}
-                    getOptionName={{x => x}} />
+                    required={true}
+                    optionList={genderList}
+                    getOptionValue={x => x}
+                    getOptionName={x => x} />
             </Col>
         </Row>
         <Row>
@@ -41,8 +41,8 @@
             <Col lg="12">
                 <SelectField label="Department"
                     bind:value="item.departmentId"
-                    required={{true}}
-                    optionList={{departmentList}} />
+                    required={true}
+                    optionList={departmentList} />
             </Col>
         </Row>
         <Row>
@@ -50,8 +50,8 @@
                 <TextField
                     type="number"
                     label="Rate"
-                    required={{true}}
-                    validate={{['minmax=10,100']}}
+                    required={true}
+                    validate={['minmax=10,100']}
                     bind:value="item.rate"
                     />
             </Col>

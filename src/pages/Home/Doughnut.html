@@ -18,14 +18,14 @@
         </td>
         <td>
             <table class="tile_info">
-                {{#each settings.data.labels as label, y}}
+                {#each settings.data.labels as label, y}
                 <tr>
                     <td>
-                        <p><i class="fa fa-square {{dataset.color[y]}}"></i>{{label}} </p>
+                        <p><i class="fa fa-square {dataset.color[y]}"></i>{label} </p>
                     </td>
-                    <td>{{dataset.data[y]}}%</td>
+                    <td>{dataset.data[y]}%</td>
                 </tr>
-                {{/each}}
+                {/each}
             </table>
         </td>
     </tr>
@@ -77,12 +77,12 @@
 		},
 		oncreate() {            
             const element = this.refs.canvas;
-            const settings = this.get('settings');
+            const {settings} = this.get();
             this.set({dataset: settings.data.datasets[0]});
             this.set({ instance: new Chart($(element), settings) })
         },
         ondestroy: function () {
-            const instance = this.get('instance');
+            const {instance} = this.get();
             instance.destroy();
             $(this.refs.canvas).empty();
         },

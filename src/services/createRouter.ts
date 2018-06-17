@@ -46,7 +46,7 @@ export default (routes) => {
         }
 
         if (content) {
-            content.teardown();
+            content.destroy();
             content = undefined;
         }
 
@@ -70,7 +70,7 @@ export default (routes) => {
             unlisten = history.listen(handleRouteChange);
             handleRouteChange((history as any).location);
         },
-        teardown: () => {
+        destory: () => {
             if (unlisten) {
                 unlisten();
                 unlisten = undefined;

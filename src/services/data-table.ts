@@ -1,6 +1,5 @@
 ﻿import { server } from '../api';
 import toastr from '../common/toastr';
-import AppService from './appService';
 
 export default {
     data: function (data) { // default data: https://svelte.technology/guide#default-data
@@ -28,15 +27,15 @@ export default {
         this.getTable().remove(); // remove jQuery object
     },
     loadData: async function () {
-        const json = await server.doFetch(this.get('url'));
+        const json = await server.doFetch(this.get().url);
         this.set({ dataSource: json });
-        toastr.info(`Retrieved data from ${this.get('url')}`, 'Info');
+        toastr.info(`Retrieved data from ${this.get().url}`, 'Info');
     },
     updateTable: function () {
-        const table = this.get('tableInstance'); // https://svelte.technology/guide#component-get-key-
+        const table = this.get().tableInstance; // https://svelte.technology/guide#component-get-key-
         if (table) {
             table.clear();
-            table.rows.add(this.get('dataSource'));
+            table.rows.add(this.get().dataSource);
             table.draw();
         }
     },
@@ -44,6 +43,6 @@ export default {
         return $(this.refs.rtable);
     },
     initHeader() {			
-        this.get('pageHeader').set(this.get('headerData'));
+        this.get().pageHeader.set(this.get().headerData);
     },
 }

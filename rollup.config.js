@@ -5,7 +5,6 @@ import resolve from 'rollup-plugin-node-resolve';
 import typescript from 'rollup-plugin-typescript2';
 import tscompile from 'typescript';
 import replace from 'rollup-plugin-replace';
-// import async from 'rollup-plugin-async';
 import scss from 'rollup-plugin-scss';
 import { minify } from 'uglify-es';
 
@@ -27,11 +26,13 @@ export default {
 		commonjs(),
 		typescript({typescript: tscompile}),
 		svelte({
+			// enable run-time checks when not in production
 			dev: !production,
+			// we'll extract any component CSS out into
+			// a separate file  better for performance
 			css: css => {
-				css.write('public/app.css');
-			},
-			cascade: true
+				css.write('public/bundle.css');
+			}
 		}),
 		resolve({
 			jsnext: true,

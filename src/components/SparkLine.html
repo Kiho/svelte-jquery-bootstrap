@@ -2,6 +2,8 @@
 </div>
 
 <script>
+    import { observe } from 'svelte-extras';
+
     export default {
         data() {
             return { 
@@ -15,12 +17,13 @@
         oncreate() {
             const element = this.refs.sparkline;
             this.observe('value', value => {
-                this.load(element, value, this.get('options'));
+                this.load(element, value, this.get().options);
             });
-            const value = this.get('value');
-            this.load(element, this.get('value'), this.get('options'));
+            const {value, options} = this.get();
+            this.load(element, value, options);
         },
         methods: {
+            observe,
             load(element, value, options) {
                 $(element).sparkline(value, options);
             }			

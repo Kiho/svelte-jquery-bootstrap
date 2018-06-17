@@ -106,12 +106,12 @@
 		},
 		oncreate() {
             const element = this.refs.plot;
-            const settings = this.get('settings');
-            const data = this.get('data');
+            const {settings} = this.get();
+            const {data} = this.get();
             this.set({ instance: $.plot($(element), data, settings) })
 		},
         ondestroy: function () {
-            const instance = this.get('instance');
+            const {instance} = this.get();
             instance.destroy();
             $(this.refs.plot).empty();
         },

@@ -1,10 +1,11 @@
-<div class="form-group"><label for={{uuid}} class="col-sm-3 control-label">{{label}}</label>
+<div class="form-group"><label for={uuid} class="col-sm-3 control-label">{label}</label>
     <div class="col-sm-9">
-        <input ref:datepicker type="text" class="form-control {{inputClass}}" id={{uuid}} placeholder={{placeholder}} bind:value="formatted"/>
+        <input ref:datepicker type="text" class="form-control {inputClass}" id={uuid} placeholder={placeholder} bind:value="formatted"/>
     </div>
 </div>
 
 <script>
+    import { observe } from 'svelte-extras';
     import { makeUniqueId, formatDate, getLocalDate } from '../utils'
 
     export default {
@@ -19,10 +20,13 @@
                 pickerInstance: null
             }
         },
+        methods: {
+            observe,
+        },
         oncreate() {
             const picker = $(this.refs.datepicker).datepicker({ });
             this.observe('value', value => { // watch for changes in 'value'
-                const formatted = this.get('formatted');
+                const {formatted} = this.get();
                 // see: https://svelte.technology/guide#component-observe-key-callback-options-
                 if (value && value.length > 10 && !formatted) {
                     const val = formatDate(value, 'mm/dd/yyyy');
@@ -40,7 +44,8 @@
             this.set({pickerInstance: picker});
         },
         ondestroy: function () { // cleanup life-cycle method. See: https://svelte.technology/guide#component-teardown-
-            this.get('pickerInstance').remove(); // remove jQuery object
+            const { pickerInstance } = this.get();
+            pickerInstance.remove(); // remove jQuery object
         },
     }
 </script>
