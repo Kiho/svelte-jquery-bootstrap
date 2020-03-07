@@ -22,3 +22,4 @@ dist/*
 **/bower_components/*
 .vscode/
 .rpt2_cache/
+/public/bundle.*

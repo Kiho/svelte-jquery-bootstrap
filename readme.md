@@ -18,8 +18,7 @@ Features:
     npm run fix:route-parser
 
 For development:
-
-    npm run serve
+    
     npm run start
 
 open [http://localhost:8081/](http://localhost:8081/) in the browser
