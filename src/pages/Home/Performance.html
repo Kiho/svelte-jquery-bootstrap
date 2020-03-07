@@ -1,10 +1,32 @@
+<script>
+    import { onDestroy, onMount } from 'svelte';
+
+    export let progress;
+
+    export let settings = { data : [
+        {title:'Facebook Campaign', percent: 80},
+        {title:'Twitter Campaign', percent: 60},
+        {title:'Conventional Media', percent: 40},
+        {title:'Bill boards', percent: 50},
+    ]};
+
+    onMount(() => {
+        const element = progress;
+        $(element).find('.progress-bar').progressbar();
+		});
+
+    onDestroy(() => {
+        $(progress).find('.progress-bar').empty();
+    });
+</script>
+
 <div class="col-md-3 col-sm-3 col-xs-12 bg-white">
     <div class="x_title">
         <h2>Top Campaign Performance</h2>
         <div class="clearfix"></div>
     </div>
 
-    <div class="col-md-12 col-sm-12 col-xs-6" ref:progress>
+    <div class="col-md-12 col-sm-12 col-xs-6" bind:this={progress}>
         {#each settings.data as row}
         <div>
             <p>{row.title}</p>
@@ -17,25 +39,3 @@
         {/each}
     </div>
 </div>
-
-<script>
-	export default {
-		data() {
-			return {
-                settings: { data : [
-                    {title:'Facebook Campaign', percent: 80},
-                    {title:'Twitter Campaign', percent: 60},
-                    {title:'Conventional Media', percent: 40},
-                    {title:'Bill boards', percent: 50},
-                ]}
-            }
-		},
-		oncreate() {
-            const element = this.refs.progress;
-            $(element).find('.progress-bar').progressbar();
-		},
-        ondestroy: function () {
-            $(this.refs.progress).find('.progress-bar').empty();
-        },
-	}
-</script>

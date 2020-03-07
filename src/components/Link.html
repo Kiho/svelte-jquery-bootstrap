@@ -1,40 +1,36 @@
+<script>
+  import history from '../services/whistory';
+
+export let to = '/';
+  export let block;
+  export let blockCenter;
+
+  export let adjustedTo;
+  $: adjustedTo = process.env.APP_BASE_PATH + to;
+
+  // [svelte-upgrade suggestion]
+  // review these functions and remove unnecessary 'export' keywords
+  export function navigate(evt, path) {
+  if (evt && evt.preventDefault) {
+    evt.preventDefault();
+  }  
+  if (path) history.push(path);
+}
+</script>
 
 {#if block}
-  <a href='{adjustedTo}' on:click='navigate(event, to)' style="display: block">
+  <a href='{adjustedTo}' on:click='{event => navigate(event, to)}' style="display: block">
     <slot></slot>
   </a>
 {:elseif blockCenter}
-  <a href='{adjustedTo}' on:click='navigate(event, to)' style="display: block;text-align: center">
+  <a href='{adjustedTo}' on:click='{event => navigate(event, to)}' style="display: block;text-align: center">
     <slot></slot>
   </a>
 {:else}
-  <a href='{adjustedTo}' on:click='navigate(event, to)'><slot></slot></a>
+  <a href='{adjustedTo}' on:click='{event => navigate(event, to)}'><slot></slot></a>
 {/if}
 
-<script>
-import history from '../services/whistory';
 
-export default {
-  data() {
-    return {
-      to: '/'
-    };
-  },
-
-  computed: {
-    adjustedTo: ({ to }) => process.env.APP_BASE_PATH + to,
-  },
-
-  methods: {
-    navigate(evt, path) {
-      if (evt && evt.preventDefault) {
-        evt.preventDefault();
-      }  
-      if (path) history.push(path);
-    }
-  }
-}
-</script>
 
 <style type="text/css">
   /*a{

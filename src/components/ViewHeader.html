@@ -1,3 +1,31 @@
+<script>
+    import { onMount } from 'svelte';
+
+    export let hidden = false;
+    export let col = 'lg-12';
+    export let viewPath = '';
+    export let icon = '';
+    export let title = '';
+    export let description = '';
+
+    onMount(() => {
+
+    });
+
+    // [svelte-upgrade suggestion]
+    // review these functions and remove unnecessary 'export' keywords
+    export function handleUpdate(data) {                
+        // if (!data){
+        //     this.set({hidden: false});
+        // }                
+        // else {
+        //     data.hidden = true;
+        //     this.set(data);
+        // }
+        // console.log('handleUpdate', data);
+    }
+</script>
+
 {#if !hidden}
 <div class="col-{col}">
     <div class="view-header">
@@ -17,33 +45,3 @@
     <hr>
 </div>
 {/if}
-
-<script>
-    export default {
-        data () {
-            return {
-                col: 'lg-12',
-                title: '',
-                viewPath: '',
-                icon: '',
-                description: '',
-                hidden: false,
-            }
-        },
-        oncreate() {
-
-        },
-        methods: {
-            handleUpdate (data) {                
-                // if (!data){
-                //     this.set({hidden: false});
-                // }                
-                // else {
-                //     data.hidden = true;
-                //     this.set(data);
-                // }
-                // console.log('handleUpdate', data);
-            }
-        }
-    }
-</script>

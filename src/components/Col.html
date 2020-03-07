@@ -1,7 +1,3 @@
-<div class="{classes} {class}">
-  <slot></slot>
-</div>
-
 <script>
   const widths = ['xs', 'sm', 'md', 'lg', 'xl'];
 
@@ -20,54 +16,56 @@
     return isXs ? `col-${colSize}` : `col-${colWidth}-${colSize}`;
   };
 
-  export default {
-    data() {
-      return {
-        class: '',
-        widths
+  export let xs;
+  export let sm;
+  export let md;
+  export let lg;
+  export let xl;
+  export let class = '';
+
+  export let classes;
+  $: {
+    const colClasses = [];
+    const props = {
+      xs,
+      sm,
+      md,
+      lg,
+      xl
+    };
+
+    widths.forEach((colWidth, i) => {
+      let columnProp = props[colWidth];
+
+      if (!i && columnProp === undefined) {
+        columnProp = true;
       }
-    },
-    computed: {
-      classes({ widths, xs, sm, md, lg, xl }) {
-        const colClasses = [];
-        const props = {
-          xs,
-          sm,
-          md,
-          lg,
-          xl
-        };
 
-        widths.forEach((colWidth, i) => {
-          let columnProp = props[colWidth];
-
-          if (!i && columnProp === undefined) {
-            columnProp = true;
-          }
-
-          if (!columnProp) {
-            return;
-          }
-
-          const isXs = !i;
-          let colClass;
-
-          if (isObject(columnProp)) {
-            const colSizeInterfix = isXs ? '-' : `-${colWidth}-`;
-            colClass = getColumnSizeClass(isXs, colWidth, columnProp.size);
-
-            if (columnProp.size || columnProp.size === '') colClasses.push(colClass);
-            if (columnProp.push) colClasses.push(`push${colSizeInterfix}${columnProp.push}`);
-            if (columnProp.pull) colClasses.push(`pull${colSizeInterfix}${columnProp.pull}`);
-            if (columnProp.offset) colClasses.push(`offset${colSizeInterfix}${columnProp.offset}`);
-          } else {
-            colClass = getColumnSizeClass(isXs, colWidth, columnProp);
-            colClasses.push(colClass);
-          }
-        });
-        
-        return colClasses.join(' ');
+      if (!columnProp) {
+        classes =;
       }
-    }
+
+      const isXs = !i;
+      let colClass;
+
+      if (isObject(columnProp)) {
+        const colSizeInterfix = isXs ? '-' : `-${colWidth}-`;
+        colClass = getColumnSizeClass(isXs, colWidth, columnProp.size);
+
+        if (columnProp.size || columnProp.size === '') colClasses.push(colClass);
+        if (columnProp.push) colClasses.push(`push${colSizeInterfix}${columnProp.push}`);
+        if (columnProp.pull) colClasses.push(`pull${colSizeInterfix}${columnProp.pull}`);
+        if (columnProp.offset) colClasses.push(`offset${colSizeInterfix}${columnProp.offset}`);
+      } else {
+        colClass = getColumnSizeClass(isXs, colWidth, columnProp);
+        colClasses.push(colClass);
+      }
+    });
+    
+    return colClasses.join(' ');
   }
 </script>
+
+<div class="{classes} {class}">
+  <slot></slot>
+</div>

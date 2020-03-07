@@ -1,3 +1,17 @@
+<script>
+    import Link from './components/Link.html';
+    import { getPathName } from './utils';
+
+    export let location = {};
+    export let menu = [];
+
+    export let route;
+    $: {
+        const pathname = getPathName(location.pathname);
+        route = pathname;
+    }
+</script>
+
 <ul class="nav side-menu">
     {#each menu as item}
     <li class='{ route === item.href ? " active" : "" }'>
@@ -5,26 +19,3 @@
     </li>
     {/each}
 </ul>
-
-<script>
-    import Link from './components/Link.html';
-    import { getPathName } from './utils';
-
-    export default {
-        data () {
-            return {
-                location: {},
-                menu: [],
-            }
-        },
-        components: {
-            Link
-        },
-        computed: {
-            route: ({ location }) => {
-                const pathname = getPathName(location.pathname);
-                return pathname;
-            }
-        }
-    };
-</script>

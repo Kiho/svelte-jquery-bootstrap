@@ -1,3 +1,20 @@
+<script>
+    import { onMount } from 'svelte';
+
+    export let icon = '';
+    export let title = '';
+    export let class = '';
+    export let count = '';
+    export let percentColor = '';
+    export let sort = '';
+    export let percent = 0;
+    export let text = '';
+
+    onMount(() => {
+        percentColor = sort == 'desc' ? 'red' : 'green';        
+    });
+</script>
+
 <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
     <span class="count_top"><i class="fa fa-{icon}"></i> {title}</span>
     <div class="count {class}">{count}</div>
@@ -9,24 +26,3 @@
         {percent}% </i> {text}
     </span>
 </div>
-
-<script>
-    export default {
-        data() {
-            return {
-                icon: '',
-                title: '',
-                count: '',
-                class: '',
-                sort: '',
-                percent: 0,
-                percentColor: '',
-                text: ''
-            }
-        },
-        oncreate() {
-            const {sort} = this.get();
-            this.set({percentColor: sort == 'desc' ? 'red' : 'green'});        
-        }
-    };
-</script>

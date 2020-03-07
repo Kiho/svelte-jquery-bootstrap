@@ -1,12 +1,6 @@
-<div class="row{noGutters ? ' no-gutters' : ''} {class}"><slot></slot></div>
-
 <script>
-  export default {
-    data() {
-      return {
-        class: '',
-        noGutters: false
-      }
-    }
-  };
+  export let noGutters = false;
+  export let class = '';
 </script>
+
+<div class="row{noGutters ? ' no-gutters' : ''} {class}"><slot></slot></div>

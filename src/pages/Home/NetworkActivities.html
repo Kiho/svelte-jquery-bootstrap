@@ -1,28 +1,8 @@
-<div class="col-md-12 col-sm-12 col-xs-12">
-    <div class="dashboard_graph">
-
-    <div class="row x_title">
-        <div class="col-md-6">
-            <h3>Network Activities <small>Graph title sub-title</small></h3>
-        </div>
-        <div class="col-md-6">
-            <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
-                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                <span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-9 col-sm-9 col-xs-12">
-        <div ref:plot class="demo-placeholder"></div>
-    </div>
-    <Performance />
-
-    <div class="clearfix"></div>
-    </div>
-</div>
-
 <script>
+    import { onDestroy, onMount } from 'svelte';
+
+    export let plot;
+
     import Performance from './Performance.html';
 
     function gd(year, month, day) {
@@ -94,26 +74,41 @@
         tooltip: false
     }
 
-	export default {
-        components: {
-			Performance,
-		},
-		data() {
-			return {
-                settings: chart_plot_01_settings,
-                data: [arr_data1, arr_data2],
-            }
-		},
-		oncreate() {
-            const element = this.refs.plot;
-            const {settings} = this.get();
-            const {data} = this.get();
-            this.set({ instance: $.plot($(element), data, settings) })
-		},
-        ondestroy: function () {
-            const {instance} = this.get();
-            instance.destroy();
-            $(this.refs.plot).empty();
-        },
-	}
+	export let settings = chart_plot_01_settings;
+    export let data = [arr_data1, arr_data2];
+    export let instance;
+
+    onMount(() => {
+        const element = plot;
+        instance = $.plot($(element), data, settings)
+		});
+
+    onDestroy(() => {
+        instance.destroy();
+        $(plot).empty();
+    });
 </script>
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="dashboard_graph">
+
+    <div class="row x_title">
+        <div class="col-md-6">
+            <h3>Network Activities <small>Graph title sub-title</small></h3>
+        </div>
+        <div class="col-md-6">
+            <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                <span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-9 col-sm-9 col-xs-12">
+        <div bind:this={plot} class="demo-placeholder"></div>
+    </div>
+    <Performance />
+
+    <div class="clearfix"></div>
+    </div>
+</div>

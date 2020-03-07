@@ -1,37 +1,8 @@
-<table class="" style="width:100%">
-    <tr>
-        <th style="width:37%;">
-            <p>Top 5</p>
-        </th>
-        <th>
-            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
-                <p class="">Device</p>
-            </div>
-        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-            <p class="">Progress</p>
-        </div>
-        </th>
-    </tr>
-    <tr>
-        <td>
-            <canvas class="canvasDoughnut" height="140" width="140" style="margin: 15px 10px 10px 0" ref:canvas ></canvas>
-        </td>
-        <td>
-            <table class="tile_info">
-                {#each settings.data.labels as label, y}
-                <tr>
-                    <td>
-                        <p><i class="fa fa-square {dataset.color[y]}"></i>{label} </p>
-                    </td>
-                    <td>{dataset.data[y]}%</td>
-                </tr>
-                {/each}
-            </table>
-        </td>
-    </tr>
-</table>
-
 <script>
+    import { onDestroy, onMount } from 'svelte';
+
+    export let canvas;
+
     const chart_doughnut_settings = {
         type: 'doughnut',
         tooltipFillColor: "rgba(51, 51, 51, 0.55)",
@@ -68,23 +39,51 @@
         }
     }
 
-	export default {
-		data() {
-			return {
-                settings: chart_doughnut_settings,
-                dataset: {data: [], color: []}
-            }
-		},
-		oncreate() {            
-            const element = this.refs.canvas;
-            const {settings} = this.get();
-            this.set({dataset: settings.data.datasets[0]});
-            this.set({ instance: new Chart($(element), settings) })
-        },
-        ondestroy: function () {
-            const {instance} = this.get();
-            instance.destroy();
-            $(this.refs.canvas).empty();
-        },
-	}
+	export let settings = chart_doughnut_settings;
+    export let dataset = {data: [], color: []};
+    export let instance;
+
+    onMount(() => {            
+        const element = canvas;
+        dataset = settings.data.datasets[0];
+        instance = new Chart($(element), settings)
+    });
+
+    onDestroy(() => {
+        instance.destroy();
+        $(canvas).empty();
+    });
 </script>
+
+<table class="" style="width:100%">
+    <tr>
+        <th style="width:37%;">
+            <p>Top 5</p>
+        </th>
+        <th>
+            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                <p class="">Device</p>
+            </div>
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+            <p class="">Progress</p>
+        </div>
+        </th>
+    </tr>
+    <tr>
+        <td>
+            <canvas class="canvasDoughnut" height="140" width="140" style="margin: 15px 10px 10px 0" bind:this={canvas} ></canvas>
+        </td>
+        <td>
+            <table class="tile_info">
+                {#each settings.data.labels as label, y}
+                <tr>
+                    <td>
+                        <p><i class="fa fa-square {dataset.color[y]}"></i>{label} </p>
+                    </td>
+                    <td>{dataset.data[y]}%</td>
+                </tr>
+                {/each}
+            </table>
+        </td>
+    </tr>
+</table>

@@ -1,3 +1,26 @@
+<script>
+	import { onMount } from 'svelte';
+
+	// [svelte-upgrade suggestion]
+	// manually refactor all references to __this
+	const __this = {
+		get: () => ({  })
+	};
+
+	import Tile from '../../components/Tile.html';
+	import Widget from '../../components/Widget.html';
+
+	import AppVersions from './AppVersions.html';
+	import Doughnut from './Doughnut.html';
+	import QuickSettings from './QuickSettings.html';
+	import NetworkActivities from './NetworkActivities.html';
+  
+	onMount(() => {
+		const headerData = { hidden: true };
+		__this.get().pageHeader.set(headerData);
+	});
+</script>
+
 <div>
 	<div class="row tile_count">
 		<Tile title="Total Users" icon="user" count="2,500" percent="4" text="From last Week" />
@@ -28,32 +51,3 @@
       </Widget> 
   </div>	
 </div>
-
-<script>
-	import Tile from '../../components/Tile.html';
-	import Widget from '../../components/Widget.html';
-
-	import AppVersions from './AppVersions.html';
-	import Doughnut from './Doughnut.html';
-	import QuickSettings from './QuickSettings.html';
-	import NetworkActivities from './NetworkActivities.html';
-  
-	export default {
-		components: {
-			Tile,
-			Widget,
-			AppVersions,
-			Doughnut,
-			QuickSettings,
-			NetworkActivities,
-		},
-		data() {
-			return { }
-		},
-		oncreate() {
-			const headerData = { hidden: true };
-			this.get().pageHeader.set(headerData);
-		}
-	}
-</script>
-

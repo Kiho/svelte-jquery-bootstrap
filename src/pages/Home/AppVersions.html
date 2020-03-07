@@ -1,3 +1,15 @@
+<script>
+    import { onMount } from 'svelte';
+
+    export let version = '';
+    export let percent = '';
+    export let value = '';
+
+    onMount(() => {
+
+		});
+</script>
+
 <div class="widget_summary">
     <div class="w_left w_25">
         <span>{version}</span>
@@ -14,18 +26,3 @@
     </div>
     <div class="clearfix"></div>
 </div>
-
-<script>
-	export default {
-		data() {
-			return {
-                version: '',
-                percent: '',
-                value: ''
-            }
-		},
-		oncreate() {
-
-		}
-	}
-</script>

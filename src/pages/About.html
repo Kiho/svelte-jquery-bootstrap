@@ -1,3 +1,29 @@
+<script>
+	import { onMount } from 'svelte';
+
+	import Link from '../components/Link.html';
+	import Button from '../components/Button.html';
+
+	export let repo = 'https://github.com/Kiho/svelte-ts-bootstrap';
+	export let headerData = {
+		title: 'About',
+		icon: 'about',
+                    hidden: false,
+		viewPath: '<small><span class="c-white">About</span></small>'
+	};
+	export let pageHeader;
+
+	onMount(() => {
+		initHeader();
+	});
+
+	// [svelte-upgrade suggestion]
+	// review these functions and remove unnecessary 'export' keywords
+	export function initHeader() {
+		pageHeader.set(headerData);
+	}
+</script>
+
 <div class="container">
     <div class="row">
         <div class="content col-md-4">
@@ -7,36 +33,3 @@
         </div>
     </div>
 </div>
-
-<script>
-	import Link from '../components/Link.html';
-	import Button from '../components/Button.html';
-
-	export default {
-		components: {
-			Link,
-			Button,
-		},
-		data() {
-			return {
-				repo: 'https://github.com/Kiho/svelte-ts-bootstrap',
-				headerData: {
-					title: 'About',
-					icon: 'about',
-                    hidden: false,
-					viewPath: '<small><span class="c-white">About</span></small>'
-				}
-			}
-		},
-		oncreate() {
-			this.initHeader();
-		},
-		methods: {
-			initHeader() {
-				const {pageHeader, headerData} = this.get();
-				pageHeader.set(headerData);
-			}			
-		}
-	}
-</script>
-

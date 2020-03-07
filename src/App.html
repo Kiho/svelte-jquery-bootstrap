@@ -1,6 +1,7 @@
-﻿
 <script>
-import createRouter from './services/createRouter';
+	import { onDestroy, onMount } from 'svelte';
+
+	import createRouter from './services/createRouter';
 import Nav from './Nav.html';
 import AboutPage from './pages/About.html';
 import ViewHeader from './components/ViewHeader.html';
@@ -44,26 +45,14 @@ const nav = new Nav({
 	data: {menu}	
 });
 
-export default {
-	components: {
-		Storage,
-		Home,
-		ViewHeader,
-		AboutPage,
-        EmployeePage
-	},
-	data: () => ({
-			development: process.env.NODE_ENV !== 'production',
-			state: { },
-		}),
-	oncreate(){
-		router.start(window.location, window.document.querySelector('#content'), pageHeader, nav);
-	},
-	ondestroy(){
-		router.remove();
-	},
-	methods: {
+export let development = process.env.NODE_ENV !== 'production';
+	export let state = { };
 
-	}
-}
+	onMount(() => {
+	router.start(window.location, window.document.querySelector('#content'), pageHeader, nav);
+});
+
+	onDestroy(() => {
+	router.remove();
+});
 </script>
