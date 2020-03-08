@@ -23,7 +23,7 @@
   export let form;
   export let departmentList = [];
   export let employeeList = [];
-  
+
   let instance;
   const entityType = 'department';
   const service = new Service();
@@ -33,8 +33,8 @@
     service.getById(instance);
   }
 
-  function handleGoBack() {
-    service.goBack();
+  function handleGoBack(e) {
+    service.goBack(e);
   }
 
   function handleSubmit(e) {

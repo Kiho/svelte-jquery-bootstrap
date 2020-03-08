@@ -9,8 +9,6 @@
 	import DepartmentEdit from './pages/Department/edit.html';
 	import EmployeePage from './pages/Employee/index.html';
 	import EmployeeEdit from './pages/Employee/edit.html';
-	import CustomerPage from './pages/Customer/index.html';
-	import CustomerEdit from './pages/Customer/edit.html';
 	import history from './services/whistory';
 
 	const pageHeader = new ViewHeader({
@@ -21,7 +19,6 @@
 		{ href: '/home', text: 'Home', icon: 'home' },
 		{ href: '/departments', text: 'Departments', icon: 'sitemap' },
 		{ href: '/employees', text: 'Employees', icon: 'users' },
-		{ href: '/customers', text: 'Customers', icon: 'users' },
 		{ href: '/about', text: 'About', icon: 'leaf' },
 	];
 
@@ -33,8 +30,6 @@
 		'/about': AboutPage,
 		'/employees': EmployeePage,
 		'/employees/:id': EmployeeEdit,
-		'/customers': CustomerPage,
-		'/customers/:id': CustomerEdit,
 	});
 
 	const nav = new Nav({
