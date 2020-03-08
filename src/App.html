@@ -1,58 +1,56 @@
 <script>
 	import { onDestroy, onMount } from 'svelte';
-
 	import createRouter from './services/createRouter';
-import Nav from './Nav.html';
-import AboutPage from './pages/About.html';
-import ViewHeader from './components/ViewHeader.html';
-import Home from './pages/Home/index.html';
-import DepartmentPage from './pages/Department/index.html';
-import DepartmentEdit from './pages/Department/edit.html';
-import EmployeePage from './pages/Employee/index.html';
-import EmployeeEdit from './pages/Employee/edit.html';
-import CustomerPage from './pages/Customer/index.html';
-import CustomerEdit from './pages/Customer/edit.html';
+	import Nav from './Nav.html';
+	import AboutPage from './pages/About.html';
+	import ViewHeader from './components/ViewHeader.html';
+	import Home from './pages/Home/index.html';
+	import DepartmentPage from './pages/Department/index.html';
+	import DepartmentEdit from './pages/Department/edit.html';
+	import EmployeePage from './pages/Employee/index.html';
+	import EmployeeEdit from './pages/Employee/edit.html';
+	import CustomerPage from './pages/Customer/index.html';
+	import CustomerEdit from './pages/Customer/edit.html';
+	import history from './services/whistory';
 
-import history from './services/whistory';
+	const pageHeader = new ViewHeader({
+		target: document.querySelector('#page-header'),
+		data: () => ({}),
+	});
 
-const pageHeader = new ViewHeader({
-	target: document.querySelector('#page-header'),
-	data: () => ({}),
-});
+	const menu = [
+		{ href: '/home', text: 'Home', icon: 'home' },
+		{ href: '/departments', text: 'Departments', icon: 'sitemap' },
+		{ href: '/employees', text: 'Employees', icon: 'users' },
+		{ href: '/customers', text: 'Customers', icon: 'users' },
+		{ href: '/about', text: 'About', icon: 'leaf' },
+	];
 
-const menu = [
-	{ href: '/home', text: 'Home', icon: 'home' },
-	{ href: '/departments', text: 'Departments', icon: 'sitemap' },
-	{ href: '/employees', text: 'Employees', icon: 'users' },
-	{ href: '/customers', text: 'Customers', icon: 'users' },
-	{ href: '/about', text: 'About', icon: 'leaf' },
-];
+	const router = createRouter({
+		'/': '/home',
+		'/home': Home,
+		'/departments': DepartmentPage,
+		'/departments/:id': DepartmentEdit,
+		'/about': AboutPage,
+		'/employees': EmployeePage,
+		'/employees/:id': EmployeeEdit,
+		'/customers': CustomerPage,
+		'/customers/:id': CustomerEdit,
+	});
 
-const router = createRouter({
-    '/': '/home',
-    '/home': Home,
-	'/departments': DepartmentPage,
-	'/departments/:id': DepartmentEdit,
-    '/about': AboutPage,
-    '/employees': EmployeePage,
-	'/employees/:id': EmployeeEdit,
-	'/customers': CustomerPage,
-	'/customers/:id': CustomerEdit,
-});
+	const nav = new Nav({
+		target: document.querySelector('#left-nav'),
+		data: {menu}	
+	});
 
-const nav = new Nav({
-	target: document.querySelector('#left-nav'),
-	data: {menu}	
-});
-
-export let development = process.env.NODE_ENV !== 'production';
+	export let development = process.env.NODE_ENV !== 'production';
 	export let state = { };
 
 	onMount(() => {
-	router.start(window.location, window.document.querySelector('#content'), pageHeader, nav);
-});
+		router.start(window.location, window.document.querySelector('#content'), pageHeader, nav);
+	});
 
 	onDestroy(() => {
-	router.remove();
-});
+		router.remove();
+	});
 </script>

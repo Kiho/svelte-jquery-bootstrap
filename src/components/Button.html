@@ -14,13 +14,13 @@
   // [svelte-upgrade suggestion]
   // review these functions and remove unnecessary 'export' keywords
   export function onClick(e) {
-            if (disabled) {
-                e.preventDefault();
-                return;
-            } else {
-                dispatch('click', e);
-            }
-        }
+    if (disabled) {
+      e.preventDefault();
+      return;
+    } else {
+      dispatch('click', e);
+    }
+  }
 </script>
 
 <button

@@ -1,71 +1,71 @@
 <script>
-    import { onMount } from 'svelte';
+  import { onMount } from 'svelte';
 
-    // [svelte-upgrade suggestion]
-    // manually refactor all references to __this
-    const __this = {
-        get: () => ({ validate, uuid, label, type, inputClass, placeholder, value, readOnly, required, pattern, validators })
-    };
+  // [svelte-upgrade suggestion]
+  // manually refactor all references to __this
+  const __this = {
+      get: () => ({ validate, uuid, label, type, inputClass, placeholder, value, readOnly, required, pattern, validators })
+  };
 
-    export let input;
+  export let input;
 
-    import { makeUniqueId } from '../utils'
+  import { makeUniqueId } from '../utils'
 
-    export let className = '';
-    export let validate = null;
-    export let uuid = makeUniqueId();
-    export let label = '';
-    export let type = 'text';
-    export let inputClass = '';
-    export let placeholder = '';
-    export let value = '';
-    export let readOnly = false;
-    export let required = false;
-    export let pattern = '';
-    export let validators = null;
+  export let className = '';
+  export let validate = null;
+  export let uuid = makeUniqueId();
+  export let label = '';
+  export let type = 'text';
+  export let inputClass = '';
+  export let placeholder = '';
+  export let value = '';
+  export let readOnly = false;
+  export let required = false;
+  export let pattern = '';
+  export let validators = null;
 
-    onMount(() => {
-        const element = input;
-        __this.observe('required', required => {
-            element.required = required;
-        });
-        element.required = __this.get().required;
-        if (pattern) {
-            element.setAttribute('pattern', pattern);
-        }
-        initValidators(element, validate);
-    });
+  onMount(() => {
+      const element = input;
+      __this.observe('required', required => {
+          element.required = required;
+      });
+      element.required = __this.get().required;
+      if (pattern) {
+          element.setAttribute('pattern', pattern);
+      }
+      initValidators(element, validate);
+  });
 
-    // [svelte-upgrade suggestion]
-    // review these functions and remove unnecessary 'export' keywords
-    export function initValidators(element, data) {
-        if (data && data.length > 0) {
-            data.forEach(function(attr) {
-                const kv = attr.split('=');
-                if (kv.length == 2) {
-                    element.setAttribute('data-validate-' + kv[0], kv[1]);
-                }                    
-            }, this);
-        }
-    }
+// [svelte-upgrade suggestion]
+// review these functions and remove unnecessary 'export' keywords
+export function initValidators(element, data) {
+  if (data && data.length > 0) {
+    data.forEach(function(attr) {
+      const kv = attr.split('=');
+      if (kv.length == 2) {
+        element.setAttribute('data-validate-' + kv[0], kv[1]);
+      }                    
+    }, this);
+  }
+}
 </script>
 
 <div class="form-group {className} {validate ? 'field' : ''}"><label for={uuid} class="col-md-1 control-label">{label}</label>
-    <div class="col-md-2">
-        {#if type=='number'}
-        <input type='number' bind:this={input} 
-            class="form-control {inputClass}" id={uuid} 
-            placeholder={placeholder} 
-            bind:value="{value}" 
-            readonly="{ readOnly ? 'readonly' : '' }"            
-            />
-        {:else}
-        <input type='text' bind:this={input} 
-            class="form-control {inputClass}" id={uuid} 
-            placeholder={placeholder} 
-            bind:value="{value}" 
-            readonly="{ readOnly ? 'readonly' : '' }"            
-            />
-        {/if}    
-    </div>
+  <div class="col-md-2">
+    {#if type=='number'}
+    <input type='number' bind:this={input} 
+      class="form-control {inputClass}" id={uuid} 
+      placeholder={placeholder} 
+      bind:value="{value}" 
+      readonly="{ readOnly ? 'readonly' : '' }"            
+      />
+    {:else}
+    <input type='text' bind:this={input} 
+      class="form-control {inputClass}" id={uuid} 
+      placeholder={placeholder} 
+      bind:value="{value}" 
+      readonly="{ readOnly ? 'readonly' : '' }"            
+      />
+    {/if}    
+  </div>
 </div>

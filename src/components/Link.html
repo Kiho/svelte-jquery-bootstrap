@@ -1,7 +1,7 @@
 <script>
   import history from '../services/whistory';
 
-export let to = '/';
+  export let to = '/';
   export let block;
   export let blockCenter;
 
@@ -11,11 +11,11 @@ export let to = '/';
   // [svelte-upgrade suggestion]
   // review these functions and remove unnecessary 'export' keywords
   export function navigate(evt, path) {
-  if (evt && evt.preventDefault) {
-    evt.preventDefault();
-  }  
-  if (path) history.push(path);
-}
+    if (evt && evt.preventDefault) {
+      evt.preventDefault();
+    }  
+    if (path) history.push(path);
+  }
 </script>
 
 {#if block}

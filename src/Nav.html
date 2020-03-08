@@ -1,21 +1,22 @@
 <script>
-    import Link from './components/Link.html';
-    import { getPathName } from './utils';
+  import Link from './components/Link.html';
+  import { getPathName } from './utils';
 
-    export let location = {};
-    export let menu = [];
+  export let location = {};
+  export let menu = [];
+  export let route;
 
-    export let route;
-    $: {
-        const pathname = getPathName(location.pathname);
-        route = pathname;
-    }
+  $: {
+    const pathname = getPathName(location.pathname);
+    route = pathname;
+  }
 </script>
 
+<svelte:options accessors={true}/>
 <ul class="nav side-menu">
-    {#each menu as item}
-    <li class='{ route === item.href ? " active" : "" }'>
-        <Link to='{ item.href }'><i class='fa fa-{ item.icon }'></i>{item.text}</Link>
-    </li>
-    {/each}
+  {#each menu as item}
+  <li class='{ route === item.href ? " active" : "" }'>
+    <Link to='{ item.href }'><i class='fa fa-{ item.icon }'></i>{item.text}</Link>
+  </li>
+  {/each}
 </ul>

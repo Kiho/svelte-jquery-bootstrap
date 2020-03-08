@@ -1,47 +1,47 @@
 <script>
-    import { onMount } from 'svelte';
+  import { onMount } from 'svelte';
 
-    export let hidden = false;
-    export let col = 'lg-12';
-    export let viewPath = '';
-    export let icon = '';
-    export let title = '';
-    export let description = '';
+  export let hidden = false;
+  export let col = 'lg-12';
+  export let viewPath = '';
+  export let icon = '';
+  export let title = '';
+  export let description = '';
 
-    onMount(() => {
+  onMount(() => {
 
-    });
+  });
 
-    // [svelte-upgrade suggestion]
-    // review these functions and remove unnecessary 'export' keywords
-    export function handleUpdate(data) {                
-        // if (!data){
-        //     this.set({hidden: false});
-        // }                
-        // else {
-        //     data.hidden = true;
-        //     this.set(data);
-        // }
-        // console.log('handleUpdate', data);
-    }
+  // [svelte-upgrade suggestion]
+  // review these functions and remove unnecessary 'export' keywords
+  export function handleUpdate(data) {                
+    // if (!data){
+    //     this.set({hidden: false});
+    // }                
+    // else {
+    //     data.hidden = true;
+    //     this.set(data);
+    // }
+    // console.log('handleUpdate', data);
+  }
 </script>
 
 {#if !hidden}
 <div class="col-{col}">
-    <div class="view-header">
-        <div class="pull-right text-right" style="line-height: 14px">
-            {@html viewPath}
-        </div>
-        <div class="header-icon">
-            <i class="fa fa-{icon}"></i>
-        </div>
-        <div class="header-title">
-            <h3>{title}</h3>
-            <small>
-                {description}
-            </small>
-        </div>
+  <div class="view-header">
+    <div class="pull-right text-right" style="line-height: 14px">
+      {@html viewPath}
     </div>
-    <hr>
+    <div class="header-icon">
+      <i class="fa fa-{icon}"></i>
+    </div>
+    <div class="header-title">
+      <h3>{title}</h3>
+      <small>
+        {description}
+      </small>
+    </div>
+  </div>
+  <hr>
 </div>
 {/if}

@@ -1,48 +1,47 @@
 <script>
-    import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
+  import Button from './Button.html';
 
-    const dispatch = createEventDispatcher();
+  const dispatch = createEventDispatcher();
 
-    import Button from './Button.html';
-
-    export let col = 'lg-12';
-    export let filled = false;
-    export let loader = '';
-    export let loading = false;
-    export let tools = false;
-    export let title = '';
-    export let description = '';
-    export let toolbar = false;
+  export let col = 'lg-12';
+  export let filled = false;
+  export let loader = '';
+  export let loading = false;
+  export let tools = false;
+  export let title = '';
+  export let description = '';
+  export let toolbar = false;
 </script>
 
 <div class="col-{col}">
-    <div class="panel {filled ? ' panel-filled' : ''}{loader && loading ? ' ld-loading' : ''}">
-        <div class="loader" >
-            <div class="loader-{loader}"></div>
-        </div>
-        { #if tools || title }
-        <div class="panel-heading">
-            { #if tools }
-            <div class="panel-tools">
-                <a class="panel-toggle"><i class="fa fa-chevron-up"></i></a>
-                <a class="panel-close"><i class="fa fa-times"></i></a>
-            </div>
-            { /if }
-            { title }
-        </div>
-        { /if }
-        <div class="panel-body">
-            { #if description }
-            <p>
-                {description}
-            </p>
-            { /if }
-            <slot></slot>
-        </div>
+  <div class="panel {filled ? ' panel-filled' : ''}{loader && loading ? ' ld-loading' : ''}">
+    <div class="loader" >
+      <div class="loader-{loader}"></div>
     </div>
-    { #if toolbar }
-    <div class="btn-toolbar" ref="toolbar">
-        <Button color="primary" on:click='{event => dispatch("onLoadData", event)}'>Load</Button>
+    { #if tools || title }
+    <div class="panel-heading">
+      { #if tools }
+      <div class="panel-tools">
+          <a class="panel-toggle"><i class="fa fa-chevron-up"></i></a>
+          <a class="panel-close"><i class="fa fa-times"></i></a>
+      </div>
+      { /if }
+      { title }
     </div>
     { /if }
+    <div class="panel-body">
+      { #if description }
+      <p>
+          {description}
+      </p>
+      { /if }
+      <slot></slot>
+    </div>
+  </div>
+  { #if toolbar }
+  <div class="btn-toolbar" ref="toolbar">
+    <Button color="primary" on:click='{event => dispatch("onLoadData", event)}'>Load</Button>
+  </div>
+  { /if }
 </div>

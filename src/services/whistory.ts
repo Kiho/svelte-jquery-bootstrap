@@ -8,9 +8,7 @@ import { createHashHistory } from 'history';
 declare var process;
 
 const h = createHashHistory({
-    basename: process.env.APP_BASE_PATH,
+  basename: process.env.APP_BASE_PATH,
 })
 
 export default h;
-
-

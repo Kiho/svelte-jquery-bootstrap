@@ -1,22 +1,22 @@
 <script>
-    import { makeUniqueId } from '../utils'
+  import { makeUniqueId } from '../utils'
 
-    export let uuid = makeUniqueId();
-    export let label = '';
-    export let inputClass = 'col-xs-6';
-    export let stateCode = '';
-    export let placeholder = '00000';
-    export let zipPostalCode = '';
+  export let uuid = makeUniqueId();
+  export let label = '';
+  export let inputClass = 'col-xs-6';
+  export let stateCode = '';
+  export let placeholder = '00000';
+  export let zipPostalCode = '';
 </script>
 
 <div class="form-group"><label for={uuid} class="col-sm-3 control-label">{label}</label>
-    <div class="col-sm-2">
-        <input type="text" class="form-control {inputClass}" bind:value="{stateCode}"/>
-    </div>
-    <div class="col-sm-2">
-        <label class="control-label pull-right">Zip</label>
-    </div>
-    <div class="col-sm-5">
-        <input type="text" class="form-control {inputClass}" id={uuid} placeholder={placeholder} bind:value="{zipPostalCode}"/>
-    </div>
+  <div class="col-sm-2">
+    <input type="text" class="form-control {inputClass}" bind:value="{stateCode}"/>
+  </div>
+  <div class="col-sm-2">
+    <label class="control-label pull-right">Zip</label>
+  </div>
+  <div class="col-sm-5">
+    <input type="text" class="form-control {inputClass}" id={uuid} placeholder={placeholder} bind:value="{zipPostalCode}"/>
+  </div>
 </div>
