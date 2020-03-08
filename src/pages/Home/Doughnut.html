@@ -1,58 +1,57 @@
 <script>
-    import { onDestroy, onMount } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
 
-    export let canvas;
-
-    const chart_doughnut_settings = {
-        type: 'doughnut',
-        tooltipFillColor: "rgba(51, 51, 51, 0.55)",
-        data: {
-            labels: [
-                "Symbian",
-                "Blackberry",
-                "Other",
-                "Android",
-                "IOS"
-            ],
-            datasets: [{
-                data: [15, 20, 30, 10, 30],
-                color: ['blue', 'green', 'purple', 'aero', 'red'],
-                backgroundColor: [
-                    "#BDC3C7",
-                    "#9B59B6",
-                    "#E74C3C",
-                    "#26B99A",
-                    "#3498DB"
-                ],
-                hoverBackgroundColor: [
-                    "#CFD4D8",
-                    "#B370CF",
-                    "#E95E4F",
-                    "#36CAAB",
-                    "#49A9EA"
-                ]
-            }]
-        },
-        options: { 
-            legend: false, 
-            responsive: false 
-        }
+  const chart_doughnut_settings = {
+    type: 'doughnut',
+    tooltipFillColor: "rgba(51, 51, 51, 0.55)",
+    data: {
+      labels: [
+        "Symbian",
+        "Blackberry",
+        "Other",
+        "Android",
+        "IOS"
+      ],
+      datasets: [{
+        data: [15, 20, 30, 10, 30],
+        color: ['blue', 'green', 'purple', 'aero', 'red'],
+        backgroundColor: [
+          "#BDC3C7",
+          "#9B59B6",
+          "#E74C3C",
+          "#26B99A",
+          "#3498DB"
+        ],
+        hoverBackgroundColor: [
+          "#CFD4D8",
+          "#B370CF",
+          "#E95E4F",
+          "#36CAAB",
+          "#49A9EA"
+        ]
+      }]
+    },
+    options: { 
+      legend: false, 
+      responsive: false 
     }
+  }
 
-	export let settings = chart_doughnut_settings;
-    export let dataset = {data: [], color: []};
-    export let instance;
+  export let settings = chart_doughnut_settings;
+  export let dataset = {data: [], color: []};
+  export let canvas;
+  export let instance;
 
-    onMount(() => {            
-        const element = canvas;
-        dataset = settings.data.datasets[0];
-        instance = new Chart(window.$(element), settings)
-    });
+  $: if (canvas) {
+    const element = canvas;
+    dataset = settings.data.datasets[0];
+    instance = new Chart(window.$(element), settings);
+  }
 
-    onDestroy(() => {
-        instance.destroy();
-        window.$(canvas).empty();
-    });
+  onDestroy(() => {
+    instance.destroy();
+    window.$(canvas).empty();
+  });
 </script>
 
 <table class="" style="width:100%">
