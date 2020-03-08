@@ -15,7 +15,6 @@
 
 	const pageHeader = new ViewHeader({
 		target: document.querySelector('#page-header'),
-		data: () => ({}),
 	});
 
 	const menu = [
@@ -40,7 +39,7 @@
 
 	const nav = new Nav({
 		target: document.querySelector('#left-nav'),
-		data: {menu}	
+		props: { menu }	
 	});
 
 	export let development = process.env.NODE_ENV !== 'production';

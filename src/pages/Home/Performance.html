@@ -1,41 +1,41 @@
 <script>
-    import { onDestroy, onMount } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
 
-    export let progress;
+  export let progress;
 
-    export let settings = { data : [
-        {title:'Facebook Campaign', percent: 80},
-        {title:'Twitter Campaign', percent: 60},
-        {title:'Conventional Media', percent: 40},
-        {title:'Bill boards', percent: 50},
-    ]};
+  export let settings = { data : [
+    {title:'Facebook Campaign', percent: 80},
+    {title:'Twitter Campaign', percent: 60},
+    {title:'Conventional Media', percent: 40},
+    {title:'Bill boards', percent: 50},
+  ]};
 
-    onMount(() => {
-        const element = progress;
-        window.$(element).find('.progress-bar').progressbar();
-		});
+  $: if (progress) {
+    const element = progress;
+    window.$(element).find('.progress-bar').progressbar();
+  };
 
-    onDestroy(() => {
-        window.$(progress).find('.progress-bar').empty();
-    });
+  onDestroy(() => {
+    window.$(progress).find('.progress-bar').empty();
+  });
 </script>
 
 <div class="col-md-3 col-sm-3 col-xs-12 bg-white">
-    <div class="x_title">
-        <h2>Top Campaign Performance</h2>
-        <div class="clearfix"></div>
-    </div>
+  <div class="x_title">
+    <h2>Top Campaign Performance</h2>
+    <div class="clearfix"></div>
+  </div>
 
-    <div class="col-md-12 col-sm-12 col-xs-6" bind:this={progress}>
-        {#each settings.data as row}
-        <div>
-            <p>{row.title}</p>
-            <div class="">
-            <div class="progress progress_sm" style="width: 76%;">
-                <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="{row.percent}"></div>
-            </div>
-            </div>
-        </div>
-        {/each}
+  <div class="col-md-12 col-sm-12 col-xs-6" bind:this={progress}>
+    {#each settings.data as row}
+    <div>
+      <p>{row.title}</p>
+      <div class="">
+      <div class="progress progress_sm" style="width: 76%;">
+        <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="{row.percent}"></div>
+      </div>
+      </div>
     </div>
+    {/each}
+  </div>
 </div>

@@ -50,11 +50,11 @@ export default (routes) => {
     }
 
     for (let i = 0; i < routeData.length; i += 1) {
-      let data = routeData[i].route.match(location.pathname);
+      let props = routeData[i].route.match(location.pathname);
 
-      if (data) {
-        data.pageHeader = header;            
-        routeData[i].behavior({ target, data });
+      if (props) {
+        props.pageHeader = header;            
+        routeData[i].behavior({ target, props });
         navigator.location = location;
         break;
       }
