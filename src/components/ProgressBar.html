@@ -29,7 +29,7 @@ export let width;
 	// review these functions and remove unnecessary 'export' keywords
 	export function start() {
 	reset()
-	continue()
+	continueBar()
 }
 
 	export function reset() {
@@ -37,7 +37,7 @@ export let width;
 	width = startingWidth, running = true
 }
 
-	export function continue() {
+	export function continueBar() {
 	const maximumWidth = __this.get().maximum
 	const intervalTime = __this.get().intervalTime
 

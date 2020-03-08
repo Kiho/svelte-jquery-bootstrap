@@ -3,7 +3,7 @@
 
     import ViewHeader from '../../components/ViewHeader.html';
     import Panel from '../../components/Panel.html';
-    import DataGrid from '../../components/DataGrid.html';
+    // import DataGrid from '../../components/DataGrid.html';
     // import SparkLine from '../../components/SparkLine.html';
     import { server } from '../../api';
     import * as utils from '../../utils';
@@ -72,6 +72,6 @@
 </script>
 
 <Panel loader="bar" bind:loading="{loading}" filled={false}>
-        <DataGrid title="Customers" rows={list} columns={columndata}></DataGrid>
-        <a href="#customers/0" class="btn btn-default">New</a>
-    </Panel>
+    <!-- <DataGrid title="Customers" rows={list} columns={columndata}></DataGrid> -->
+    <a href="#customers/0" class="btn btn-default">New</a>
+</Panel>

@@ -12,11 +12,11 @@
 
     onMount(() => {
         const element = progress;
-        $(element).find('.progress-bar').progressbar();
+        window.$(element).find('.progress-bar').progressbar();
 		});
 
     onDestroy(() => {
-        $(progress).find('.progress-bar').empty();
+        window.$(progress).find('.progress-bar').empty();
     });
 </script>
 

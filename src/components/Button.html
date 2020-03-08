@@ -9,7 +9,7 @@
   export let block = false;
   export let active = false;
   export let disabled;
-  export let class = '';
+  export let className = '';
 
   // [svelte-upgrade suggestion]
   // review these functions and remove unnecessary 'export' keywords
@@ -24,7 +24,7 @@
 </script>
 
 <button
-  class="btn btn{outline ? '-outline' : ''}-{color}{size ? ` btn-${size}` : ''}{block ? ' btn-block' : ''}{ active ? ' active' : ''}{ disabled ? ' disabled' : ''} {class}"
+  class="btn btn{outline ? '-outline' : ''}-{color}{size ? ` btn-${size}` : ''}{block ? ' btn-block' : ''}{ active ? ' active' : ''}{ disabled ? ' disabled' : ''} {className}"
   on:click="{onClick}">
   <slot></slot>
 </button>

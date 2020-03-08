@@ -80,12 +80,12 @@
 
     onMount(() => {
         const element = plot;
-        instance = $.plot($(element), data, settings)
+        instance = window.$.plot(window.$(element), data, settings)
 		});
 
     onDestroy(() => {
         instance.destroy();
-        $(plot).empty();
+        window.$(plot).empty();
     });
 </script>
 

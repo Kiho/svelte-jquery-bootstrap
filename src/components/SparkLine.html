@@ -26,12 +26,12 @@
     // [svelte-upgrade suggestion]
     // review these functions and remove unnecessary 'export' keywords
     export function load(element, value, options) {
-        $(element).sparkline(value, options);
+        window.$(element).sparkline(value, options);
     }
 
     onDestroy(() => {
-        $(sparkline).sparkline('destroy');
-        $(sparkline).empty();
+        window.$(sparkline).sparkline('destroy');
+        window.$(sparkline).empty();
     });
 </script>
 

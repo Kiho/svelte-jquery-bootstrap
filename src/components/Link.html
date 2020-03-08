@@ -22,7 +22,7 @@ export let to = '/';
   <a href='{adjustedTo}' on:click='{event => navigate(event, to)}' style="display: block">
     <slot></slot>
   </a>
-{:elseif blockCenter}
+{:else if blockCenter}
   <a href='{adjustedTo}' on:click='{event => navigate(event, to)}' style="display: block;text-align: center">
     <slot></slot>
   </a>

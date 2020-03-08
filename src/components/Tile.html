@@ -3,7 +3,7 @@
 
     export let icon = '';
     export let title = '';
-    export let class = '';
+    export let className = '';
     export let count = '';
     export let percentColor = '';
     export let sort = '';
@@ -17,7 +17,7 @@
 
 <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
     <span class="count_top"><i class="fa fa-{icon}"></i> {title}</span>
-    <div class="count {class}">{count}</div>
+    <div class="count {className}">{count}</div>
     <span class="count_bottom">
         <i class={percentColor}>
         {#if sort}

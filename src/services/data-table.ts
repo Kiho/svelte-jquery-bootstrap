@@ -8,12 +8,12 @@ export default {
             dataSource: [],
         }, data);
     },
-    oncreate: async function (component: IDataTable, service, lookups) { // life-cycle hook 
+    oncreate: async function (component: any, service, lookups) { // life-cycle hook 
         await service.getLookups(component, lookups)
         component.loadData();
         this.initialize(component);
     },
-    initialize(component: IDataTable){
+    initialize(component: any){
         component.initHeader();
         const table = component.initTable(component.getTable()); 
         component.set({ tableInstance: table });     

@@ -46,12 +46,12 @@
     onMount(() => {            
         const element = canvas;
         dataset = settings.data.datasets[0];
-        instance = new Chart($(element), settings)
+        instance = new Chart(window.$(element), settings)
     });
 
     onDestroy(() => {
         instance.destroy();
-        $(canvas).empty();
+        window.$(canvas).empty();
     });
 </script>
 
