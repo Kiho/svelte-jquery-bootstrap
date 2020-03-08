@@ -1,93 +1,93 @@
 <script>
-    import { onMount } from 'svelte';
+  import { onMount } from 'svelte';
 
-    export let rtable;
+  export let rtable;
 
-    import ViewHeader from '../../components/ViewHeader.html';
-    import Panel from '../../components/Panel.html';
-    // import SparkLine from '../../components/SparkLine.html';
-    import { server } from '../../api';
-    import * as utils from '../../utils';
-    import Service from './service';
+  import Panel from '../../components/Panel.html';
+  import { server } from '../../api';
+  import * as utils from '../../utils';
+  import Service from './service';
 
-    const service = new Service();
-    const entityType = 'department';
+  export let loading;
+  export let list = [];
+  export let header = {
+    title: 'Departments',
+    icon: 'sitemap',
+    hidden: false,
+    viewPath: '<small><span class="c-white">Departments</span></small>'
+  };
+  
+  const entityType = 'department';
+  const service = new Service();
 
-    export let loading;
-    export let list = [];
-    export let header = {
-					title: 'Departments',
-					icon: 'sitemap',
-        hidden: false,
-					viewPath: '<small><span class="c-white">Departments</span></small>'
-				};
+  const app = { entityType, id: 0, header, 
+    setData: x => (list = x) };
 
-    onMount(() => {
-        service.init(this);
-			service.initHeader(this);
-        service.getList(this);         
-		});
+  onMount(() => {
+    service.initHeader(app);
+    service.getList(app);       
+  });
 
-    // [svelte-upgrade suggestion]
-    // review these functions and remove unnecessary 'export' keywords
-    export function createNew(e) {
-        window.location.href = '#departments';
-    }
+  // [svelte-upgrade suggestion]
+  // review these functions and remove unnecessary 'export' keywords
+  export function createNew(e) {
+    window.location.href = '#departments';
+  }
 
-    const formatDate = utils.formatDate;
+  const formatDate = utils.formatDate;
 </script>
 
 <Panel loader="bar" filled={true}>
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="input-group m-b-xs m-t-xs">
-                    <input class="form-control" type="text" placeholder="Search by Department.." style="width: 100%">
-                    <div class="input-group-btn">
-                        <button class="btn btn-default"><i class="fa fa-search"></i></button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <select class="form-control m-b-xs m-t-xs" name="account" style="width: 100%">
-                    <option selected="">Select status</option>
-                    <option>Option 1</option>
-                    <option>Option 2</option>
-                </select>
-            </div>
-            <div class="col-lg-3">
-                <select class="form-control m-t-xs" name="account" style="width: 100%">
-                    <option selected="">Sort by:</option>
-                    <option>Option 1</option>
-                    <option>Option 2</option>
-                </select>
-            </div>
-        </div>
-    </Panel>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="input-group m-b-xs m-t-xs">
+          <input class="form-control" type="text" placeholder="Search by Department.." style="width: 100%">
+          <div class="input-group-btn">
+              <button class="btn btn-default"><i class="fa fa-search"></i></button>
+          </div>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <select class="form-control m-b-xs m-t-xs" name="account" style="width: 100%">
+          <option selected="">Select status</option>
+          <option>Option 1</option>
+          <option>Option 2</option>
+      </select>
+    </div>
+    <div class="col-lg-3">
+      <select class="form-control m-t-xs" name="account" style="width: 100%">
+          <option selected="">Sort by:</option>
+          <option>Option 1</option>
+          <option>Option 2</option>
+      </select>
+    </div>
+  </div>
+</Panel>
 
-    <Panel loader="bar" bind:loading="{loading}" filled={false}>
-        <div class="table-responsive">
-            <table id="projects"
-                bind:this={rtable}
-                class="table table-vertical-align-middle">
-                <thead>
-                    <tr>
-                        <th>Department#</th>
-                        <th>Department</th>
-                        <th>Group</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {#each list as department}
-                    <tr>
-                        <td>{department.id}</td>
-                        <td>{department.name}</td>
-                        <td>{department.groupName}</td>
-                        <td><a href="#departments/{department.id}" class="btn btn-default btn-xs">Edit</a></td>
-                    </tr>
-                    {/each}
-                </tbody>
-            </table>
-        </div>
-        <a href="#departments/0" class="btn btn-default">New</a>
-    </Panel>
+<Panel loader="bar" bind:loading="{loading}" filled={false}>
+  <div class="table-responsive">
+    <table id="projects"
+      bind:this={rtable}
+      class="table table-vertical-align-middle">
+      <thead>
+        <tr>
+          <th>Department#</th>
+          <th>Department</th>
+          <th>Group</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {#each list as department}
+        <tr>
+          <td>{department.id}</td>
+          <td>{department.name}</td>
+          <td>{department.groupName}</td>
+          <td><a href="#departments/{department.id}" class="btn btn-default btn-xs">Edit</a></td>
+        </tr>
+        {/each}
+      </tbody>
+    </table>
+  </div>
+  <a href="#departments/0" class="btn btn-default">New</a>
+</Panel>

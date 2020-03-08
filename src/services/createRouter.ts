@@ -45,7 +45,7 @@ export default (routes) => {
     }
 
     if (content) {
-      content.destroy();
+      content.$destroy();
       content = undefined;
     }
 

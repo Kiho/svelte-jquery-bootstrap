@@ -1,94 +1,94 @@
 <script>
-    import { onDestroy, onMount } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
 
-    // [svelte-upgrade suggestion]
-    // manually refactor all references to __this
-    const __this = {
-        get: () => ({ tableName, description, departmentList, url, headerData })
+  // [svelte-upgrade suggestion]
+  // manually refactor all references to __this
+  const __this = {
+    get: () => ({ tableName, description, departmentList, url, headerData })
+  };
+
+  export let rtable;
+
+  import grid from '../../services/data-table';
+  import Panel from '../../components/Panel.html';
+  import { API_URL } from '../../api/server';
+  import Service from './service';
+  // import { observe } from 'svelte-extras';
+
+  const service = new Service();
+  const entityType = 'employee';
+
+  export let tableName = '';
+  export let description = '';
+  export let departmentList = [];
+  export let url = API_URL + entityType;
+  export let headerData = {
+    title: 'Employees',
+    icon: 'users',
+    hidden: false,
+    viewPath: '<small><span class="c-white">Employees</span></small>'
+  };
+
+  // [svelte-upgrade suggestion]
+  // review these functions and remove unnecessary 'export' keywords
+  export function getDepartmentName(id) {
+    const department = departmentList.find(x => x.id === id);
+    return department ? department.name : '';
+  }
+
+  export function initTable(table) {
+    const options = {
+      processing: true,
+      // select: true,
+      searching: true,
+      data: __this.get().dataSource,
+      columns: [
+        { data: 'id' },
+        { data: 'name' },
+        { data: 'gender'},
+        { data: 'title' },
+        { data: (data, type, row, meta) => {
+            return '<a href="#departments/' + data.departmentId + '">' + getDepartmentName(data.departmentId) + '</a>';
+        } },
+        { data: 'rate' },
+        { data: function (data, type, row, meta) {
+            return '<a href="#employees/' + data.id + '" class="btn btn-default btn-xs">Edit</a>';
+        } },
+      ],
     };
-
-    export let rtable;
-
-    import grid from '../../services/data-table';
-    import Panel from '../../components/Panel.html';
-    import { API_URL } from '../../api/server';
-    import Service from './service';
-    // import { observe } from 'svelte-extras';
-
-    const service = new Service();
-    const entityType = 'employee';
-
-    export let tableName = '';
-    export let description = '';
-    export let departmentList = [];
-    export let url = API_URL + entityType;
-    export let headerData = {
-        title: 'Employees',
-        icon: 'users',
-        hidden: false,
-        viewPath: '<small><span class="c-white">Employees</span></small>'
-    };
-
-    // [svelte-upgrade suggestion]
-    // review these functions and remove unnecessary 'export' keywords
-    export function getDepartmentName(id) {
-        const department = __this.get().departmentList.find(x => x.id === id);
-        return department ? department.name : '';
-    }
-
-    export function initTable(table) {
-        const options = {
-            processing: true,
-            // select: true,
-            searching: true,
-            data: __this.get().dataSource,
-            columns: [
-                { data: 'id' },
-                { data: 'name' },
-                { data: 'gender'},
-                { data: 'title' },
-                { data: (data, type, row, meta) => {
-                    return '<a href="#departments/' + data.departmentId + '">' + getDepartmentName(data.departmentId) + '</a>';
-                } },
-                { data: 'rate' },
-                { data: function (data, type, row, meta) {
-                    return '<a href="#employees/' + data.id + '" class="btn btn-default btn-xs">Edit</a>';
-                } },
-            ],
-        };
-        // const table = $table.DataTable(options);
-        // table.on('select', (e, dt, type, indexes) => {
-        //     // event handling for jquery.dataTables
-        //     // see: https://datatables.net/examples/advanced_init/dt_events.html
-        // });
-        // return table;
-    }
-
-    onMount(() => {
-        grid.oncreate(this, service, ['department']);
+    const t = table.DataTable(options);
+    t.on('select', (e, dt, type, indexes) => {
+        // event handling for jquery.dataTables
+        // see: https://datatables.net/examples/advanced_init/dt_events.html
     });
+    return t;
+  }
 
-    onDestroy(() => {
-        grid.ondestroy();
-    });
+  onMount(() => {
+    grid.oncreate(this, service, ['department']);
+  });
+
+  onDestroy(() => {
+    grid.ondestroy();
+  });
 </script>
 
 <Panel title={tableName} description={description} filled={true} on:onLoadData='{loadData}' toolbar={false} >
-    <div class="table-responsive">
-        <table id="employees"
-            bind:this={rtable}
-            class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Gender</th>
-                    <th>Title</th>
-                    <th>Department</th>
-                    <th>Rate</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-        </table>
-    </div>
+  <div class="table-responsive">
+    <table id="employees"
+      bind:this={rtable}
+      class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Gender</th>
+          <th>Title</th>
+          <th>Department</th>
+          <th>Rate</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
 </Panel>

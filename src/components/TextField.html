@@ -24,30 +24,30 @@
   export let pattern = '';
   export let validators = null;
 
-  onMount(() => {
-      const element = input;
-      __this.observe('required', required => {
-          element.required = required;
-      });
-      element.required = __this.get().required;
-      if (pattern) {
-          element.setAttribute('pattern', pattern);
-      }
-      initValidators(element, validate);
-  });
-
-// [svelte-upgrade suggestion]
-// review these functions and remove unnecessary 'export' keywords
-export function initValidators(element, data) {
-  if (data && data.length > 0) {
-    data.forEach(function(attr) {
-      const kv = attr.split('=');
-      if (kv.length == 2) {
-        element.setAttribute('data-validate-' + kv[0], kv[1]);
-      }                    
-    }, this);
+  $: if (input) {
+    const element = input;
+    // __this.observe('required', required => {
+    //     element.required = required;
+    // });
+    element.required = required;
+    if (pattern) {
+        element.setAttribute('pattern', pattern);
+    }
+    initValidators(element, validate);
   }
-}
+
+  // [svelte-upgrade suggestion]
+  // review these functions and remove unnecessary 'export' keywords
+  export function initValidators(element, data) {
+    if (data && data.length > 0) {
+      data.forEach(function(attr) {
+        const kv = attr.split('=');
+        if (kv.length == 2) {
+          element.setAttribute('data-validate-' + kv[0], kv[1]);
+        }                    
+      }, this);
+    }
+  }
 </script>
 
 <div class="form-group {className} {validate ? 'field' : ''}"><label for={uuid} class="col-md-1 control-label">{label}</label>

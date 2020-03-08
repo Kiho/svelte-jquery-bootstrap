@@ -103,6 +103,8 @@ export let width;
 }
 </script>
 
+<svelte:options accessors={true}/>
+
 {#if width && widthPercent}
 <div class="svelte-progress-bar {barClass}" style="width: {widthPercent}%; {barColorStyle}">
 	{#if running}
@@ -110,8 +112,6 @@ export let width;
 	{/if}
 </div>
 {/if}
-
-
 
 <style>
 .svelte-progress-bar {
