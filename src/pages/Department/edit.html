@@ -1,8 +1,5 @@
 <script>
   import { onMount } from 'svelte';
-
-  export let form;
-
   import Col from '../../components/Col.html';
   import Row from '../../components/Row.html';
   import Button from '../../components/Button.html';
@@ -11,6 +8,7 @@
   import StateZipField from '../../components/StateZipField.html';
   import Panel from '../../components/Panel.html';
   import Service from './service';
+  import AppInstance from '../../services/AppInstance.html';
 
   export let loading;
   export let item = {};
@@ -21,31 +19,30 @@
     viewPath: '<small><span class="c-white">Department</span></small>'
   };
 
-  export let entityType = 'department';
   export let id = 0;
+  export let form;
   export let departmentList = [];
   export let employeeList = [];
-
-  const app = { entityType, id, form, 
-    setData: x => (item = x) };
+  
+  let instance;
+  const entityType = 'department';
   const service = new Service();
 
-  onMount(() => {
-    service.initHeader(app);
-    service.getById(app);
-  });
+  $: if (instance) {
+    service.initHeader(instance);
+    service.getById(instance);
+  }
 
-  // [svelte-upgrade suggestion]
-  // review these functions and remove unnecessary 'export' keywords
-  export function handleGoBack() {
+  function handleGoBack() {
     service.goBack();
   }
 
-  export function handleSubmit(e) {
-    service.submit(e, this);
+  function handleSubmit(e) {
+    service.submit(e, instance);
   }
 </script>
 
+<AppInstance {entityType} {header} {form} bind:id bind:loading bind:item bind:this={instance} />
 <Panel loader="bar" bind:loading="{loading}" filled={true}>
   <form class="form-horizontal" bind:this={form}> 
     <Row>

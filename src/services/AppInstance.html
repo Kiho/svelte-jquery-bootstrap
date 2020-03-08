@@ -1,0 +1,18 @@
+<script>
+  export let loading;
+  export let header = {
+    title: '',
+    icon: '',
+    hidden: false,
+    viewPath: ''
+  }; 
+  export let entityType = '';
+  // index.svelte
+  export let list = [];
+  // edit.svelte
+  export let id = 0;
+  export let item = [];
+  export let form = null;
+</script>
+
+<svelte:options accessors={true}/>

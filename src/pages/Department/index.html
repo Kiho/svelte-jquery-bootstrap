@@ -7,6 +7,7 @@
   import { server } from '../../api';
   import * as utils from '../../utils';
   import Service from './service';
+  import AppInstance from '../../services/AppInstance.html';
 
   export let loading;
   export let list = [];
@@ -17,16 +18,14 @@
     viewPath: '<small><span class="c-white">Departments</span></small>'
   };
   
+  let instance;
   const entityType = 'department';
   const service = new Service();
 
-  const app = { entityType, id: 0, header, 
-    setData: x => (list = x) };
-
-  onMount(() => {
-    service.initHeader(app);
-    service.getList(app);       
-  });
+  $: if (instance) {
+    service.initHeader(instance);
+    service.getList(instance); 
+  }
 
   // [svelte-upgrade suggestion]
   // review these functions and remove unnecessary 'export' keywords
@@ -37,6 +36,7 @@
   const formatDate = utils.formatDate;
 </script>
 
+<AppInstance {entityType} {header} bind:loading bind:list bind:this={instance} />
 <Panel loader="bar" filled={true}>
   <div class="row">
     <div class="col-lg-6">

@@ -33,7 +33,7 @@ const loaded = (intervalTime, start, end, app: IApp, complete: (x: IApp) => void
 
 export interface IApp {
   get: () => any;
-  set: (object) => void;
+  $set: (object) => void;
   setData: (object) => void;
   entityType: EntityType;
   id: number;
@@ -50,20 +50,20 @@ export default class AppService {
   }
 
   init(app: IApp) { 
-    const {id, entityType} = app.get();       
-    app.entityType = entityType;
-    app.id = id;
+    // const {id, entityType} = app.get();       
+    // app.entityType = entityType;
+    // app.id = id;
   } 
 
   initHeader(app: IApp) {			
     // app.get().pageHeader.set(app.get().header);
     if (app.form) {
-      this.initValidator(app, app.form);
+      this.initValidator(app.form);
     }
     console.log('AppService: init()', this._page);
   }
     
-  initValidator(app: IApp, form) {
+  initValidator(form) {
     if (!form) {
       return;
     }
@@ -104,7 +104,7 @@ export default class AppService {
       loadAll.push(
         server.getList(entity).then((x) => {
             const listName = entity + 'List';
-            app.set({[listName]: x});
+            app.$set({[listName]: x});
             // cache.data[entity] = x;
             console.log(listName + ' from server', x);
         })
@@ -117,7 +117,7 @@ export default class AppService {
     const action = () => server.getList(app.entityType);
     const postAction = (list) => {
         console.log('List from server', list);
-        app.setData(list);
+        app.$set({list});
     };
     this.serverAction(app, action, postAction);
   }
@@ -127,7 +127,7 @@ export default class AppService {
         this.createNew(app); return;
     }
     const action = () => server.getById(app.entityType, app.id);
-    const postAction = item => app.setData(item);
+    const postAction = item => app.$set({ item });
     this.serverAction(app, action, postAction);
   }
 
@@ -158,6 +158,6 @@ export default class AppService {
   }
 
   createNew(app: IApp) {        
-    app.set({item: createNew(app.entityType)});
+    app.$set({ item: createNew(app.entityType) });
   }
 }
