@@ -2,47 +2,26 @@
 import toastr from '../common/toastr';
 
 export default {
-    data: function (data) { // default data: https://svelte.technology/guide#default-data
-        return Object.assign({
-            tableInstance: undefined,
-            dataSource: [],
-        }, data);
-    },
-    oncreate: async function (component: any, service, lookups) { // life-cycle hook 
-        await service.getLookups(component, lookups)
-        component.loadData();
-        this.initialize(component);
-    },
-    initialize(component: any){
-        component.initHeader();
-        const table = component.initTable(component.getTable()); 
-        component.set({ tableInstance: table });     
-        component.observe('dataSource', dataSource => { // watch for changes in 'dataSource'
-            if (dataSource) {
-                component.updateTable();
-            }
-        });
+    tableInstance: null,
+    oncreate: async function (component: any, initTable, table, url) { // life-cycle hook 
+        this.table = table;
+        this.tableInstance = initTable(table);
+        await this.loadData(component, url);
     },
     ondestroy: function () { // cleanup life-cycle method.
-        this.getTable().remove(); // remove jQuery object
+        this.table.remove(); // remove jQuery object
     },
-    loadData: async function () {
-        const json = await server.doFetch(this.get().url);
-        this.set({ dataSource: json });
-        toastr.info(`Retrieved data from ${this.get().url}`, 'Info');
+    loadData: async function (component: any, url: string) {        
+        const json = await server.doFetch(url);
+        component.$set({ list: json });
+        toastr.info(`Retrieved data from ${url}`, 'Info');
     },
-    updateTable: function () {
-        const table = this.get().tableInstance; // https://svelte.technology/guide#component-get-key-
+    updateTable: function (list) {
+        const table = this.tableInstance; // https://svelte.technology/guide#component-get-key-
         if (table) {
             table.clear();
-            table.rows.add(this.get().dataSource);
+            table.rows.add(list);
             table.draw();
         }
-    },
-    getTable: function () {
-        return $(this.refs.rtable);
-    },
-    initHeader() {			
-        this.get().pageHeader.set(this.get().headerData);
     },
 }

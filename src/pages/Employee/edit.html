@@ -1,53 +1,58 @@
 <script>
-    import { onMount } from 'svelte';
+  import { onMount } from 'svelte';
+  import Col from '../../components/Col.html';
+  import Row from '../../components/Row.html';
+  import Button from '../../components/Button.html';
+  import TextField from '../../components/TextField.html';
+  import SelectField from '../../components/SelectField.html';
+  import StateZipField from '../../components/StateZipField.html';
+  import Panel from '../../components/Panel.html';
+  import Service from './service';
+  import AppInstance from '../../services/AppInstance.html';
 
-    export let form;
+  export let loading;
+  export let item = {};
+  export let header = {
+    title: 'Employee',
+    icon: 'users',
+    hidden: false,
+    viewPath: '<small><span class="c-white">Employee</span></small>'
+  };
+  
+  export let id = 0;
+  export let form;
+  export let pageHeader;
+  export let genderList = ["Male", "Female"];
+  export let departmentList = [];
 
-    import Col from '../../components/Col.html';
-    import Row from '../../components/Row.html';
-    import Button from '../../components/Button.html';
-    import TextField from '../../components/TextField.html';
-    import SelectField from '../../components/SelectField.html';
-    import StateZipField from '../../components/StateZipField.html';
-    import Panel from '../../components/Panel.html';
-    import Service from './service';
+  let instance;
+  const entityType = 'employee';
+  const service = new Service();
+  let lookups = {};
 
-    const service = new Service();
+  $: if (instance) {
+    service.initHeader(instance);
+    service.getLookups(instance, ['department'])
+      .then(() => {
+        departmentList = lookups['departmentList'];
+        service.getById(instance);
+      });
+  }
 
-    export let loading;
-    export let item = {};
-    export let genderList = ["Male", "Female"];
-    export let departmentList = [];
-    export let header = {
-					title: 'Employee',
-					icon: 'users',
-        hidden: false,
-					viewPath: '<small><span class="c-white">Employee</span></small>'
-				};
-    export let entityType = 'employee';
-    export let id = 0;
+  onMount(() => {
+    pageHeader.$set(header);
+  });
 
-    onMount(() => {
-        service.init(this);
-			service.initHeader(this);
-        service.getLookups(this, ['department'])
-            .then(() => {
-                // console.log('Call getById');
-                service.getById(this);
-            });
-		});
+  function handleGoBack(e) {
+    service.goBack(e);
+  }
 
-    // [svelte-upgrade suggestion]
-    // review these functions and remove unnecessary 'export' keywords
-    export function handleGoBack() {
-        service.goBack();
-    }
-
-    export function handleSubmit(e) {
-        service.submit(e, this);
-    }
+  function handleSubmit(e) {
+    service.submit(e, instance);
+  }
 </script>
 
+<AppInstance {entityType} {header} {form} bind:lookups bind:id bind:loading bind:item bind:this={instance} />
 <Panel loader="bar" bind:loading="{loading}" filled={true}>
     <form class="form-horizontal" bind:this={form}>   
         <Row>

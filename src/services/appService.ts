@@ -34,8 +34,8 @@ const loaded = (intervalTime, start, end, app: IApp, complete: (x: IApp) => void
 export interface IApp {
   get: () => any;
   $set: (object) => void;
-  setData: (object) => void;
   entityType: EntityType;
+  lookups: object;
   id: number;
   form?: HTMLFormElement;
   item?: object;
@@ -104,8 +104,8 @@ export default class AppService {
       loadAll.push(
         server.getList(entity).then((x) => {
             const listName = entity + 'List';
-            app.$set({[listName]: x});
-            // cache.data[entity] = x;
+            app.lookups[listName] = x;
+            // app.$set({ lookups: { [listName]: x } });
             console.log(listName + ' from server', x);
         })
       );                      

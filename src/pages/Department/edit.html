@@ -23,7 +23,8 @@
   export let form;
   export let departmentList = [];
   export let employeeList = [];
-
+  export let pageHeader;
+  
   let instance;
   const entityType = 'department';
   const service = new Service();
@@ -32,6 +33,10 @@
     service.initHeader(instance);
     service.getById(instance);
   }
+
+  onMount(() => {
+    pageHeader.$set(header);
+  });
 
   function handleGoBack(e) {
     service.goBack(e);

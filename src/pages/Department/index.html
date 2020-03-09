@@ -17,7 +17,8 @@
     hidden: false,
     viewPath: '<small><span class="c-white">Departments</span></small>'
   };
-  
+  export let pageHeader;
+
   let instance;
   const entityType = 'department';
   const service = new Service();
@@ -27,11 +28,13 @@
     service.getList(instance); 
   }
 
-  // [svelte-upgrade suggestion]
-  // review these functions and remove unnecessary 'export' keywords
   export function createNew(e) {
     window.location.href = '#departments';
   }
+
+  onMount(() => {
+    pageHeader.$set(header);
+  });
 
   const formatDate = utils.formatDate;
 </script>

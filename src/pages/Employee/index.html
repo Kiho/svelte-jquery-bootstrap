@@ -3,9 +3,9 @@
 
   // [svelte-upgrade suggestion]
   // manually refactor all references to __this
-  const __this = {
-    get: () => ({ tableName, description, departmentList, url, headerData })
-  };
+  // const __this = {
+  //   get: () => ({ tableName, description, departmentList, url, headerData })
+  // };
 
   export let rtable;
 
@@ -13,24 +13,39 @@
   import Panel from '../../components/Panel.html';
   import { API_URL } from '../../api/server';
   import Service from './service';
-  // import { observe } from 'svelte-extras';
-
-  const service = new Service();
-  const entityType = 'employee';
+  import AppInstance from '../../services/AppInstance.html';
 
   export let tableName = '';
   export let description = '';
   export let departmentList = [];
   export let url = API_URL + entityType;
-  export let headerData = {
+  export let header = {
     title: 'Employees',
     icon: 'users',
     hidden: false,
     viewPath: '<small><span class="c-white">Employees</span></small>'
   };
+  export let pageHeader;
+  export let list = [];
 
-  // [svelte-upgrade suggestion]
-  // review these functions and remove unnecessary 'export' keywords
+  let instance;
+  const service = new Service();
+  const entityType = 'employee';
+  let lookups = {};
+  let initialized = false;
+
+  $: if (!initialized && instance) {
+    initialized = true;
+    service.initHeader(instance);
+    service.getLookups(instance, ['department'])
+      .then(() => {
+        departmentList = lookups['departmentList'];
+        grid.oncreate(instance, initTable, rtable, url);
+      });
+  }
+
+  $: grid.updateTable(list);
+
   export function getDepartmentName(id) {
     const department = departmentList.find(x => x.id === id);
     return department ? department.name : '';
@@ -41,7 +56,7 @@
       processing: true,
       // select: true,
       searching: true,
-      data: __this.get().dataSource,
+      data: list, // __this.get().dataSource,
       columns: [
         { data: 'id' },
         { data: 'name' },
@@ -56,7 +71,7 @@
         } },
       ],
     };
-    const t = table.DataTable(options);
+    const t = window.$(table).DataTable(options);
     t.on('select', (e, dt, type, indexes) => {
         // event handling for jquery.dataTables
         // see: https://datatables.net/examples/advanced_init/dt_events.html
@@ -65,7 +80,7 @@
   }
 
   onMount(() => {
-    grid.oncreate(this, service, ['department']);
+    pageHeader.$set(header);
   });
 
   onDestroy(() => {
@@ -73,7 +88,8 @@
   });
 </script>
 
-<Panel title={tableName} description={description} filled={true} on:onLoadData='{loadData}' toolbar={false} >
+<AppInstance {entityType} {header} bind:lookups bind:list bind:this={instance} />
+<Panel title={tableName} description={description} filled={true} toolbar={false} >
   <div class="table-responsive">
     <table id="employees"
       bind:this={rtable}
