@@ -1,6 +1,4 @@
 import { server } from '../api';
-import * as utils from '../utils';
-import history from '../services/whistory';
 import { EntityType, createNew } from '../model';
 import ProgressBar from '../components/ProgressBar.html';
 
@@ -154,7 +152,7 @@ export default class AppService {
 
   goBack(event) {
     event.preventDefault();
-    history.goBack();
+    window.history.back();
   }
 
   createNew(app: IApp) {        

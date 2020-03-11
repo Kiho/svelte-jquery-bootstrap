@@ -1,5 +1,7 @@
 <script>
   import { onMount } from 'svelte';
+  import { params } from 'svelte-hash-router';
+
   import Col from '../../components/Col.html';
   import Row from '../../components/Row.html';
   import Button from '../../components/Button.html';
@@ -31,16 +33,18 @@
   let lookups = {};
 
   $: if (instance) {
+
+  }
+
+  onMount(() => {
+    // pageHeader.$set(header);
+    instance.$set({id: $params.id}); 
     service.initHeader(instance);
     service.getLookups(instance, ['department'])
       .then(() => {
         departmentList = lookups['departmentList'];
         service.getById(instance);
       });
-  }
-
-  onMount(() => {
-    pageHeader.$set(header);
   });
 
   function handleGoBack(e) {

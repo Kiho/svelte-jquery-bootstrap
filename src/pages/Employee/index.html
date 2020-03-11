@@ -63,11 +63,11 @@
         { data: 'gender'},
         { data: 'title' },
         { data: (data, type, row, meta) => {
-            return '<a href="#departments/' + data.departmentId + '">' + getDepartmentName(data.departmentId) + '</a>';
+            return '<a href="/#/departments/' + data.departmentId + '">' + getDepartmentName(data.departmentId) + '</a>';
         } },
         { data: 'rate' },
         { data: function (data, type, row, meta) {
-            return '<a href="#employees/' + data.id + '" class="btn btn-default btn-xs">Edit</a>';
+            return '<a href="/#/employees/' + data.id + '" class="btn btn-default btn-xs">Edit</a>';
         } },
       ],
     };
@@ -80,7 +80,7 @@
   }
 
   onMount(() => {
-    pageHeader.$set(header);
+    // pageHeader.$set(header);
   });
 
   onDestroy(() => {

@@ -1,5 +1,4 @@
 <script>
-  import Link from './components/Link.html';
   import { getPathName } from './utils';
 
   export let location = {};
@@ -16,7 +15,7 @@
 <ul class="nav side-menu">
   {#each menu as item}
   <li class='{ route === item.href ? " active" : "" }'>
-    <Link to='{ item.href }'><i class='fa fa-{ item.icon }'></i>{item.text}</Link>
+    <a href='#{ item.href }'><i class='fa fa-{ item.icon }'></i>{item.text}</a>
   </li>
   {/each}
 </ul>

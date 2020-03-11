@@ -1,5 +1,7 @@
 <script>
   import { onMount } from 'svelte';
+  import { params } from 'svelte-hash-router';
+
   import Col from '../../components/Col.html';
   import Row from '../../components/Row.html';
   import Button from '../../components/Button.html';
@@ -29,13 +31,11 @@
   const entityType = 'department';
   const service = new Service();
 
-  $: if (instance) {
+  onMount(() => {
+    // pageHeader.$set(header);
+    instance.$set({id: $params.id});
     service.initHeader(instance);
     service.getById(instance);
-  }
-
-  onMount(() => {
-    pageHeader.$set(header);
   });
 
   function handleGoBack(e) {

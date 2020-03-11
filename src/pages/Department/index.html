@@ -23,17 +23,14 @@
   const entityType = 'department';
   const service = new Service();
 
-  $: if (instance) {
-    service.initHeader(instance);
-    service.getList(instance); 
-  }
-
   export function createNew(e) {
     window.location.href = '#departments';
   }
 
   onMount(() => {
-    pageHeader.$set(header);
+    // pageHeader.$set(header);
+    service.initHeader(instance);
+    service.getList(instance); 
   });
 
   const formatDate = utils.formatDate;
@@ -86,11 +83,11 @@
           <td>{department.id}</td>
           <td>{department.name}</td>
           <td>{department.groupName}</td>
-          <td><a href="#departments/{department.id}" class="btn btn-default btn-xs">Edit</a></td>
+          <td><a href="/#/departments/{department.id}" class="btn btn-default btn-xs">Edit</a></td>
         </tr>
         {/each}
       </tbody>
     </table>
   </div>
-  <a href="#departments/0" class="btn btn-default">New</a>
+  <a href="/#/departments/0" class="btn btn-default">New</a>
 </Panel>

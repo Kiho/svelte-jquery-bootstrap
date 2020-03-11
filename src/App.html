@@ -1,6 +1,6 @@
-<script>
+﻿<script>
 	import { onDestroy, onMount } from 'svelte';
-	import createRouter from './services/createRouter';
+	import Router, { routes } from 'svelte-hash-router';
 	import Nav from './Nav.html';
 	import AboutPage from './pages/About.html';
 	import ViewHeader from './components/ViewHeader.html';
@@ -9,7 +9,6 @@
 	import DepartmentEdit from './pages/Department/edit.html';
 	import EmployeePage from './pages/Employee/index.html';
 	import EmployeeEdit from './pages/Employee/edit.html';
-	import history from './services/whistory';
 
 	const pageHeader = new ViewHeader({
 		target: document.querySelector('#page-header'),
@@ -22,7 +21,17 @@
 		{ href: '/about', text: 'About', icon: 'leaf' },
 	];
 
-	const router = createRouter({
+	// const router = createRouter({
+	// 	'/': '/home',
+	// 	'/home': Home,
+	// 	'/departments': DepartmentPage,
+	// 	'/departments/:id': DepartmentEdit,
+	// 	'/about': AboutPage,
+	// 	'/employees': EmployeePage,
+	// 	'/employees/:id': EmployeeEdit,
+	// });
+
+	routes.set({
 		'/': '/home',
 		'/home': Home,
 		'/departments': DepartmentPage,
@@ -38,13 +47,15 @@
 	});
 
 	export let development = process.env.NODE_ENV !== 'production';
-	export let state = { };
+	// export let state = { };
 
-	onMount(() => {
-		router.start(window.location, window.document.querySelector('#content'), pageHeader, nav);
-	});
+	// onMount(() => {
+	// 	router.start(window.location, window.document.querySelector('#content'), pageHeader, nav);
+	// });
 
-	onDestroy(() => {
-		router.remove();
-	});
+	// onDestroy(() => {
+	// 	router.remove();
+	// });
 </script>
+
+<Router />
