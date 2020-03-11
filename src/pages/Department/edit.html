@@ -49,7 +49,7 @@
 
 <AppInstance {entityType} {header} {form} bind:id bind:loading bind:item bind:this={instance} />
 <Panel loader="bar" bind:loading="{loading}" filled={true}>
-  <form class="form-horizontal" bind:this={form}> 
+  <form name="form" class="form-horizontal" bind:this={form}> 
     <Row>
       <Col lg="12">
         <TextField

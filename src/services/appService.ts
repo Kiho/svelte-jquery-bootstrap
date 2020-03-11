@@ -131,6 +131,7 @@ export default class AppService {
 
   async submit(event, app: IApp) {
     event.preventDefault();
+    event.stopPropagation();
     const form = app.form;
     const data = app.item;
 
@@ -152,7 +153,9 @@ export default class AppService {
 
   goBack(event) {
     event.preventDefault();
-    window.history.back();
+    setTimeout(() => {
+      window.history.back();
+    }, 0);
   }
 
   createNew(app: IApp) {        
