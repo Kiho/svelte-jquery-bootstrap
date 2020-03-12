@@ -1,6 +1,5 @@
 <script>
   import { onMount } from 'svelte';
-  import { params } from 'svelte-hash-router';
 
   import Col from '../../components/Col.html';
   import Row from '../../components/Row.html';
@@ -11,6 +10,7 @@
   import Panel from '../../components/Panel.html';
   import Service from './service';
   import AppInstance from '../../services/AppInstance.html';
+  import { pageHeaderComponent } from '../../components/ViewHeader.html';
 
   export let loading;
   export let item = {};
@@ -25,15 +25,15 @@
   export let form;
   export let departmentList = [];
   export let employeeList = [];
-  export let pageHeader;
+  export let params = {};
   
   let instance;
   const entityType = 'department';
   const service = new Service();
 
   onMount(() => {
-    // pageHeader.$set(header);
-    instance.$set({id: $params.id});
+    pageHeaderComponent.update(header);
+    instance.$set({id: params.id});
     service.initHeader(instance);
     service.getById(instance);
   });
@@ -49,7 +49,7 @@
 
 <AppInstance {entityType} {header} {form} bind:id bind:loading bind:item bind:this={instance} />
 <Panel loader="bar" bind:loading="{loading}" filled={true}>
-  <form name="form" class="form-horizontal" bind:this={form}> 
+  <form name="form" on:submit="{() => false}" class="form-horizontal" bind:this={form}> 
     <Row>
       <Col lg="12">
         <TextField

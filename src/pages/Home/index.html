@@ -7,10 +7,12 @@
 	import Doughnut from './Doughnut.html';
 	import QuickSettings from './QuickSettings.html';
 	import NetworkActivities from './NetworkActivities.html';
+  import { pageHeaderComponent } from '../../components/ViewHeader.html';
 	
 	export let pageHeader;
 
 	onMount(() => {
+		pageHeaderComponent.update({ hidden: true });
 		// pageHeader.hidden = true;
 	});
 </script>

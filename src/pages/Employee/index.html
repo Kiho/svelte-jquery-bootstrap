@@ -14,6 +14,7 @@
   import { API_URL } from '../../api/server';
   import Service from './service';
   import AppInstance from '../../services/AppInstance.html';
+  import { pageHeaderComponent } from '../../components/ViewHeader.html';
 
   export let tableName = '';
   export let description = '';
@@ -35,6 +36,7 @@
   let initialized = false;
 
   $: if (!initialized && instance) {
+    pageHeaderComponent.update(header);
     initialized = true;
     service.initHeader(instance);
     service.getLookups(instance, ['department'])

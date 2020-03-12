@@ -1,6 +1,5 @@
 <script>
   import { onMount } from 'svelte';
-  import { params } from 'svelte-hash-router';
 
   import Col from '../../components/Col.html';
   import Row from '../../components/Row.html';
@@ -11,6 +10,7 @@
   import Panel from '../../components/Panel.html';
   import Service from './service';
   import AppInstance from '../../services/AppInstance.html';
+  import { pageHeaderComponent } from '../../components/ViewHeader.html';
 
   export let loading;
   export let item = {};
@@ -26,19 +26,16 @@
   export let pageHeader;
   export let genderList = ["Male", "Female"];
   export let departmentList = [];
+  export let params = {};
 
   let instance;
   const entityType = 'employee';
   const service = new Service();
   let lookups = {};
 
-  $: if (instance) {
-
-  }
-
   onMount(() => {
-    // pageHeader.$set(header);
-    instance.$set({id: $params.id}); 
+    pageHeaderComponent.update(header);
+    instance.$set({id: params.id}); 
     service.initHeader(instance);
     service.getLookups(instance, ['department'])
       .then(() => {

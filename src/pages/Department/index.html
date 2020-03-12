@@ -8,6 +8,7 @@
   import * as utils from '../../utils';
   import Service from './service';
   import AppInstance from '../../services/AppInstance.html';
+  import { pageHeaderComponent } from '../../components/ViewHeader.html';
 
   export let loading;
   export let list = [];
@@ -27,8 +28,8 @@
     window.location.href = '#departments';
   }
 
-  onMount(() => {
-    // pageHeader.$set(header);
+  onMount(() => {   
+    pageHeaderComponent.update(header);
     service.initHeader(instance);
     service.getList(instance); 
   });

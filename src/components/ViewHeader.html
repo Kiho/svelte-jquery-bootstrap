@@ -1,28 +1,46 @@
+<script context="module">  
+  import pageHeader from '../stores/pageHeader';
+
+  export const pageHeaderComponent = pageHeader();
+</script>
+
 <script>
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
 
   export let hidden = false;
-  export let col = 'lg-12';
-  export let viewPath = '';
-  export let icon = '';
-  export let title = '';
-  export let description = '';
+  
+  export let component = pageHeaderComponent;
+  export let item = {};
+
+  $: {
+    item = $component;
+    hidden = item.hidden;
+  }
+
+  const unsubscribe = pageHeaderComponent.subscribe(value => {
+    console.log('subscribe', value);
+  }); // logs 'got a subscriber', then '1'
+
+  onDestroy(() => {
+    console.log('unsubscribe');
+    unsubscribe(); // logs 'no more subscribers'
+  });  
 </script>
 
 <svelte:options accessors={true}/>
 {#if !hidden}
-<div class="col-{col}">
+<div class="col-{item.col}">
   <div class="view-header">
     <div class="pull-right text-right" style="line-height: 14px">
-      {@html viewPath}
+      {@html item.viewPath}
     </div>
     <div class="header-icon">
-      <i class="fa fa-{icon}"></i>
+      <i class="fa fa-{item.icon}"></i>
     </div>
     <div class="header-title">
-      <h3>{title}</h3>
+      <h3>{item.title}</h3>
       <small>
-        {description}
+        {item.description}
       </small>
     </div>
   </div>

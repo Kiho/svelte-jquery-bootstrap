@@ -1,6 +1,7 @@
 ﻿<script>
 	import { onDestroy, onMount } from 'svelte';
-	import Router, { routes } from 'svelte-hash-router';
+	import Router from 'svelte-spa-router';
+
 	import Nav from './Nav.html';
 	import AboutPage from './pages/About.html';
 	import ViewHeader from './components/ViewHeader.html';
@@ -9,10 +10,6 @@
 	import DepartmentEdit from './pages/Department/edit.html';
 	import EmployeePage from './pages/Employee/index.html';
 	import EmployeeEdit from './pages/Employee/edit.html';
-
-	const pageHeader = new ViewHeader({
-		target: document.querySelector('#page-header'),
-	});
 
 	const menu = [
 		{ href: '/home', text: 'Home', icon: 'home' },
@@ -31,20 +28,15 @@
 	// 	'/employees/:id': EmployeeEdit,
 	// });
 
-	routes.set({
-		'/': '/home',
+	const routes = {
+		'/': Home,
 		'/home': Home,
 		'/departments': DepartmentPage,
 		'/departments/:id': DepartmentEdit,
 		'/about': AboutPage,
 		'/employees': EmployeePage,
 		'/employees/:id': EmployeeEdit,
-	});
-
-	const nav = new Nav({
-		target: document.querySelector('#left-nav'),
-		props: { menu }	
-	});
+	};
 
 	export let development = process.env.NODE_ENV !== 'production';
 	// export let state = { };
@@ -56,6 +48,15 @@
 	// onDestroy(() => {
 	// 	router.remove();
 	// });
+
+	const pageHeader = new ViewHeader({
+		target: document.querySelector('#page-header'),
+	});
+
+	const nav = new Nav({
+		target: document.querySelector('#left-nav'),
+		props: { menu }	
+	});
 </script>
 
-<Router />
+<Router {routes} />
