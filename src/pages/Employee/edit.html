@@ -36,7 +36,7 @@
   onMount(() => {
     pageHeaderComponent.update(header);
     instance.$set({id: params.id}); 
-    service.initHeader(instance);
+    service.initForm(instance);
     service.getLookups(instance, ['department'])
       .then(() => {
         departmentList = lookups['departmentList'];

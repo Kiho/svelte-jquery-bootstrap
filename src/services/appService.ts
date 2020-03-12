@@ -12,17 +12,18 @@ const progress = new ProgressBar({
 })
 
 function startLoading(app: IApp) {
-  // app.loading = true; 
+  app.$set({ loading: true });
   progress.start();
 }
 
 function completeLoading(app: IApp) {
-  // app.loading = false;
+  app.$set({ loading: false });
   progress.complete();
 } 
 
 const loaded = (intervalTime, start, end, app: IApp, complete: (x: IApp) => void) => {
   if (end - start < intervalTime) {
+    console.log('end - start < intervalTime', end - start, intervalTime);
     setTimeout(() => complete(app), intervalTime);
   } else {
     complete(app);
@@ -30,11 +31,11 @@ const loaded = (intervalTime, start, end, app: IApp, complete: (x: IApp) => void
 }
 
 export interface IApp {
-  get: () => any;
   $set: (object) => void;
   entityType: EntityType;
   lookups: object;
   id: number;
+  loading: boolean;
   form?: HTMLFormElement;
   item?: object;
   list?: any[];
@@ -47,14 +48,7 @@ export default class AppService {
     console.log('AppService: constructor()', _page);
   }
 
-  init(app: IApp) { 
-    // const {id, entityType} = app.get();       
-    // app.entityType = entityType;
-    // app.id = id;
-  } 
-
-  initHeader(app: IApp) {			
-    // app.get().pageHeader.set(app.get().header);
+  initForm(app: IApp) {
     if (app.form) {
       this.initValidator(app.form);
     }
@@ -80,15 +74,15 @@ export default class AppService {
     let data;
 
     try{
-        startLoading(app);
-        data = await action(app.entityType);       
+      startLoading(app);
+      data = await action(app.entityType);       
     } catch(e) {
-        alert('ERROR: ' + e.message);
+      alert('ERROR: ' + e.message);
     }
     
     let end = Date.now();
     if (data) {            
-        postAction(data);
+      postAction(data);
     }
 
     const { intervalTime } = progress;
@@ -101,10 +95,10 @@ export default class AppService {
     entities.forEach(entity => {
       loadAll.push(
         server.getList(entity).then((x) => {
-            const listName = entity + 'List';
-            app.lookups[listName] = x;
-            // app.$set({ lookups: { [listName]: x } });
-            console.log(listName + ' from server', x);
+          const listName = entity + 'List';
+          app.lookups[listName] = x;
+          // app.$set({ lookups: { [listName]: x } });
+          console.log(listName + ' from server', x);
         })
       );                      
     });
@@ -114,8 +108,8 @@ export default class AppService {
   async getList(app: IApp) {
     const action = () => server.getList(app.entityType);
     const postAction = (list) => {
-        console.log('List from server', list);
-        app.$set({list});
+      console.log('List from server', list);
+      app.$set({list});
     };
     this.serverAction(app, action, postAction);
   }

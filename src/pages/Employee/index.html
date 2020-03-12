@@ -38,7 +38,6 @@
   $: if (!initialized && instance) {
     pageHeaderComponent.update(header);
     initialized = true;
-    service.initHeader(instance);
     service.getLookups(instance, ['department'])
       .then(() => {
         departmentList = lookups['departmentList'];

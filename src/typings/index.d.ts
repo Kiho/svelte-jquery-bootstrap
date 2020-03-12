@@ -8,7 +8,7 @@ interface ObjectConstructor {
 }
 
 // interface IDataTable extends Svelte {
-//     initHeader: () => void;
+//     initForm: () => void;
 //     loadData: () => void;
 //     updateTable: () => void;
 //     initTable: (JQuery) => any;

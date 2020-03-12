@@ -34,7 +34,7 @@
   onMount(() => {
     pageHeaderComponent.update(header);
     instance.$set({id: params.id});
-    service.initHeader(instance);
+    service.initForm(instance);
     service.getById(instance);
   });
 
