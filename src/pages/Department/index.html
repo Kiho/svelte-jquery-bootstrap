@@ -1,4 +1,4 @@
-<script>
+﻿<script>
   import { onMount } from 'svelte';
 
   export let rtable;
@@ -37,7 +37,7 @@
   const formatDate = utils.formatDate;
 </script>
 
-<AppInstance {entityType} {header} bind:loading bind:list bind:this={instance} />
+<AppInstance {entityType} bind:loading bind:list bind:this={instance} />
 <Panel loader="bar" filled={true}>
   <div class="row">
     <div class="col-lg-6">

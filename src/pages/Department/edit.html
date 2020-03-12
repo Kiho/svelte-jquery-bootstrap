@@ -47,7 +47,7 @@
   }
 </script>
 
-<AppInstance {entityType} {header} {form} bind:id bind:loading bind:item bind:this={instance} />
+<AppInstance {entityType} {form} bind:id bind:loading bind:item bind:this={instance} />
 <Panel loader="bar" bind:loading="{loading}" filled={true}>
   <form name="form" on:submit="{() => false}" class="form-horizontal" bind:this={form}> 
     <Row>

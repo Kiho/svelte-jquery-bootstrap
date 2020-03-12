@@ -1,4 +1,4 @@
-<script>
+﻿<script>
   import { onDestroy, onMount } from 'svelte';
 
   // [svelte-upgrade suggestion]
@@ -90,7 +90,7 @@
   });
 </script>
 
-<AppInstance {entityType} {header} bind:lookups bind:list bind:this={instance} />
+<AppInstance {entityType} bind:lookups bind:list bind:this={instance} />
 <Panel title={tableName} description={description} filled={true} toolbar={false} >
   <div class="table-responsive">
     <table id="employees"
