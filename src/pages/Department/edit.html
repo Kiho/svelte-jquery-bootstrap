@@ -1,99 +1,98 @@
-<Panel loader="bar" bind:loading="loading" filled={true}>
-    <form class="form-horizontal" ref:form> 
-        <Row>
-            <Col lg="12">
-                <TextField
-                    label="Department #"
-                    readOnly=&#123;true}
-                    bind:value="item.id"
-                    md="1"
-                    />
-            </Col>
-        </Row>
-        <Row>
-            <Col lg="12">
-                <TextField
-                    label="Department Name"
-                    validate={['length-range=6']} 
-                    required=&#123;true}
-                    bind:value="item.name"
-                    />
-            </Col>
-        </Row>
-        <Row>
-            <Col lg="12">
-                <TextField
-                    label="Group Name"
-                    required=&#123;true}
-                    bind:value="item.groupName"
-                    />
-            </Col>
-        </Row>       
-        <Row className="formfoot">
-            <Col lg="12">
-                <Col md="1" />
-                <Button color="primary" on:click="handleSubmit(event)">Submit</Button>
-                <Button color="primary" on:click="handleGoBack(event)">Back</Button>
-            </Col>
-            <Col lg="12">
-                <!--<Spinner isActive={app.loading}/>-->
-            </Col>
-        </Row>
-        <Row>
-            <Col lg="12">
-                <!--<InvoiceTable rows={rows} actions={actions} className="mdl-color--white" width={this.width - 40}/>-->
-            </Col>
-        </Row> 
-    </form>
-</Panel>
-
 <script>
-    import Col from '../../components/Col.html';
-    import Row from '../../components/Row.html';
-    import Button from '../../components/Button.html';
-    import TextField from '../../components/TextField.html';
-    import SelectField from '../../components/SelectField.html';
-    import StateZipField from '../../components/StateZipField.html';
-    import Panel from '../../components/Panel.html';
-    import Service from './service';
+  import { onMount } from 'svelte';
 
-    const service = new Service();
+  import Col from '../../components/Col.html';
+  import Row from '../../components/Row.html';
+  import Button from '../../components/Button.html';
+  import TextField from '../../components/TextField.html';
+  import SelectField from '../../components/SelectField.html';
+  import StateZipField from '../../components/StateZipField.html';
+  import Panel from '../../components/Panel.html';
+  import Service from './service';
+  import AppInstance from '../../services/AppInstance.html';
+  import { pageHeaderComponent } from '../../components/ViewHeader.html';
 
-    export default {
-        data () {
-            return { 
-                item: {},
-                header: {
-					title: 'Department',
-					icon: 'home',
-                    hidden: false,
-					viewPath: '<small><span class="c-white">Department</span></small>'
-				},
-                entityType: 'department',
-                id: 0,
-                departmentList: [],
-                employeeList: []
-            }
-        },
-        components: {
-            Col,
-            Row,
-            Button,
-            Panel,
-            TextField,
-            StateZipField,
-            SelectField,
-        },
-        oncreate() {
-            service.init(this);
-			service.initHeader(this);
-            service.getById(this);
-		},
-		methods: {
-            handleGoBack: service.goBack,
-            handleSubmit(e) {
-                service.submit(e, this);
-            }
-		}
-    };
+  export let loading;
+  export let item = {};
+  export let header = {
+    title: 'Department',
+    icon: 'home',
+    hidden: false,
+    viewPath: '<small><span class="c-white">Department</span></small>'
+  };
+
+  export let id = 0;
+  export let form;
+  export let departmentList = [];
+  export let employeeList = [];
+  export let params = {};
+  
+  let instance;
+  const entityType = 'department';
+  const service = new Service();
+
+  onMount(() => {
+    pageHeaderComponent.update(header);
+    instance.$set({id: params.id});
+    service.initHeader(instance);
+    service.getById(instance);
+  });
+
+  function handleGoBack(e) {
+    service.goBack(e);
+  }
+
+  function handleSubmit(e) {
+    service.submit(e, instance);
+  }
 </script>
+
+<AppInstance {entityType} {header} {form} bind:id bind:loading bind:item bind:this={instance} />
+<Panel loader="bar" bind:loading="{loading}" filled={true}>
+  <form name="form" on:submit="{() => false}" class="form-horizontal" bind:this={form}> 
+    <Row>
+      <Col lg="12">
+        <TextField
+            label="Department #"
+            readOnly=&#123;true}
+            bind:value="{item.id}"
+            md="1"
+            />
+      </Col>
+    </Row>
+    <Row>
+      <Col lg="12">
+        <TextField
+            label="Department Name"
+            validate={['length-range=6']} 
+            required=&#123;true}
+            bind:value="{item.name}"
+            />
+      </Col>
+    </Row>
+    <Row>
+      <Col lg="12">
+        <TextField
+            label="Group Name"
+            required=&#123;true}
+            bind:value="{item.groupName}"
+            />
+      </Col>
+    </Row>       
+    <Row className="formfoot">
+      <Col lg="12">
+        <Col md="1" />
+        <Button color="primary" on:click="{handleSubmit}">Submit</Button>
+        <Button color="primary" on:click="{handleGoBack}">Back</Button>
+      </Col>
+      <Col lg="12">
+        <!--<Spinner isActive={app.loading}/>-->
+      </Col>
+    </Row>
+    <Row>
+      <Col lg="12">
+        <!--<InvoiceTable rows={rows} actions={actions} className="mdl-color--white" width={this.width - 40}/>-->
+      </Col>
+    </Row> 
+  </form>
+</Panel>

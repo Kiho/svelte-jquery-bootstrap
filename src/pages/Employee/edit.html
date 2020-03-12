@@ -1,11 +1,67 @@
-<Panel loader="bar" bind:loading="loading" filled={true}>
-    <form class="form-horizontal" ref:form>   
+<script>
+  import { onMount } from 'svelte';
+
+  import Col from '../../components/Col.html';
+  import Row from '../../components/Row.html';
+  import Button from '../../components/Button.html';
+  import TextField from '../../components/TextField.html';
+  import SelectField from '../../components/SelectField.html';
+  import StateZipField from '../../components/StateZipField.html';
+  import Panel from '../../components/Panel.html';
+  import Service from './service';
+  import AppInstance from '../../services/AppInstance.html';
+  import { pageHeaderComponent } from '../../components/ViewHeader.html';
+
+  export let loading;
+  export let item = {};
+  export let header = {
+    title: 'Employee',
+    icon: 'users',
+    hidden: false,
+    viewPath: '<small><span class="c-white">Employee</span></small>'
+  };
+  
+  export let id = 0;
+  export let form;
+  export let pageHeader;
+  export let genderList = ["Male", "Female"];
+  export let departmentList = [];
+  export let params = {};
+
+  let instance;
+  const entityType = 'employee';
+  const service = new Service();
+  let lookups = {};
+
+  onMount(() => {
+    pageHeaderComponent.update(header);
+    instance.$set({id: params.id}); 
+    service.initHeader(instance);
+    service.getLookups(instance, ['department'])
+      .then(() => {
+        departmentList = lookups['departmentList'];
+        service.getById(instance);
+      });
+  });
+
+  function handleGoBack(e) {
+    service.goBack(e);
+  }
+
+  function handleSubmit(e) {
+    service.submit(e, instance);
+  }
+</script>
+
+<AppInstance {entityType} {header} {form} bind:lookups bind:id bind:loading bind:item bind:this={instance} />
+<Panel loader="bar" bind:loading="{loading}" filled={true}>
+    <form name="form" class="form-horizontal" bind:this={form}>   
         <Row>
             <Col lg="12">
                 <TextField
                     label="Employee #"
                     readOnly=&#123;true}
-                    bind:value="item.id"
+                    bind:value="{item.id}"
                     />
             </Col>
         </Row>
@@ -15,14 +71,14 @@
                     label="Employee Name"
                     validate={['length-range=6']} 
                     required={true}
-                    bind:value="item.name"
+                    bind:value="{item.name}"
                     />
             </Col>
         </Row>
         <Row>
             <Col lg="12">
                 <SelectField label="Gender"
-                    bind:value="item.gender"
+                    bind:value="{item.gender}"
                     required={true}
                     optionList={genderList}
                     getOptionValue={x => x}
@@ -33,14 +89,14 @@
             <Col lg="12">
                 <TextField
                     label="Title"
-                    bind:value="item.title"
+                    bind:value="{item.title}"
                     />
             </Col>
         </Row>
         <Row>
             <Col lg="12">
                 <SelectField label="Department"
-                    bind:value="item.departmentId"
+                    bind:value="{item.departmentId}"
                     required={true}
                     optionList={departmentList} />
             </Col>
@@ -52,15 +108,15 @@
                     label="Rate"
                     required={true}
                     validate={['minmax=10,100']}
-                    bind:value="item.rate"
+                    bind:value="{item.rate}"
                     />
             </Col>
         </Row>        
         <Row className="formfoot">
             <Col lg="12">
                  <Col md="1" />
-                <Button color="primary" on:click="handleSubmit(event)">Submit</Button>
-                <Button color="primary" on:click="handleGoBack(event)">Back</Button>
+                <Button color="primary" on:click="{handleSubmit}">Submit</Button>
+                <Button color="primary" on:click="{handleGoBack}">Back</Button>
             </Col>
             <Col lg="12">
                 <!--<Spinner isActive={app.loading}/>-->
@@ -73,58 +129,3 @@
         </Row> 
     </form>
 </Panel>
-
-<script>
-    import Col from '../../components/Col.html';
-    import Row from '../../components/Row.html';
-    import Button from '../../components/Button.html';
-    import TextField from '../../components/TextField.html';
-    import SelectField from '../../components/SelectField.html';
-    import StateZipField from '../../components/StateZipField.html';
-    import Panel from '../../components/Panel.html';
-    import Service from './service';
-
-    const service = new Service();
-
-    export default {
-        data () {
-            return { 
-                item: {},
-                header: {
-					title: 'Employee',
-					icon: 'users',
-                    hidden: false,
-					viewPath: '<small><span class="c-white">Employee</span></small>'
-				},
-                entityType: 'employee',
-                id: 0,
-                departmentList: [],
-                genderList: ["Male", "Female"],
-            }
-        },
-        components: {
-            Col,
-            Row,
-            Button,
-            Panel,
-            TextField,
-            StateZipField,
-            SelectField,
-        },
-        oncreate() {
-            service.init(this);
-			service.initHeader(this);
-            service.getLookups(this, ['department'])
-                .then(() => {
-                    // console.log('Call getById');
-                    service.getById(this);
-                });
-		},
-		methods: {
-            handleGoBack: service.goBack,
-            handleSubmit(e) {
-                service.submit(e, this);
-            }
-		}
-    };
-</script>
