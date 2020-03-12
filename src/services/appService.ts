@@ -7,7 +7,8 @@ declare var validator: validator;
 export const lookupTypes: EntityType[] = ['employee', 'department'];
 
 const progress = new ProgressBar({
-	target: document.querySelector('body'),
+  target: document.querySelector('body'),
+  anchor: document.querySelector('.body'),
   props: { color: 'blue' }
 })
 

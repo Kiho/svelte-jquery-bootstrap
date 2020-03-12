@@ -14,7 +14,6 @@
     "copy-js": "copyfiles -u 2 \"./src/assets/js/**/*\" \"./server/public\"",
     "copy-file": "copyfiles ./index.html ./server/public && copyfiles ./custom.css ./server/public  && npm run copy-images  && npm run copy-js && npm run copy-vendor",
     "clean": "rimraf ./server/public",
-    "fix:route-parser": "replace-in-file /_token_stack:/ //_token_stack: node_modules/route-parser/lib/route/compiled-grammar.js --isRegex",
     "watch": "rollup -c -w",
     "serve-web": "live-server --cors --port=8081 --proxy=/api:http://127.0.0.1:5011/api --watch=./server/public/app.js,./server/public/app.css,./server/public/index.html server/public",
     "serve-api": "node server/index.js",
