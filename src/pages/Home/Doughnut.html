@@ -42,11 +42,11 @@
   export let canvas;
   export let instance;
 
-  $: if (canvas) {
+  onMount(() => {
     const element = canvas;
     dataset = settings.data.datasets[0];
     instance = new Chart(window.$(element), settings);
-  }
+  });
 
   onDestroy(() => {
     instance.destroy();

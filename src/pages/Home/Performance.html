@@ -10,10 +10,10 @@
     {title:'Bill boards', percent: 50},
   ]};
 
-  $: if (progress) {
+  onMount(() => {
     const element = progress;
     window.$(element).find('.progress-bar').progressbar();
-  };
+  });
 
   onDestroy(() => {
     window.$(progress).find('.progress-bar').empty();

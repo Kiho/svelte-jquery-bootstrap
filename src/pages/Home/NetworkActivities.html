@@ -76,10 +76,10 @@
   export let plot = null;
   export let instance = null;
 
-  $: if (plot) {
+  onMount(() => {
     const element = plot;
     instance = window.$.plot(window.$(element), data, settings);
-  }
+  });
 
   onDestroy(() => {
     if (instance) {

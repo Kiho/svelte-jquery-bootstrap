@@ -24,7 +24,7 @@
   export let pattern = '';
   export let validators = null;
 
-  $: if (input) {
+  onMount(() => {
     const element = input;
     // __this.observe('required', required => {
     //     element.required = required;
@@ -34,7 +34,7 @@
         element.setAttribute('pattern', pattern);
     }
     initValidators(element, validate);
-  }
+  });
 
   // [svelte-upgrade suggestion]
   // review these functions and remove unnecessary 'export' keywords

@@ -20,7 +20,7 @@
   export let settings = chart_gauge_settings;
   export let canvas;
 
-  $: if (canvas) {
+  onMount(() => {
     const element = canvas;
     const gauge = new Gauge(element).setOptions(settings);
         
@@ -28,7 +28,7 @@
     gauge.animationSpeed = 32;
     gauge.set(3200);
     gauge.setTextField(document.getElementById("gauge-text"));
-  }
+  });
 
   onDestroy(() => {
     window.$(canvas).empty();
