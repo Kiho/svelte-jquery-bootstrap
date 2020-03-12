@@ -14,10 +14,10 @@ Features:
 * Basic Form Validation
 
 ## How to run
-    npm install
+    `npm install`
 
 For development:
-    npm run start
+    `npm run start`
 
 open [http://localhost:8081/](http://localhost:8081/) in the browser
 
