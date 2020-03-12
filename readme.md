@@ -1,5 +1,5 @@
 ﻿
-# Svelte + Bootstrap Starter project in TypeScript
+# Svelte + Bootstrap Starter project in TypeScript (v3)
 
 The goal of this project is to provide a starting base for an Svelte project styled with Bootstrap in TypeScript.
 
@@ -15,11 +15,9 @@ Features:
 
 ## How to run
     npm install
-    npm run fix:route-parser
 
 For development:
 
-    npm run serve
     npm run start
 
 open [http://localhost:8081/](http://localhost:8081/) in the browser
@@ -42,12 +40,6 @@ Need Express to run api server
 ## Goals
 
 I needed a simple POC code to support CRUD operation with JavaScript front-end and WebAPI back-end.
-
-## Known Issues
-(commonjs plugin) Invalid labeled declaration (163:8) in D:/Work/svelte-ts-bootstrap/node_modules/route-parser/lib/route/compiled-grammar.js
-
-Error when building with rollup #25
-[https://github.com/rcs/route-parser/issues/25](https://github.com/rcs/route-parser/issues/25)
 
 ## Credits
 
