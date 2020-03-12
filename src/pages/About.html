@@ -1,3 +1,23 @@
+<script>
+	import { onMount } from 'svelte';
+
+	import Link from '../components/Link.html';
+	import Button from '../components/Button.html';
+  import { pageHeaderComponent } from '../components/ViewHeader.html';
+
+	export let repo = 'https://github.com/Kiho/svelte-ts-bootstrap';
+	export let header = {
+		title: 'About',
+		icon: 'about',
+    hidden: false,
+		viewPath: '<small><span class="c-white">About</span></small>'
+	};
+	
+	onMount(() => {
+		pageHeaderComponent.update(header);
+	});
+</script>
+
 <div class="container">
     <div class="row">
         <div class="content col-md-4">
@@ -7,36 +27,3 @@
         </div>
     </div>
 </div>
-
-<script>
-	import Link from '../components/Link.html';
-	import Button from '../components/Button.html';
-
-	export default {
-		components: {
-			Link,
-			Button,
-		},
-		data() {
-			return {
-				repo: 'https://github.com/Kiho/svelte-ts-bootstrap',
-				headerData: {
-					title: 'About',
-					icon: 'about',
-                    hidden: false,
-					viewPath: '<small><span class="c-white">About</span></small>'
-				}
-			}
-		},
-		oncreate() {
-			this.initHeader();
-		},
-		methods: {
-			initHeader() {
-				const {pageHeader, headerData} = this.get();
-				pageHeader.set(headerData);
-			}			
-		}
-	}
-</script>
-

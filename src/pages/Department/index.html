@@ -1,98 +1,94 @@
-﻿    <Panel loader="bar" filled={true}>
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="input-group m-b-xs m-t-xs">
-                    <input class="form-control" type="text" placeholder="Search by Department.." style="width: 100%">
-                    <div class="input-group-btn">
-                        <button class="btn btn-default"><i class="fa fa-search"></i></button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <select class="form-control m-b-xs m-t-xs" name="account" style="width: 100%">
-                    <option selected="">Select status</option>
-                    <option>Option 1</option>
-                    <option>Option 2</option>
-                </select>
-            </div>
-            <div class="col-lg-3">
-                <select class="form-control m-t-xs" name="account" style="width: 100%">
-                    <option selected="">Sort by:</option>
-                    <option>Option 1</option>
-                    <option>Option 2</option>
-                </select>
-            </div>
-        </div>
-    </Panel>
-
-    <Panel loader="bar" bind:loading="loading" filled={false}>
-        <div class="table-responsive">
-            <table id="projects"
-                ref:rtable
-                class="table table-vertical-align-middle">
-                <thead>
-                    <tr>
-                        <th>Department#</th>
-                        <th>Department</th>
-                        <th>Group</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {#each list as department}
-                    <tr>
-                        <td>{department.id}</td>
-                        <td>{department.name}</td>
-                        <td>{department.groupName}</td>
-                        <td><a href="#departments/{department.id}" class="btn btn-default btn-xs">Edit</a></td>
-                    </tr>
-                    {/each}
-                </tbody>
-            </table>
-        </div>
-        <a href="#departments/0" class="btn btn-default">New</a>
-    </Panel>
-
 <script>
-    import ViewHeader from '../../components/ViewHeader.html';
-    import Panel from '../../components/Panel.html';
-    // import SparkLine from '../../components/SparkLine.html';
-    import { server } from '../../api';
-    import * as utils from '../../utils';
-    import Service from './service';
+  import { onMount } from 'svelte';
 
-    const service = new Service();
-    const entityType = 'department';
+  export let rtable;
 
-    export default {
-        components: {
-            ViewHeader,
-            Panel,
-        },
-        data() {
-			return { 
-                list: [],
-                entityType: entityType,
-                header: {
-					title: 'Departments',
-					icon: 'sitemap',
-                    hidden: false,
-					viewPath: '<small><span class="c-white">Departments</span></small>'
-				},
-            }
-		},
-		oncreate() {
-            service.init(this);
-			service.initHeader(this);
-            service.getList(this);         
-		},
-		methods: {
-            createNew: function(e) {
-                window.location.href = '#departments';
-            } 
-		},
-        helpers: {
-            formatDate: utils.formatDate
-        }
-    }
+  import Panel from '../../components/Panel.html';
+  import { server } from '../../api';
+  import * as utils from '../../utils';
+  import Service from './service';
+  import AppInstance from '../../services/AppInstance.html';
+  import { pageHeaderComponent } from '../../components/ViewHeader.html';
+
+  export let loading;
+  export let list = [];
+  export let header = {
+    title: 'Departments',
+    icon: 'sitemap',
+    hidden: false,
+    viewPath: '<small><span class="c-white">Departments</span></small>'
+  };
+  export let pageHeader;
+
+  let instance;
+  const entityType = 'department';
+  const service = new Service();
+
+  export function createNew(e) {
+    window.location.href = '#departments';
+  }
+
+  onMount(() => {   
+    pageHeaderComponent.update(header);
+    service.initHeader(instance);
+    service.getList(instance); 
+  });
+
+  const formatDate = utils.formatDate;
 </script>
+
+<AppInstance {entityType} {header} bind:loading bind:list bind:this={instance} />
+<Panel loader="bar" filled={true}>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="input-group m-b-xs m-t-xs">
+          <input class="form-control" type="text" placeholder="Search by Department.." style="width: 100%">
+          <div class="input-group-btn">
+              <button class="btn btn-default"><i class="fa fa-search"></i></button>
+          </div>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <select class="form-control m-b-xs m-t-xs" name="account" style="width: 100%">
+          <option selected="">Select status</option>
+          <option>Option 1</option>
+          <option>Option 2</option>
+      </select>
+    </div>
+    <div class="col-lg-3">
+      <select class="form-control m-t-xs" name="account" style="width: 100%">
+          <option selected="">Sort by:</option>
+          <option>Option 1</option>
+          <option>Option 2</option>
+      </select>
+    </div>
+  </div>
+</Panel>
+
+<Panel loader="bar" bind:loading="{loading}" filled={false}>
+  <div class="table-responsive">
+    <table id="projects"
+      bind:this={rtable}
+      class="table table-vertical-align-middle">
+      <thead>
+        <tr>
+          <th>Department#</th>
+          <th>Department</th>
+          <th>Group</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {#each list as department}
+        <tr>
+          <td>{department.id}</td>
+          <td>{department.name}</td>
+          <td>{department.groupName}</td>
+          <td><a href="/#/departments/{department.id}" class="btn btn-default btn-xs">Edit</a></td>
+        </tr>
+        {/each}
+      </tbody>
+    </table>
+  </div>
+  <a href="/#/departments/0" class="btn btn-default">New</a>
+</Panel>

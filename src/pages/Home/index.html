@@ -1,3 +1,22 @@
+<script>
+	import { onMount } from 'svelte';
+	import Tile from '../../components/Tile.html';
+	import Widget from '../../components/Widget.html';
+
+	import AppVersions from './AppVersions.html';
+	import Doughnut from './Doughnut.html';
+	import QuickSettings from './QuickSettings.html';
+	import NetworkActivities from './NetworkActivities.html';
+  import { pageHeaderComponent } from '../../components/ViewHeader.html';
+	
+	export let pageHeader;
+
+	onMount(() => {
+		pageHeaderComponent.update({ hidden: true });
+		// pageHeader.hidden = true;
+	});
+</script>
+
 <div>
 	<div class="row tile_count">
 		<Tile title="Total Users" icon="user" count="2,500" percent="4" text="From last Week" />
@@ -13,47 +32,18 @@
 	<br />
   	<div class="row">
       <Widget title="App Versions">          
-          <h4>App Usage across versions</h4>
-          <AppVersions version="0.1.5.2" value="123k" percent="66" />
-          <AppVersions version="0.1.5.3" value="53k" percent="45" />
-          <AppVersions version="0.1.5.4" value="23k" percent="25" />
-          <AppVersions version="0.1.5.5" value="3k" percent="5" />
-          <AppVersions version="0.1.5.6" value="1k" percent="2" />       
+				<h4>App Usage across versions</h4>
+				<AppVersions version="0.1.5.2" value="123k" percent="66" />
+				<AppVersions version="0.1.5.3" value="53k" percent="45" />
+				<AppVersions version="0.1.5.4" value="23k" percent="25" />
+				<AppVersions version="0.1.5.5" value="3k" percent="5" />
+				<AppVersions version="0.1.5.6" value="1k" percent="2" />       
       </Widget>
       <Widget title="Device Usage">          
-           <Doughnut />             
+        <Doughnut />             
       </Widget> 
       <Widget title="Quick Settings">          
-           <QuickSettings />             
+        <QuickSettings />             
       </Widget> 
   </div>	
 </div>
-
-<script>
-	import Tile from '../../components/Tile.html';
-	import Widget from '../../components/Widget.html';
-
-	import AppVersions from './AppVersions.html';
-	import Doughnut from './Doughnut.html';
-	import QuickSettings from './QuickSettings.html';
-	import NetworkActivities from './NetworkActivities.html';
-  
-	export default {
-		components: {
-			Tile,
-			Widget,
-			AppVersions,
-			Doughnut,
-			QuickSettings,
-			NetworkActivities,
-		},
-		data() {
-			return { }
-		},
-		oncreate() {
-			const headerData = { hidden: true };
-			this.get().pageHeader.set(headerData);
-		}
-	}
-</script>
-

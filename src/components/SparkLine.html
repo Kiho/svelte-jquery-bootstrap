@@ -1,36 +1,39 @@
-<div ref:sparkline>
-</div>
-
 <script>
-    import { observe } from 'svelte-extras';
+  import { onDestroy, onMount } from 'svelte';
 
-    export default {
-        data() {
-            return { 
-                value: null,
-                options: {
-                    type: 'pie',
-                    sliceColors: ['#f7af3e', '#404652']
-                }
-            }
-        },
-        oncreate() {
-            const element = this.refs.sparkline;
-            this.observe('value', value => {
-                this.load(element, value, this.get().options);
-            });
-            const {value, options} = this.get();
-            this.load(element, value, options);
-        },
-        methods: {
-            observe,
-            load(element, value, options) {
-                $(element).sparkline(value, options);
-            }			
-		},
-        ondestroy: function () {
-            $(this.refs.sparkline).sparkline('destroy');
-            $(this.refs.sparkline).empty();
-        },
-    }
+  // [svelte-upgrade suggestion]
+  // manually refactor all references to __this
+  const __this = {
+    get: () => ({ value, options })
+  };
+
+  export let sparkline;
+
+  export let value = null;
+  export let options = {
+    type: 'pie',
+    sliceColors: ['#f7af3e', '#404652']
+  };
+
+  onMount(() => {
+    const element = sparkline;
+    __this.observe('value', value => {
+      load(element, value, __this.get().options);
+    });
+    load(element, value, options);
+  });
+
+  // [svelte-upgrade suggestion]
+  // review these functions and remove unnecessary 'export' keywords
+  export function load(element, value, options) {
+    window.$(element).sparkline(value, options);
+  }
+
+  onDestroy(() => {
+    window.$(sparkline).sparkline('destroy');
+    window.$(sparkline).empty();
+  });
 </script>
+
+<div bind:this={sparkline}>
+</div>

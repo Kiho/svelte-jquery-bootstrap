@@ -1,30 +1,22 @@
-<ul class="nav side-menu">
-    {#each menu as item}
-    <li class='{ route === item.href ? " active" : "" }'>
-        <Link to='{ item.href }'><i class='fa fa-{ item.icon }'></i>{item.text}</Link>
-    </li>
-    {/each}
-</ul>
-
 <script>
-    import Link from './components/Link.html';
-    import { getPathName } from './utils';
+  import { getPathName } from './utils';
+  import Link from './components/Link.html';
 
-    export default {
-        data () {
-            return {
-                location: {},
-                menu: [],
-            }
-        },
-        components: {
-            Link
-        },
-        computed: {
-            route: ({ location }) => {
-                const pathname = getPathName(location.pathname);
-                return pathname;
-            }
-        }
-    };
+  export let location = {};
+  export let menu = [];
+  export let route;
+
+  $: {
+    const pathname = getPathName(location.pathname);
+    route = pathname;
+  }
 </script>
+
+<svelte:options accessors={true}/>
+<ul class="nav side-menu">
+  {#each menu as item}
+  <li class='{ route === item.href ? " active" : "" }'>
+    <Link to='{ item.href }'><i class='fa fa-{ item.icon }'></i>{item.text}</Link>
+  </li>
+  {/each}
+</ul>

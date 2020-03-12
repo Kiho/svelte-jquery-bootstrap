@@ -1,13 +1,11 @@
-{#if width && widthPercent}
-<div class="svelte-progress-bar {barClass}" style="width: {widthPercent}%; {barColorStyle}">
-	{#if running}
-	<div class="svelte-progress-bar-leader" style="{leaderColorStyle}"></div>
-	{/if}
-</div>
-{/if}
-
 <script>
-function getIncrement(number) {
+	// [svelte-upgrade suggestion]
+	// manually refactor all references to __this
+	const __this = {
+		get: () => ({ width, completed, color, running, minimum, maximum, settleTime, intervalTime, stepSizes })
+	};
+
+	function getIncrement(number) {
 	if (number >= 0 && number < 0.2) return 0.1
 	else if (number >= 0.2 && number < 0.5) return 0.04
 	else if (number >= 0.5 && number < 0.8) return 0.02
@@ -17,95 +15,103 @@ function getIncrement(number) {
 
 let updater
 
-export default {
-	data() {
-		return {
-			minimum: 0.08,
-			maximum: 0.994,
-			settleTime: 700,
-			intervalTime: 700,
-			stepSizes: [ 0, 0.005, 0.01, 0.02 ]
-		}
-	},
-	methods: {
-		start() {
-			this.reset()
-			this.continue()
-		},
-		reset() {
-			const startingWidth = this.get().minimum
-			this.set({
-				width: startingWidth,
-				running: true
-			})
-		},
-		continue() {
-			const maximumWidth = this.get().maximum
-			const intervalTime = this.get().intervalTime
+export let width;
+	export let completed;
+	export let color;
+	export let running;
+	export let minimum = 0.08;
+	export let maximum = 0.994;
+	export let settleTime = 700;
+	export let intervalTime = 700;
+	export let stepSizes = [ 0, 0.005, 0.01, 0.02 ];
 
-			if (updater) {
-				// prevent multiple intervals by clearing before making
-				clearInterval(updater)
-			}
-			this.set({ running: true })
-			updater = setInterval(() => {
-				let value = this.get().width
+	// [svelte-upgrade suggestion]
+	// review these functions and remove unnecessary 'export' keywords
+	export function start() {
+	reset()
+	continueBar()
+}
 
-				const stepSizes = this.get().stepSizes
-				const randomStep = stepSizes[Math.floor(Math.random() * stepSizes.length)]
-				const step = getIncrement(value) + randomStep
-				if (value < maximumWidth) {
-					value = value + step
-				}
-				if (value > maximumWidth) {
-					value = maximumWidth
-					this.stop()
-				}
-				this.set({ width: value })
-			}, intervalTime)
-		},
-		stop() {
-			if (updater) {
-				clearInterval(updater)
-			}
-		},
-		complete() {
-			clearInterval(updater)
-			this.set({
-				width: 1,
-				running: false
-			})
-			const settleTime = this.get().settleTime
-			setTimeout(() => {
-				this.set({
-					completed: true
-				})
-				setTimeout(() => {
-					this.set({
-						completed: false,
-						width: 0
-					})
-				}, settleTime)
-			}, settleTime)
+	export function reset() {
+	const startingWidth = __this.get().minimum
+	width = startingWidth, running = true
+}
+
+	export function continueBar() {
+	const maximumWidth = __this.get().maximum
+	const intervalTime = __this.get().intervalTime
+
+	if (updater) {
+		// prevent multiple intervals by clearing before making
+		clearInterval(updater)
+	}
+	running = true
+	updater = setInterval(() => {
+		let value = __this.get().width
+
+		const stepSizes = __this.get().stepSizes
+		const randomStep = stepSizes[Math.floor(Math.random() * stepSizes.length)]
+		const step = getIncrement(value) + randomStep
+		if (value < maximumWidth) {
+			value = value + step
 		}
-	},
-	computed: {
-		widthPercent({ width }) {
-			return width * 100 || undefined
-		},
-		barClass({ completed }) {
-			return completed ? 'svelte-progress-bar-hiding' : ''
-		},
-		barColorStyle({ color }) {
-			return color && `background-color: ${color};` || ''
-		},
-		leaderColorStyle({ color }) {
-			// the box shadow of the leader bar uses `color` to set its shadow color
-			return color && `background-color: ${color}; color: ${color};` || ''
+		if (value > maximumWidth) {
+			value = maximumWidth
+			stop()
 		}
+		width = value
+	}, intervalTime)
+}
+
+	export function stop() {
+	if (updater) {
+		clearInterval(updater)
 	}
 }
+
+	export function complete() {
+	clearInterval(updater)
+	width = 1, running = false
+	const settleTime = __this.get().settleTime
+	setTimeout(() => {
+		completed = true
+		setTimeout(() => {
+			completed = false, width = 0
+		}, settleTime)
+	}, settleTime)
+}
+
+	export let widthPercent;
+	$: {
+	widthPercent = width * 100 || undefined
+}
+
+	export let barClass;
+	$: {
+	barClass = completed ? 'svelte-progress-bar-hiding' : ''
+}
+
+	export let barColorStyle;
+	$: {
+	barColorStyle = color && `background-color: ${color};` || ''
+}
+
+	export let leaderColorStyle;
+	$: {
+	// the box shadow of the leader bar uses `color` to set its shadow color
+	leaderColorStyle = color && `background-color: ${color}; color: ${color};` || ''
+}
 </script>
+
+<svelte:options accessors={true}/>
+
+{#if width && widthPercent}
+<div class="svelte-progress-bar {barClass}" style="width: {widthPercent}%; {barColorStyle}">
+	{#if running}
+	<div class="svelte-progress-bar-leader" style="{leaderColorStyle}"></div>
+	{/if}
+</div>
+{/if}
 
 <style>
 .svelte-progress-bar {

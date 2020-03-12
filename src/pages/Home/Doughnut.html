@@ -1,3 +1,59 @@
+<script>
+  import { onDestroy, onMount } from 'svelte';
+
+  const chart_doughnut_settings = {
+    type: 'doughnut',
+    tooltipFillColor: "rgba(51, 51, 51, 0.55)",
+    data: {
+      labels: [
+        "Symbian",
+        "Blackberry",
+        "Other",
+        "Android",
+        "IOS"
+      ],
+      datasets: [{
+        data: [15, 20, 30, 10, 30],
+        color: ['blue', 'green', 'purple', 'aero', 'red'],
+        backgroundColor: [
+          "#BDC3C7",
+          "#9B59B6",
+          "#E74C3C",
+          "#26B99A",
+          "#3498DB"
+        ],
+        hoverBackgroundColor: [
+          "#CFD4D8",
+          "#B370CF",
+          "#E95E4F",
+          "#36CAAB",
+          "#49A9EA"
+        ]
+      }]
+    },
+    options: { 
+      legend: false, 
+      responsive: false 
+    }
+  }
+
+  export let settings = chart_doughnut_settings;
+  export let dataset = {data: [], color: []};
+  export let canvas;
+  export let instance;
+
+  $: if (canvas) {
+    const element = canvas;
+    dataset = settings.data.datasets[0];
+    instance = new Chart(window.$(element), settings);
+  }
+
+  onDestroy(() => {
+    instance.destroy();
+    window.$(canvas).empty();
+  });
+</script>
+
 <table class="" style="width:100%">
     <tr>
         <th style="width:37%;">
@@ -14,7 +70,7 @@
     </tr>
     <tr>
         <td>
-            <canvas class="canvasDoughnut" height="140" width="140" style="margin: 15px 10px 10px 0" ref:canvas ></canvas>
+            <canvas class="canvasDoughnut" height="140" width="140" style="margin: 15px 10px 10px 0" bind:this={canvas} ></canvas>
         </td>
         <td>
             <table class="tile_info">
@@ -30,61 +86,3 @@
         </td>
     </tr>
 </table>
-
-<script>
-    const chart_doughnut_settings = {
-        type: 'doughnut',
-        tooltipFillColor: "rgba(51, 51, 51, 0.55)",
-        data: {
-            labels: [
-                "Symbian",
-                "Blackberry",
-                "Other",
-                "Android",
-                "IOS"
-            ],
-            datasets: [{
-                data: [15, 20, 30, 10, 30],
-                color: ['blue', 'green', 'purple', 'aero', 'red'],
-                backgroundColor: [
-                    "#BDC3C7",
-                    "#9B59B6",
-                    "#E74C3C",
-                    "#26B99A",
-                    "#3498DB"
-                ],
-                hoverBackgroundColor: [
-                    "#CFD4D8",
-                    "#B370CF",
-                    "#E95E4F",
-                    "#36CAAB",
-                    "#49A9EA"
-                ]
-            }]
-        },
-        options: { 
-            legend: false, 
-            responsive: false 
-        }
-    }
-
-	export default {
-		data() {
-			return {
-                settings: chart_doughnut_settings,
-                dataset: {data: [], color: []}
-            }
-		},
-		oncreate() {            
-            const element = this.refs.canvas;
-            const {settings} = this.get();
-            this.set({dataset: settings.data.datasets[0]});
-            this.set({ instance: new Chart($(element), settings) })
-        },
-        ondestroy: function () {
-            const {instance} = this.get();
-            instance.destroy();
-            $(this.refs.canvas).empty();
-        },
-	}
-</script>

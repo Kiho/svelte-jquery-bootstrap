@@ -1,12 +1,10 @@
 import svelte from 'rollup-plugin-svelte';
-import uglify from 'rollup-plugin-uglify';
 import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
 import typescript from 'rollup-plugin-typescript2';
 import tscompile from 'typescript';
 import replace from 'rollup-plugin-replace';
 import scss from 'rollup-plugin-scss';
-import { minify } from 'uglify-es';
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 const appBasePath = process.env.APP_BASE_PATH || '';
@@ -20,7 +18,6 @@ export default {
 		format: 'iife',
 		file: 'server/public/app.js',
 		name: 'app',
-		sourcemap: true,
 	},
 	plugins: [
 		commonjs(),
@@ -45,7 +42,12 @@ export default {
 			'process.env.APP_BASE_PATH': JSON.stringify(appBasePath),
 			'process.env.SERVER_URL': JSON.stringify(serverUrl),
 		}),
-		production && buble({ exclude: 'node_modules/**' }),
-		production && uglify()
-	]
+		// If we're building for production (npm run build
+		// instead of npm run dev), minify
+		production && terser()
+	],
+
+	watch: {
+		clearScreen: false
+	}
 };

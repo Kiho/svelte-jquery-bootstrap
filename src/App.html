@@ -1,69 +1,62 @@
-﻿
-<script>
-import createRouter from './services/createRouter';
-import Nav from './Nav.html';
-import AboutPage from './pages/About.html';
-import ViewHeader from './components/ViewHeader.html';
-import Home from './pages/Home/index.html';
-import DepartmentPage from './pages/Department/index.html';
-import DepartmentEdit from './pages/Department/edit.html';
-import EmployeePage from './pages/Employee/index.html';
-import EmployeeEdit from './pages/Employee/edit.html';
-import CustomerPage from './pages/Customer/index.html';
-import CustomerEdit from './pages/Customer/edit.html';
+﻿<script>
+	import { onDestroy, onMount } from 'svelte';
+	import Router from 'svelte-spa-router';
 
-import history from './services/whistory';
+	import Nav from './Nav.html';
+	import AboutPage from './pages/About.html';
+	import ViewHeader from './components/ViewHeader.html';
+	import Home from './pages/Home/index.html';
+	import DepartmentPage from './pages/Department/index.html';
+	import DepartmentEdit from './pages/Department/edit.html';
+	import EmployeePage from './pages/Employee/index.html';
+	import EmployeeEdit from './pages/Employee/edit.html';
 
-const pageHeader = new ViewHeader({
-	target: document.querySelector('#page-header'),
-	data: () => ({}),
-});
+	const menu = [
+		{ href: '/home', text: 'Home', icon: 'home' },
+		{ href: '/departments', text: 'Departments', icon: 'sitemap' },
+		{ href: '/employees', text: 'Employees', icon: 'users' },
+		{ href: '/about', text: 'About', icon: 'leaf' },
+	];
 
-const menu = [
-	{ href: '/home', text: 'Home', icon: 'home' },
-	{ href: '/departments', text: 'Departments', icon: 'sitemap' },
-	{ href: '/employees', text: 'Employees', icon: 'users' },
-	{ href: '/customers', text: 'Customers', icon: 'users' },
-	{ href: '/about', text: 'About', icon: 'leaf' },
-];
+	// const router = createRouter({
+	// 	'/': '/home',
+	// 	'/home': Home,
+	// 	'/departments': DepartmentPage,
+	// 	'/departments/:id': DepartmentEdit,
+	// 	'/about': AboutPage,
+	// 	'/employees': EmployeePage,
+	// 	'/employees/:id': EmployeeEdit,
+	// });
 
-const router = createRouter({
-    '/': '/home',
-    '/home': Home,
-	'/departments': DepartmentPage,
-	'/departments/:id': DepartmentEdit,
-    '/about': AboutPage,
-    '/employees': EmployeePage,
-	'/employees/:id': EmployeeEdit,
-	'/customers': CustomerPage,
-	'/customers/:id': CustomerEdit,
-});
+	const routes = {
+		'/': Home,
+		'/home': Home,
+		'/departments': DepartmentPage,
+		'/departments/:id': DepartmentEdit,
+		'/about': AboutPage,
+		'/employees': EmployeePage,
+		'/employees/:id': EmployeeEdit,
+	};
 
-const nav = new Nav({
-	target: document.querySelector('#left-nav'),
-	data: {menu}	
-});
+	export let development = process.env.NODE_ENV !== 'production';
+	// export let state = { };
 
-export default {
-	components: {
-		Storage,
-		Home,
-		ViewHeader,
-		AboutPage,
-        EmployeePage
-	},
-	data: () => ({
-			development: process.env.NODE_ENV !== 'production',
-			state: { },
-		}),
-	oncreate(){
-		router.start(window.location, window.document.querySelector('#content'), pageHeader, nav);
-	},
-	ondestroy(){
-		router.remove();
-	},
-	methods: {
+	// onMount(() => {
+	// 	router.start(window.location, window.document.querySelector('#content'), pageHeader, nav);
+	// });
 
-	}
-}
+	// onDestroy(() => {
+	// 	router.remove();
+	// });
+
+	const pageHeader = new ViewHeader({
+		target: document.querySelector('#page-header'),
+	});
+
+	const nav = new Nav({
+		target: document.querySelector('#left-nav'),
+		props: { menu }	
+	});
 </script>
+
+<Router {routes} />

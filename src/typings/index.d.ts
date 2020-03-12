@@ -7,10 +7,10 @@ interface ObjectConstructor {
     assign(target: any, ...sources: any[]): any;
 }
 
-interface IDataTable extends Svelte {
-    initHeader: () => void;
-    loadData: () => void;
-    updateTable: () => void;
-    initTable: (JQuery) => any;
-    getTable: () => JQuery;
-}
+// interface IDataTable extends Svelte {
+//     initHeader: () => void;
+//     loadData: () => void;
+//     updateTable: () => void;
+//     initTable: (JQuery) => any;
+//     getTable: () => JQuery;
+// }

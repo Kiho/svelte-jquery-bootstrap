@@ -1,28 +1,22 @@
-<div class="form-group"><label for={uuid} class="col-md-1 control-label">{label}</label>
-    <div class="col-md-2">
-        <select class="form-control {inputClass}" bind:value="value" id={uuid} placeholder={placeholder}>
-            {#each optionList as opt}
-            <option value={getOptionValue(opt)}>{getOptionName(opt)}</option>
-            {/each}
-        </select>
-    </div>
-</div>
-
 <script>
-    import { makeUniqueId } from '../utils'
+  import { makeUniqueId } from '../utils'
 
-    export default {
-        data() {
-            return { 
-                uuid: makeUniqueId(),
-                placeholder: '',
-                label: '',
-                inputClass: '',
-                value: '',
-                optionList: [],
-                getOptionName: (x) => x.name,
-                getOptionValue: (x) => x.id,
-            }
-        }
-    }
+  export let uuid = makeUniqueId();
+  export let label = '';
+  export let inputClass = '';
+  export let value = '';
+  export let placeholder = '';
+  export let optionList = [];
+  export let getOptionValue = (x) => x.id;
+  export let getOptionName = (x) => x.name;
 </script>
+
+<div class="form-group"><label for={uuid} class="col-md-1 control-label">{label}</label>
+  <div class="col-md-2">
+    <select class="form-control {inputClass}" bind:value="{value}" id={uuid} placeholder={placeholder}>
+      {#each optionList as opt}
+      <option value={getOptionValue(opt)}>{getOptionName(opt)}</option>
+      {/each}
+    </select>
+  </div>
+</div>

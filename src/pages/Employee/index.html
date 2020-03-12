@@ -1,92 +1,112 @@
-﻿<Panel title={tableName} description={description} filled={true} on:onLoadData='loadData(event)' toolbar={false} >
-    <div class="table-responsive">
-        <table id="employees"
-            ref:rtable
-            class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Gender</th>
-                    <th>Title</th>
-                    <th>Department</th>
-                    <th>Rate</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-        </table>
-    </div>
-</Panel> 
-
 <script>
-    import grid from '../../services/data-table';
-    import ViewHeader from '../../components/ViewHeader.html';
-    import Panel from '../../components/Panel.html';
-    import { API_URL } from '../../api/server';
-    import Service from './service';
-    import { observe } from 'svelte-extras';
+  import { onDestroy, onMount } from 'svelte';
 
-    const service = new Service();
-    const entityType = 'employee';
+  // [svelte-upgrade suggestion]
+  // manually refactor all references to __this
+  // const __this = {
+  //   get: () => ({ tableName, description, departmentList, url, headerData })
+  // };
 
-    export default {
-        components: {
-            ViewHeader,
-            Panel,
-        },
-        data: () => grid.data({   
-            departmentList: [],
-            tableName: '',
-            url: API_URL + entityType,
-            description: '',
-            headerData: {
-                title: 'Employees',
-                icon: 'users',
-                hidden: false,
-                viewPath: '<small><span class="c-white">Employees</span></small>'
-            }
-        }),
-        methods: {
-            observe,
-            getDepartmentName: function (id) {
-                const department = this.get().departmentList.find(x => x.id === id);
-                return department ? department.name : '';
-            },
-            initTable: function ($table) {
-                const options = {
-                    processing: true,
-                    // select: true,
-                    searching: true,
-                    data: this.get().dataSource,
-                    columns: [
-                        { data: 'id' },
-                        { data: 'name' },
-                        { data: 'gender'},
-                        { data: 'title' },
-                        { data: (data, type, row, meta) => {
-                            return '<a href="#departments/' + data.departmentId + '">' + this.getDepartmentName(data.departmentId) + '</a>';
-                        } },
-                        { data: 'rate' },
-                        { data: function (data, type, row, meta) {
-                            return '<a href="#employees/' + data.id + '" class="btn btn-default btn-xs">Edit</a>';
-                        } },
-                    ],
-                };
-                const table = $table.DataTable(options);
-                table.on('select', (e, dt, type, indexes) => {
-                    // event handling for jquery.dataTables
-                    // see: https://datatables.net/examples/advanced_init/dt_events.html
-                });
-                return table;
-            },
-            updateTable: grid.updateTable,
-            getTable: grid.getTable,
-            loadData: grid.loadData,
-            initHeader: grid.initHeader
-        },
-        oncreate() {
-            grid.oncreate(this, service, ['department']);
-        },
-        ondestroy: grid.ondestroy
-    }
+  export let rtable;
+
+  import grid from '../../services/data-table';
+  import Panel from '../../components/Panel.html';
+  import { API_URL } from '../../api/server';
+  import Service from './service';
+  import AppInstance from '../../services/AppInstance.html';
+  import { pageHeaderComponent } from '../../components/ViewHeader.html';
+
+  export let tableName = '';
+  export let description = '';
+  export let departmentList = [];
+  export let url = API_URL + entityType;
+  export let header = {
+    title: 'Employees',
+    icon: 'users',
+    hidden: false,
+    viewPath: '<small><span class="c-white">Employees</span></small>'
+  };
+  export let pageHeader;
+  export let list = [];
+
+  let instance;
+  const service = new Service();
+  const entityType = 'employee';
+  let lookups = {};
+  let initialized = false;
+
+  $: if (!initialized && instance) {
+    pageHeaderComponent.update(header);
+    initialized = true;
+    service.initHeader(instance);
+    service.getLookups(instance, ['department'])
+      .then(() => {
+        departmentList = lookups['departmentList'];
+        grid.oncreate(instance, initTable, rtable, url);
+      });
+  }
+
+  $: grid.updateTable(list);
+
+  export function getDepartmentName(id) {
+    const department = departmentList.find(x => x.id === id);
+    return department ? department.name : '';
+  }
+
+  export function initTable(table) {
+    const options = {
+      processing: true,
+      // select: true,
+      searching: true,
+      data: list, // __this.get().dataSource,
+      columns: [
+        { data: 'id' },
+        { data: 'name' },
+        { data: 'gender'},
+        { data: 'title' },
+        { data: (data, type, row, meta) => {
+            return '<a href="/#/departments/' + data.departmentId + '">' + getDepartmentName(data.departmentId) + '</a>';
+        } },
+        { data: 'rate' },
+        { data: function (data, type, row, meta) {
+            return '<a href="/#/employees/' + data.id + '" class="btn btn-default btn-xs">Edit</a>';
+        } },
+      ],
+    };
+    const t = window.$(table).DataTable(options);
+    t.on('select', (e, dt, type, indexes) => {
+        // event handling for jquery.dataTables
+        // see: https://datatables.net/examples/advanced_init/dt_events.html
+    });
+    return t;
+  }
+
+  onMount(() => {
+    // pageHeader.$set(header);
+  });
+
+  onDestroy(() => {
+    grid.ondestroy();
+  });
 </script>
+
+<AppInstance {entityType} {header} bind:lookups bind:list bind:this={instance} />
+<Panel title={tableName} description={description} filled={true} toolbar={false} >
+  <div class="table-responsive">
+    <table id="employees"
+      bind:this={rtable}
+      class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Gender</th>
+          <th>Title</th>
+          <th>Department</th>
+          <th>Rate</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+</Panel>

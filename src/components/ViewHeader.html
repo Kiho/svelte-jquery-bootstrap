@@ -1,49 +1,49 @@
-{#if !hidden}
-<div class="col-{col}">
-    <div class="view-header">
-        <div class="pull-right text-right" style="line-height: 14px">
-            {@html viewPath}
-        </div>
-        <div class="header-icon">
-            <i class="fa fa-{icon}"></i>
-        </div>
-        <div class="header-title">
-            <h3>{title}</h3>
-            <small>
-                {description}
-            </small>
-        </div>
-    </div>
-    <hr>
-</div>
-{/if}
+<script context="module">  
+  import pageHeader from '../stores/pageHeader';
+
+  export const pageHeaderComponent = pageHeader();
+</script>
 
 <script>
-    export default {
-        data () {
-            return {
-                col: 'lg-12',
-                title: '',
-                viewPath: '',
-                icon: '',
-                description: '',
-                hidden: false,
-            }
-        },
-        oncreate() {
+  import { onMount, onDestroy } from 'svelte';
 
-        },
-        methods: {
-            handleUpdate (data) {                
-                // if (!data){
-                //     this.set({hidden: false});
-                // }                
-                // else {
-                //     data.hidden = true;
-                //     this.set(data);
-                // }
-                // console.log('handleUpdate', data);
-            }
-        }
-    }
+  export let hidden = false;
+  
+  export let component = pageHeaderComponent;
+  export let item = {};
+
+  $: {
+    item = $component;
+    hidden = item.hidden;
+  }
+
+  const unsubscribe = pageHeaderComponent.subscribe(value => {
+    console.log('subscribe', value);
+  }); // logs 'got a subscriber', then '1'
+
+  onDestroy(() => {
+    console.log('unsubscribe');
+    unsubscribe(); // logs 'no more subscribers'
+  });  
 </script>
+
+<svelte:options accessors={true}/>
+{#if !hidden}
+<div class="col-{item.col}">
+  <div class="view-header">
+    <div class="pull-right text-right" style="line-height: 14px">
+      {@html item.viewPath}
+    </div>
+    <div class="header-icon">
+      <i class="fa fa-{item.icon}"></i>
+    </div>
+    <div class="header-title">
+      <h3>{item.title}</h3>
+      <small>
+        {item.description}
+      </small>
+    </div>
+  </div>
+  <hr>
+</div>
+{/if}
