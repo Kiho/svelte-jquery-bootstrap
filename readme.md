@@ -17,6 +17,7 @@ Features:
     npm install
 
 For development:
+
     npm run start
 
 open [http://localhost:8081/](http://localhost:8081/) in the browser
