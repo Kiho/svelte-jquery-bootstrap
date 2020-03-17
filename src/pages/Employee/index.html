@@ -33,17 +33,17 @@
   const service = new Service();
   const entityType = 'employee';
   let lookups = {};
-  let initialized = false;
+  
 
-  $: if (!initialized && instance) {
+  onMount(() => {
     pageHeaderComponent.update(header);
-    initialized = true;
+
     service.getLookups(instance, ['department'])
       .then(() => {
         departmentList = lookups['departmentList'];
         grid.oncreate(instance, initTable, rtable, url);
       });
-  }
+  });
 
   $: grid.updateTable(list);
 
@@ -79,10 +79,6 @@
     });
     return t;
   }
-
-  onMount(() => {
-    // pageHeader.$set(header);
-  });
 
   onDestroy(() => {
     grid.ondestroy();
